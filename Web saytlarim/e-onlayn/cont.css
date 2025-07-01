@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.font-size_45{
+    font-size: 45px;
+}
+.display{
+    display: flex;
+    align-items: center;
+    gap: 100px;
+}
+.display_2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+}
+a{
+    text-decoration: none;
+}
+.adres_1{
+    text-align: center;
+    margin-left: 200px;
+    margin-top: 100px;
+}
+.icon{
+    margin-top: 60px;
+    text-align: center;
+    margin-left: 30px;
+    margin-top: 100px;
+}

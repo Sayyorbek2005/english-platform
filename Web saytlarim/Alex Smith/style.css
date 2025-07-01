@@ -1,0 +1,398 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.display_2  {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    
+}
+.display_3{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    
+}
+.display_4{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+   
+}
+.display_5{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+   
+}
+
+
+
+.font-size_18{
+    font-size: 18px;
+}
+.font-size_25{
+    font-size: 25px;
+}.font-size_30{
+    font-size: 30px;
+}.font-size_40{
+    font-size: 40px;
+}.font-size_55{
+    font-size: 55px;
+}.font-size_65{
+    font-size: 65px;
+}
+.max-width{
+    max-width: 100%;
+    margin: auto;
+}
+
+.sidebar{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    padding-top: 20px;
+    width: 20%;
+    background-color: black;
+    color: white;
+   
+
+}
+.sidebar>.img_1{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 13px solid rgb(30, 29, 29);
+    margin-left: 50px;
+}
+.bx{
+    /* border: 1px solid aqua; */
+    border-radius: 50%;
+    padding: 5px;
+    background-color: rgb(30, 29, 29);
+    cursor: pointer;
+    
+} 
+.iconlar{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+   margin-left: 35px;
+   cursor: pointer;
+   transition: all .4s ease;
+
+}
+ul{
+    list-style: none;
+    margin-left: 30px;
+    cursor: pointer;
+}
+.Alex{
+    text-align: center;
+    cursor: pointer;
+}
+.Home:hover,.About:hover,.Portfolio:hover,.Contact:hover{
+    background-color: rgb(30, 29, 29);
+    color: rgb(60, 0, 255);
+    
+}
+.sidebar .bx:hover,.facebook:hover,.intagram:hover,.linkidin:hover{
+    background-color: rgb(30, 29, 29);
+    color: aqua;
+    transition: background-color 0.3s ease;
+}
+.left_img{
+    margin-left: 20%;
+    width: 80%;
+    height: 100vh;
+    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+    background-image: url('img/pexels-photo-2379004.jpeg');
+}
+
+
+.left_img h1 {
+    z-index: 100;
+    margin-top: 350px;
+    margin-left: 35px;
+}
+.left_img p {
+    z-index: 100;
+    margin-left: 35px;
+  
+}
+.hero_2{
+  margin-left: 330px;
+}
+.left_text{
+    margin-bottom: 100px;
+    margin-right: 50px;
+}
+.hero_2 img {
+    width: 400px;
+    height: 450px;
+    object-fit: cover;
+   
+}
+.h_1{
+   text-align: left;
+}
+
+.icon_text{
+justify-content: space-between;
+padding: 0px 50px;
+}
+
+.bx-smile{
+    color: white;
+    margin-top: 0px;
+    
+}
+.bx-tab{
+    color: white;
+}
+.bxl-meta{
+    color: white;
+}
+.bxs-contact{
+    color: white;
+}
+.Portfolio_1{
+   margin-left: 330px;
+}
+.ul_1{
+    color: black;
+    margin-top: 70px;
+    margin-left: 300px;
+}
+.li_2:hover{
+   
+    color: aqua;
+    font-size: 18px;
+}
+
+
+.hero_img_1{
+    text-align: center;
+    margin-left: 300px;
+    
+}
+.hero_img_2{
+    text-align: center;
+    margin-left: 300px;
+}
+.hero_img_3{
+    text-align: center;
+    margin-left: 300px;
+}
+.hero_img_4{
+    text-align: center;
+    margin-left: 300px;
+}
+.img-1{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-2{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-3{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-4{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-5{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-6{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-6{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-7{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-8{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-9{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-10{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-11{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer;
+}
+.img-12{
+    object-fit: cover;
+    width: 350px;
+    height: 250px;
+    cursor: pointer; 
+}
+
+.Contact_1{
+   margin-left: 350px;
+   margin-top: 70px;
+}
+.Adresslar{
+    margin-left: 330px;
+    margin-top: 50px;
+}
+.bx-location-plus{
+    font-size: 30px;    
+    border: 1px solid blue;
+}
+
+
+.bx-location-plus:hover{
+    background-color: rgb(163, 185, 195);
+    color: blue;
+    
+}
+.bx-phone-call{
+    font-size: 30px;    
+    border: 1px solid blue;
+}
+.bx-phone-call:hover{
+    background-color: rgb(163, 185, 195);
+    color: blue;
+}
+.bx-envelope{
+    font-size: 30px;    
+    border: 1px solid blue;
+}
+.bx-envelope:hover{
+    background-color: rgb(163, 185, 195);
+    color: blue;
+}
+.chiziq{
+    color: #00bcd4;
+}
+
+.container {
+    display: flex;
+    gap: 40px;
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info h3 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.contact-info p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.contact-form {
+    flex: 2;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+
+
+button {
+    margin-left: 350px;
+    width: 150px;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0097a7;
+}

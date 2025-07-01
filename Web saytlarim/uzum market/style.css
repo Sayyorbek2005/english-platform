@@ -1,0 +1,341 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.display_2  {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+}
+.display_3{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    
+}
+.display_4{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+   
+}
+.display_5{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+   
+}
+
+
+
+.font-size_18{
+    font-size: 18px;
+}
+.font-size_25{
+    font-size: 25px;
+}.font-size_30{
+    font-size: 30px;
+}.font-size_40{
+    font-size: 40px;
+}.font-size_55{
+    font-size: 55px;
+}.font-size_65{
+    font-size: 65px;
+}
+.bac{
+    height: 560vh;
+}
+.max-width{
+    max-width: 1300px;
+    margin: auto;
+}
+ul{
+    list-style: none;
+    cursor: pointer;
+}
+.Qidiruv > .header_input{
+    
+    padding: 10px 90px;
+    text-align: left;
+}
+.Katalog{
+    padding: 5px 25px;
+    color: #7000ff;
+    background-color: rgb(234, 237, 238);
+    border: 1px solid rgb(168, 168, 232);
+    cursor: pointer;
+}
+.Katalog:hover{
+      background-color: rgb(168, 168, 232);
+}
+.ul_2 > li{
+    margin-top: 20px;
+}
+
+.top-bar-lists{
+    /* color: ; */
+    gap: 50px;
+    padding: 10px 0px;
+}
+.Aqua{
+    color: #7000ff;
+}
+.Uzum h1{
+    color: #7000ff;
+}
+.bx-bookmark-plus{
+    color: #7000ff;
+}
+.img_1{
+    margin-top: 30px;
+}
+.boxlar{
+    margin-top: 30px;
+}
+.box_1{
+    background-color: rgb(241, 237, 237);
+    border: 1px solid rgb(241, 237, 237);
+    /* display: inline-block; */
+    padding: 30px 70px;
+    height: 100px;
+    border-radius: 20px;
+}
+.box_2{
+    background-color: rgb(241, 237, 237);
+    border: 1px solid rgb(241, 237, 237);
+    /* display: inline-block; */
+    padding: 30px 70px;
+    height: 100px;
+    border-radius: 20px;
+}
+.box_3{
+    background-color: rgb(241, 237, 237);
+    border: 1px solid rgb(241, 237, 237);
+    /* display: inline-block; */
+    padding: 30px 70px;
+    height: 100px;
+    border-radius: 20px;
+}
+.box_4{
+    background-color: rgb(241, 237, 237);
+    border: 1px solid rgb(241, 237, 237);
+    /* display: inline-block; */
+    padding: 30px 70px;
+    height: 100px;
+    border-radius: 20px;
+}
+img{
+    width: 100%;
+    border-radius: 10px;
+}
+.Rasm_1{
+    width: 250px;
+    cursor: pointer;
+    
+}
+.Rasm_2{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_3{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_4{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_5{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_6{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_7{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_8{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_9{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_10{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_11{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_12{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_13{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_14{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_15{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_16{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_17{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_18{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_19{
+    width: 250px;
+    cursor: pointer;
+}
+.Rasm_20{
+    
+    width: 250px;
+    cursor: pointer;
+}
+.sariq{
+   background-color: yellow;
+   width: 130px;
+}
+ .Contact_3{
+    margin-top: 60px;
+ }
+.Contact_4{
+    margin-top: 100px;
+}
+.iconlar{
+    cursor: pointer;
+}
+.bxl-apple{
+    cursor: pointer;
+}.bxl-play-store{
+    cursor: pointer;
+}
+.box_1:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+}
+.box_2:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+
+}
+.box_3:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+
+}
+.box_4:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+}
+.img_1{
+    cursor: pointer;
+}
+.Uzum{
+    cursor: pointer;
+}
+.Kirish{
+    padding: 5px 10px;
+}
+.Saralanganlar{
+    padding: 5px 10px;
+}
+.Savat{
+    padding: 5px 10px;
+}
+.Kirish:hover{
+    border-radius: 10px;
+    
+    background-color: rgb(241, 237, 237);
+    cursor: pointer;
+}
+.Saralanganlar:hover{
+    border-radius: 10px;
+   
+    background-color: rgb(241, 237, 237);
+    cursor: pointer;
+}
+.Savat:hover{
+    border-radius: 10px;
+    
+    background-color: rgb(241, 237, 237);
+    cursor: pointer;
+}
+.Mashxur{
+    cursor: pointer;
+}
+.Sizuchun{
+    cursor: pointer;
+}
+.Li{
+    cursor: pointer;
+}
+.img_2{
+    cursor: pointer;
+}
+.ul_2{
+    color: rgb(117, 109, 98);
+}
+
+.Hafta:hover{
+    color: black;
+}
+.Elektronika:hover{
+    color: black;
+}
+.Maishiy:hover{
+    color: black;
+}
+.Kiyim:hover{
+    color: black;
+}
+.Poyabzallar:hover{
+    color: black;
+}
+.Aksesuarlar:hover{
+    color: black;
+}
+.Gozallik:hover{
+    color: black;
+}
+.Salomatlik:hover{
+    color: black;
+}
+.Uy:hover{
+    color: black;
+}
+.Qurilish:hover{
+    color: black;
+}.Yana:hover{
+    color: blanone
+    ck;
+}

@@ -1,0 +1,162 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.bac{
+    height: 90vh;
+}
+.max-width{
+    max-width: 1500px;
+    margin: auto;
+}
+.max-width_2{
+    max-width: 1100px;
+    margin: auto;
+}
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+.display_2{
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+.display_3{
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}
+.display_4{
+    display: flex;
+    align-items: center;
+    gap: 85px;
+}
+.display_5{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.font-size_25{
+    font-size: 25px;
+}
+.font-size_30{
+    font-size: 30px;
+}
+.Tat{
+    width: 100px;
+}
+ul{
+    list-style: none;
+}
+.uz{
+    border: 1px solid black;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+.img_2{
+    width: 50px;
+}
+.sidebar{
+    box-shadow: 22px 3px 17px -3px rgba(34, 60, 80, 0.2);
+    position: fixed;
+    left: 0px;
+    top: 80px;
+    bottom: 0px;
+    padding-top: 30px;
+    width: 10%;
+    background-color: white;
+    color: black;
+}
+.center{
+    text-align: center;
+}
+.left_box{
+    border: 1px solid black;
+    width: 436px;
+    margin-top:20px;
+}
+.left_box_{
+    margin-left: 30px;
+    padding-top: 30px;
+    padding-bottom: 70px;
+    
+}
+input{
+   padding-right: 160px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.Davomat{
+   margin-top: 0px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 20px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+nav button {
+    padding: 10px 15px;
+    border: none;
+    background: #eaeaea;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+nav button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.controls button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.present {
+    background-color: #2ca6aa;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: default;
+}

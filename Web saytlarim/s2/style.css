@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+div {
+    width: 100px;
+    height: 50px;
+    background-color: red;
+    position: relative;
+    /* animation-name: example; */
+    animation: mymove 5s;
+    animation-fill-mode: forwards;
+
+    /* 3soniyadan keyin boshlanadi */
+    /* animation-delay: 3s; */
+    /* necha sekund davomida qilishini belgilaydi */
+    /* animation-duration: 1s; */
+    /* necha marta aylanishini belgilaydi */
+    /* animation-iteration-count: 3; */
+    /* bergan buyrugimizni teskari bajaradi */
+    /* animation-direction: reverse; */
+    /* qanday borsa shunday qaytadi */
+    /* animation-direction: alternate; */
+    /* teskari borib qaytadi */
+    /* animation-direction: alternate-reverse; */
+    /* 5 ta ish bittada bajariladi */
+    /* animation: example 5s linear 2s infinite alternate; */
+}
+
+#div1 {
+    animation-timing-function: linear;
+}
+
+#div2 {
+    animation-timing-function: ease;
+}
+
+#div3 {
+    animation-timing-function: ease-in;
+}
+
+#div4 {
+    animation-timing-function: ease-out;
+}
+
+#div5 {
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes mymove {
+    from {
+        left: 0px;
+    }
+
+    to {
+        left: 300px;
+    }
+}
+
+/* @keyframes example{
+    0% {background-color: red;}
+    25% {background-color: yellow;}
+    50%{background-color: blue;}
+    100%{background-color: green;}
+} */
+/* @keyframes example{
+    0% {background-color: red; left:0px; top:0px;}
+    25% {background-color: yellow; left:200px;top:0px;}
+    50% {background-color: blue; left:200px; top:200px;}
+    75% {background-color: green; left:0px;top:200px;}
+    100% {background-color: red;left:0px;top:0px;}
+} */

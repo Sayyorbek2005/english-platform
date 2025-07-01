@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 100px;
+}
+
+.cont-int{
+    text-align: center;
+    width: 500px;
+}
+
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* width: 500px; */
+    margin-bottom: 5px;
+}
+s
+.box_1{
+    width: 500px;
+    /* height: 10px; */
+    background-color: gray;
+}
+
+.box_2{
+    background-color: aqua;
+    height: 10px;
+    width: 90%;
+}

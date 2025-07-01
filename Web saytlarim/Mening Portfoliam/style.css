@@ -1,0 +1,531 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.bac{
+    height: 620vh;
+    color: white;
+    background-color: rgb(47, 45, 45);
+}
+.max-width{
+    max-width: 1300px;
+    margin: auto;
+}
+.max-width_2{
+    max-width: 2000px;
+    margin: auto;
+}
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+}
+.display_2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.display_3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
+.font-size-18{
+    font-size: 18px;
+}
+.font-size-25{
+    font-size: 25px;
+}.font-size-35{
+    font-size: 35px;
+}.font-size-45{
+    font-size: 45px;
+}.font-size-65{
+    font-size: 65px;
+}
+.yellow{
+    color: rgb(197, 139, 13);
+}
+.header{
+    color: white;
+    margin-top: 10px;
+    border: 1px solid green;
+    border-radius: 30px;
+    background-color: rgb(7, 53, 7);
+}
+.ul{
+    list-style: none;
+   
+}
+li{
+    cursor: pointer;
+}
+li:hover{
+    color: orange;
+}
+.Sayyor{
+    margin-left: 5px;
+}
+button{
+    margin-right: 5px;
+    border-radius: 30px;
+    padding: 7px 15px;
+    border: none;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(192, 155, 155);
+}
+.katta_div{
+      justify-content: space-between;
+}
+
+.left_text{
+    margin-top: 100px;
+  
+    
+}
+.buttonlar{
+    margin-top: 50px;
+}
+.button_2{
+    background-color: rgb(7, 53, 7);
+    color: white;
+}
+.button_2:hover{
+    background-color: rgb(83, 133, 83);
+}
+.button_3{
+    background-color: white;
+    padding: 5px 10px;
+    border: 1px solid black;
+}
+.button_3:hover{
+    background-color: rgb(186, 183, 183);
+}
+img{
+    object-fit: cover;
+    height: 350px;
+    width: 350px;
+    border-radius: 30px;
+    margin-top: 100px;
+}
+.footer{
+    border: 1px solid orange;
+    background-color: orange;
+    color: black;
+    padding: 8px 15px;
+    margin-top: 100px;
+}
+.face_2{
+    margin-top: 100px;
+}
+.button_4{
+    margin-top: 150px;
+    background-color: rgb(7, 53, 7);
+    color: white;
+}
+.button_4:hover{
+    background-color: rgb(83, 133, 83);
+}
+.boxlar{
+    margin-top: 50px;
+}
+
+.box_1{
+    border: 1px solid gray;
+    padding: 30px;
+    width: 400px;
+    cursor: pointer;
+}
+.box_1:hover{
+    background-color: rgb(100, 98, 98);
+}
+.img_1{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.learn_1{
+    color: rgb(235, 246, 235);
+    cursor: pointer;
+}
+.box_2{
+    border: 1px solid gray;
+    padding: 30px;
+    width: 400px;
+    cursor: pointer;
+}
+.box_2:hover{
+    background-color: rgb(100, 98, 98);
+}
+.img_2{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.learn_2{
+    color: rgb(235, 246, 235);
+    cursor: pointer;
+}
+.box_3{
+    border: 1px solid gray;
+    padding: 30px;
+    width: 400px;
+    cursor: pointer;
+}
+.box_3:hover{
+    background-color: rgb(100, 98, 98);
+}
+.img_3{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.learn_3{
+    color: rgb(235, 246, 235);
+    cursor: pointer;
+}
+/* .logo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+} */
+.logo_1{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+    
+}
+.logo_2{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_3{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_4{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_5{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_6{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_8{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_9{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.logo_10{
+    width: 150px;
+    height: 150px;
+    object-fit: cover   ;
+}
+.About{
+    margin-top: 150px;
+    text-align: center;
+}
+.obunachilar{
+    margin-top: 150px;
+}
+.obunachilar h1{
+    color: orange;
+}
+.Skill{
+    margin-top: 250px;
+    text-align: center;
+}
+.skil_box_1{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_1:hover{
+    background-color: rgb(70, 69, 69);
+}
+.html{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.skil_box_2{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_2:hover{
+    background-color: rgb(70, 69, 69);
+}
+.css{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.skil_box_3{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_3:hover{
+    background-color: rgb(70, 69, 69);
+}
+.java{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.skil_box_4{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_4:hover{
+    background-color: rgb(70, 69, 69);
+}
+.python{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.skil_box_5{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_5:hover{
+    background-color: rgb(70, 69, 69);
+}
+.react{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.skil_box_6{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+.skil_box_6:hover{
+    background-color: rgb(70, 69, 69);
+}
+.php{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-top: 50px;
+}
+.foiz{
+    border: 1px solid orange;
+    width: 250px;
+    margin-left: 46px;
+    border-radius: 30px;
+}
+.klentlar_1{
+    text-align: center;
+    margin-top: 200px;
+}
+.klint_1{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+  
+  
+}
+.klient_1{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_1:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_1{
+    margin-top: 30px;  
+}
+.klint_2{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.klient_2{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_2:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_2{
+    margin-top: 30px;  
+}
+.klint_3{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.klient_3{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_3:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_3{
+    margin-top: 30px;  
+}
+.klint_4{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.klient_4{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_4:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_4{
+    margin-top: 30px;  
+}
+.klint_5{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.klient_5{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_5:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_5{
+    margin-top: 30px;  
+}
+.klint_6{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.klient_6{
+    border: 1px solid gray;
+    width: 350px ;
+    height: 250px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.klient_6:hover{
+    background-color: rgb(70, 69, 69);
+}
+.klint_6{
+    margin-top: 30px;  
+}
+.li_2:hover{
+    color: gray;
+    cursor: pointer;
+}
+.input_2{
+    background-color: rgb(47, 45, 45);
+    padding: 10px 20px;
+    color: white;
+}
+.face_5{
+    margin-top: 250px;
+}
+.telefon{
+    margin-top: 60px;
+}
+.email{
+    margin-top: 20px;
+}
+.Contact{
+    margin-top: 40px;
+}
+.footer_button{
+    margin-left: 0px;
+    color: red;
+}
+.footer_button:hover{
+    background-color: gray;
+}

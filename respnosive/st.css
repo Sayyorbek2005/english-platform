@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* header{
+    column-rule: white;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+li{
+    font-size: 20px;
+}
+.bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+button{
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.bx-menu{
+    display: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+@media(max-width:1335px){
+    .max-width{
+        padding: 0px 1rem;
+    }
+}
+} */
+@media(max-width:1200px) {
+    .max-width {
+        padding: 0 1rem;
+    }
+}
+
+@media(max-width:600px) {
+    header .none {
+        display: none;
+    }
+    header .menu_none{
+        display: none;
+    }
+
+    header .nemu_block {
+        display: block;
+        padding: 0 20px;
+        cursor: pointer;
+    }
+
+    header > i:hover .modal {
+        display: block;
+    }
+}
+
+.bac {
+    color: white;
+    background-image: url(img/img.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.max-width {
+    max-width: 1350px;
+    margin: auto;
+}
+.max-width {
+    max-width: 1350px;
+    margin: auto;
+}
+.display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.font-size-40 {
+    font-size: 40px;
+}
+
+header {
+    margin-top: 0px;
+}
+
+ul {
+    gap: 30px;
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+.left-text {
+    margin-top: 200px;
+}
+
+.button-1 {
+    padding: 15px 50px;
+    background-color: rgb(9, 167, 9);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.footer{
+    margin-top: 150px;
+    justify-content: flex-start;
+    gap: 50px;
+}
+.page-2{
+    background-color: black;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+.left-img{
+    margin-top: 50px;
+    margin-left: 0px;
+}
+.left-img>img{
+    margin-top: 50px;
+}

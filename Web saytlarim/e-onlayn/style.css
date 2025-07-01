@@ -1,0 +1,209 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.max-width{
+   max-width: 1300px;
+   margin: auto;
+  
+}
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+ }
+ .display_2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+ }
+ .display_3{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+   gap: 30px;
+ }
+ .display_4{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   gap: 80px;
+ }
+ .orange{
+   color: orange;
+ }
+ .font-size_18{
+    font-size: 18px;
+ }
+ .font-size_25{
+    font-size: 25px;
+ }
+ .font-size_35{
+    font-size: 35px;
+ }
+ .font-size_45{
+    font-size: 45px;
+ }
+ .font-size_65{
+    font-size: 65px;
+ }
+ .bac{
+    background-image: url(img/bread.avif);
+    height: 90vh;
+    object-fit: cover;
+    color: black;
+ }
+ header{
+   margin-top: 30px;
+ }
+ ul{
+    list-style: none;
+    cursor: pointer;
+ }
+ button{
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: rgb(158, 125, 189);
+    border: none;
+    color: white;
+ }
+ button:hover{
+     background-color: blueviolet;
+ 
+ }
+ .text_left{
+   margin-top: 50px;
+ }
+ .button_2:hover{
+   background-color: blueviolet;
+   /* padding: 10px 30px; */
+   cursor: pointer;
+   
+ }
+ .button_2{
+   padding: 10px 30px;
+ }
+ img{
+   width: 300px;
+   margin-top: 50px;
+ }
+ .browse{
+   margin-top: 50px;
+ }
+ .boxlar{
+   margin-top: 30px;
+ }
+ hr{
+   width: 87px;
+ }
+ .box_1{
+   border: 1px solid rgb(218, 85, 85);
+   padding: 20px 60px;
+   border-radius: 20px;
+   color: white;
+   background-color: rgb(218, 85, 85);
+   cursor: pointer;
+ }
+ .box_1:hover{
+   background-color: rgb(208, 58, 58);
+ }
+ .box_2{
+  height: 210px;
+   border: 1px solid rgb(58, 53, 103);
+   padding: 20px 60px;
+   border-radius: 20px;
+   color: rgb(21, 19, 19);
+   background-color: rgb(245, 244, 249);
+   cursor: pointer;
+ }
+ .box_2:hover{
+   background-color: rgb(200, 200, 208);
+ }
+ .box_3{
+   border: 1px solid rgb(85, 176, 246);
+   padding: 20px 60px;
+   border-radius: 20px;
+   color: white;
+   background-color: rgb(85, 176, 246);
+   cursor: pointer;
+ }
+ .box_3:hover{
+   background-color: rgb(31, 114, 238);
+ }
+ .box_4{
+   border: 1px solid rgb(244, 210, 85);
+   padding: 20px 60px;
+   border-radius: 20px;
+   color: white;
+   background-color: rgb(244, 210, 85);
+   cursor: pointer;
+ }
+ .box_4:hover{
+   background-color: rgb(238, 155, 31);
+ }
+ /* .oxirgi{
+   width: 50px;
+   height: 50px;
+   border: 1px solid rgb(58, 53, 103);
+   border-radius: 50px;
+   text-align: center;
+   background-color: rgb(58, 53, 103);
+   color: white;
+   cursor: pointer;
+ }
+ .oxirgi:hover{
+   background-color: rgb(50, 30, 86);
+ } */
+ .box_5{
+  border: 1px solid rgb(65, 56, 24);
+  padding: 20px 60px;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(135, 124, 86);
+  cursor: pointer;
+}
+.box_5:hover{
+  background-color: rgb(197, 165, 120);
+}
+.box_6{
+  border: 1px solid rgb(97, 133, 137);
+  padding: 20px 60px;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(86, 135, 135);
+  cursor: pointer;
+}
+.box_6:hover{
+  background-color: rgb(136, 208, 223);
+}
+ a{
+  text-decoration: none;
+ }
+ .uzum{
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50px;
+ }
+ .It{
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50px;
+ }
+ .You{
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50px;
+ }
+ .Alibaba{
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50px;
+ }
+ .Apple{
+  width: 70px;
+  object-fit: cover;
+  border-radius: 50px;
+ }

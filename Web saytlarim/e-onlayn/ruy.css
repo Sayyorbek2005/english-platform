@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+h1{
+    text-align: center;
+    margin-top: 250px;
+}
+button{
+   margin-left: 830px;
+   margin-top: 40px;
+   padding: 15px 30px;
+   background-color: beige;
+}
+a{
+    text-decoration: none;
+}
+button:hover{
+    background-color: rgb(221, 221, 162);
+}
