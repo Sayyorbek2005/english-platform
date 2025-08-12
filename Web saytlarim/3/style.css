@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root{
+    --blue: blue;
+    --darkBlue: #000080;
+    --black: #000;
+    --white: #fff;
+}
+
+
+
+
+/* back white */
+.bac{
+    color: white;
+}
+/* max widht */
+.max-width{
+    max-width: 1300px;
+    margin: auto;
+}
+/* Display */
+.display{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/*  gap */
+.gap-10{
+    gap: 10px;
+}
+.gap-20{
+   
+    gap: 20px;
+}
+.gap-50{
+    gap: 50px;
+}
+
+
+
+li,.bx,button{
+    cursor: pointer;
+}
+
+/* ? Font Size */
+
+.font-size18{
+    font-size: 18px;
+}
+.font-size20{
+    font-size: 20px;
+}
+.font-size25{
+    font-size: 25px;
+}
+.font-size30{
+    font-size: 30px;
+}
+.font-size40{
+    font-size: 40px;
+}
+.font-size50{
+    font-size: 50px;
+}
+.font-size65{
+    font-size: 65px;
+}
+/* font weight */
+.font-weight400{
+    font-weight: 400px;
+}
+.font-weight500{
+    font-weight: 500px;
+}
+.font-weight600{
+    font-weight: 600px;
+}
+.font-weight700{
+    font-weight: 700px;
+}
+.font-weight800{
+    font-weight: 800px;
+}
+.font-weight900{
+    font-weight: 900px;
+}
+header > ul {
+    list-style: none;
+    gap: 70px;
+}
+/* ! tayyor input css */
+form{
+       border-radius: 10px;
+}
+input{
+    width: 100%;
+    outline: none;
+}
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 500px;
+    width: 100%;
+   
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-btn:hover {
+    color: var(--black);
+}
+
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    min-height: 100px;
+    outline: none;
+}
+.btn-1{
+    padding: 10px 20px;
+    border-radius: 7px;
+    border: none;
+    background-color: #2563eb;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+/* Modal oynaning asosiy qismi */
+.modal-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+/* Modal kontent */
+.modal-content-2 {
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    font-family: Arial, sans-serif;
+}
+
+/* Sarlavha */
+.modal-content-2 > h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Paragraflar */
+.modal-content-2 > p {
+    color: #555;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Yopish tugmasi */
+.modal-content-2 > .btn-close {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effekti */
+.modal-content-2 > .btn-close:hover {
+    background-color: #e60000;
+}
+.modal-content-2 > .xx{
+    font-size: 30px;
+}

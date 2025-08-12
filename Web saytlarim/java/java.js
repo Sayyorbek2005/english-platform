@@ -1,51 +1,23 @@
-alert("salom dunyo");
-alert("MEning ismim sayyor!");
+// let color = document.querySelector(".color")
 
+// color.style.color = " red"
 
-let button = document.querySelector(".btn");
-console.log(button);
-let modal = document.querySelector(".salom")
-console.log(modal);
+// color.addEventListener("mouseover",  () =>{
+//     color.style.color = "blue"
+// })
+let button = document.querySelector(".button-1")
 
-button.addEventListener("click", function () {
-console.log("Sayyor you clciked me");
-modal.style.display = "none"
+// button.addEventListener("mouseover", () =>{
+//     button.style.color = "blue"```
 
-button.style.backgroundColor = "red";
-
-button.style.color = "white";
-
-button.style.padding = "10px";
-
-button.style.border = "none";
-
-button.style.borderRadius = "5px";
-button.innerHTML = "Sayyor";
-
+// })
+button.addEventListener("mouseover", () =>{
+    button.style.backgroundColor = "blue"
+    button.style.color = "white"
 })
 
-
-let remove = document.querySelector(".remove");
-
-console.log(remove);
-
-remove.addEventListener("click", function(){
-    modal.style.display = "block"
-//     button.innerHTML = "click";
-//     button.style.backgroundColor = "transparent";
-
-// button.style.color = "black";
-
-// button.style.padding = "2px";
-
-// button.style.border = "1px solid black";
-
-// button.style.borderRadius = "3px";
-
-
-
+button.addEventListener("mouseout", () =>{
+    button.style.backgroundColor = "white"
+    button.style.color = "blue"
 })
-
-
-
-
+    

@@ -1,0 +1,474 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    --blue: blue;
+    --darkBlue: #000080;
+    --black: #000;
+    --white: #fff;
+}
+.color{
+    background-color: yellow;
+    width: 100px;
+    padding: 1px 3px;
+}
+
+
+
+/* back white */
+.background {
+    height: 330vh;
+    color: black;
+}
+
+/* max widht */
+.max-width {
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* Display */
+.display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*  gap */
+.gap-5 {
+    gap: 5px;
+}
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-20 {
+
+    gap: 20px;
+}
+
+.gap-50 {
+    gap: 50px;
+}
+
+
+
+li,
+.bx,
+button {
+    cursor: pointer;
+}
+
+/* ? Font Size */
+
+.font-size18 {
+    font-size: 18px;
+}
+
+.font-size20 {
+    font-size: 20px;
+}
+
+.font-size25 {
+    font-size: 25px;
+}
+
+.font-size30 {
+    font-size: 30px;
+}
+
+.font-size40 {
+    font-size: 40px;
+}
+
+.font-size50 {
+    font-size: 50px;
+}
+
+.font-size65 {
+    font-size: 65px;
+}
+
+/* font weight */
+.font-weight400 {
+    font-weight: 400px;
+}
+
+.font-weight500 {
+    font-weight: 500px;
+}
+
+.font-weight600 {
+    font-weight: 600px;
+}
+
+.font-weight700 {
+    font-weight: 700px;
+}
+
+.font-weight800 {
+    font-weight: 800px;
+}
+
+.font-weight900 {
+    font-weight: 900px;
+}
+header{
+    margin-top: 20px;
+}
+
+header>ul {
+    list-style: none;
+    gap: 70px;
+}
+.uzum{
+    color: blue;
+}
+.top-bar-lists{
+    /* color: ; */
+    gap: 50px;
+    padding: 10px 0px;
+    list-style: none;
+}
+.Aqua{
+    color: #7000ff;
+}
+.uzum-logo > img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.uzum-logo > a {
+    text-decoration: none;
+    color: var(--black);
+    font-size: 30px;
+    color: blue;
+    
+}
+.katalog{
+    border: 0.3px solid #ccc;
+    padding: 7px 30px;
+    border-radius: 5px;
+    background-color: #7000ff;
+    cursor: pointer;
+}
+.katalog > .menu, .kat{
+    color: white;
+}
+.katalog:hover {
+    background-color: #681ec8;
+    transition: 0.3s;
+}
+input{
+    padding: 10px 250px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+.search{
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+   
+}
+.kirish:hover{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+
+}
+.saralangan:hover{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+
+}
+.savat:hover{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    
+}
+
+.Hafta-tovarlar{
+    margin-top: 20px;
+   
+}
+.slider-container {
+    
+    width: 1420px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #slider-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffffcc;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .arrow.left {
+    left: -3px;
+  }
+  
+  .arrow.right {
+    right: -3px;
+  }
+  .onalar-bolalar{
+    margin-top: 50px;
+  }
+  .onalar{
+      border: 1px solid #ccc;
+      padding: 3px 50px;
+      border-radius: 10px;
+      background-color: rgb(241, 237, 237)
+  }
+  .onalar:hover{
+   background-color: rgb(227, 223, 223);
+   cursor: pointer;
+  }
+  .onalar > img {
+    width: 50px;
+  }
+  .Arzon-narx{
+    border: 1px solid #ccc;
+    padding: 3px 50px;
+    border-radius: 10px;
+    background-color: rgb(241, 237, 237)
+}
+.Arzon-narx:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+   }
+  .Arzon-narx > img {
+    width: 50px;
+  }
+  .Zamonaviy-bozor{
+    border: 1px solid #ccc;
+    padding: 3px 50px;
+    border-radius: 10px;
+    background-color: rgb(241, 237, 237)
+  }
+  .Zamonaviy-bozor:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+   }
+  .Zamonaviy-bozor > img {
+    width: 50px;
+  }
+  .Maktab-bozor{
+    border: 1px solid #ccc;
+    padding: 3px 50px;
+    border-radius: 10px;
+    background-color: rgb(241, 237, 237)
+  }
+  .Maktab-bozor:hover{
+    background-color: rgb(227, 223, 223);
+    cursor: pointer;
+   }
+  .Maktab-bozor > img {
+    width: 50px;
+  }
+  .mashhurlar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 50px;
+  }
+  .qator-1{
+    margin-top: 30px; 
+  }
+ 
+  .box-1{
+    border: 1px solid white;
+    background: transparent;
+    width: 250px;
+    position: relative;
+    transition: all 0.3s;
+    border-radius: 10px;
+  }
+  .box-1:hover{
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    transform: scale(1.01);
+    box-shadow: 0px 0px 17px 11px rgba(34, 60, 80, 0.2);
+  }
+  .heart{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #7000ff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .som{
+    color: #7000ff;
+  }
+  
+  .Savat{
+    color: white;
+    border: 1px solid #ccc;
+    padding: 5px 100px;
+    border-radius: 10px;
+    background-color: #7000ff
+  }
+ .box-1 > img {
+    width: 250px;
+    border-radius: 10px;
+ } 
+
+ 
+ .yana-korsat{
+    margin-top: 50px;
+    width: 50%;
+    margin-left: 25%;
+    padding: 15px;
+}
+.yana{
+    display: none;
+}
+
+.login{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+    display: none;
+}
+.x{
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+}
+.bosish{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+.Contact_3{
+    margin-top: 30px
+}
+.Contact_4{
+    margin-top: 113px;
+}
+.iconlar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+
+/* ! tayyor input css */
+/* form{ */
+/* width: 450px; */
+/* height: 450px; */
+/* border-radius: 10px; */
+/* } */
+/* input{ */
+/* width: 100%; */
+/* outline: none; */
+/* } */
+/*  */
+/*  */
+/* .modal { */
+/* position: fixed; */
+/* top: 50%; */
+/* left: 50%; */
+/* transform: translate(-50%, -50%); */
+/* background-color: white; */
+/* padding: 30px; */
+/* border-radius: 10px; */
+/* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); */
+/* z-index: 1000; */
+/* width: 90%; */
+/* max-width: 500px; */
+/* display: none; */
+/* } */
+/*  */
+/* .modal-content { */
+/* display: flex; */
+/* flex-direction: column; */
+/* gap: 15px; */
+/* position: relative; */
+/* } */
+/*  */
+/* .close-btn { */
+/* position: absolute; */
+/* top: 10px; */
+/* right: 10px; */
+/* background: none; */
+/* border: none; */
+/* font-size: 24px; */
+/* cursor: pointer; */
+/* color: #666; */
+/* } */
+/*  */
+/* .close-btn:hover { */
+/* color: var(--black); */
+/* } */
+/*  */
+/*  */
+/* input, textarea { */
+/* width: 100%; */
+/* padding: 10px; */
+/* margin-bottom: 15px; */
+/* border: 1px solid #ccc; */
+/* border-radius: 5px; */
+/* font-size: 16px; */
+/* } */
+/*  */
+/* textarea { */
+/* min-height: 100px; */
+/* outline: none; */
+/* } */
+/* .btn-1{ */
+/* padding: 10px 20px; */
+/* border-radius: 10px; */
+/* border: none; */
+/* background-color: #2563eb; */
+/* } */
