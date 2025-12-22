@@ -1,0 +1,57 @@
+.taskfour4-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+.taskfour4-card li{
+  list-style: none;
+}
+.taskfour4 ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.taskfour4-question ul li {
+    transition: all .2s ease-in-out;
+    font-size: var(--font-size-20);
+    padding: 5px;
+}
+
+.taskfour4-question ul li:hover {
+    color: #3498db;
+}
+.taskfour4-question.answer-1 h3{
+    line-height: 60px;
+    font-weight: var(--font-weight-500);
+}
+.taskfour4-question h1{
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-600);
+}
+.taskfour-input {
+  width: 150px;
+  font-size: var(--font-size-20);
+}
+.taskfour4-btn{
+  padding: 5px 10px;
+    font-size: 20px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    border: none;
+    margin-top: 30px;
+    margin-left: 350px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.taskfour4-btn:hover{
+    transform: scaleX(1.04);
+}
+
+.taskfour4-question h2{
+    font-weight: 300 !important;
+}
