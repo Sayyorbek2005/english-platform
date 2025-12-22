@@ -1,0 +1,128 @@
+.page-2{
+    position: absolute;
+     top: 760px;
+     left:400px
+ }
+ .linear-1{
+    width: 80px;
+    height: 5px;
+    background-color: var(--blue);
+}
+ .linear{
+    width: 150px;
+    height: 15px;
+    background-color: var(--blue);
+}
+
+.five{
+    transform: rotate(0deg);
+    position: absolute;
+    top: 50px;
+}
+.six{
+    transform: rotate(0deg);
+    position: absolute;
+   top: 70px;
+}
+.malumotlar{
+    position: absolute;
+    margin-top: 50px;
+    gap: 100px;
+}
+.foiz_1{
+    width: 300px;
+    border: 1px solid #2563eb;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+
+}
+.foiz_1_1{
+    background-color: #2563eb;
+    width: 80%;
+    text-align: center;
+    height: 10px;
+    border-radius: 20px
+}
+.foiz_2{
+    width: 300px;
+    border: 1px solid #2563eb;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+
+}
+.foiz_2_1{
+    background-color: #2563eb;
+    width: 74%;
+    text-align: center;
+    height: 10px;
+    border-radius: 20px
+}
+.foiz_3{
+    width: 300px;
+    border: 1px solid #2563eb;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+
+}
+.foiz_3_1{
+    background-color: #2563eb;
+    width: 63%;
+    text-align: center;
+    height: 10px;
+    border-radius: 20px
+}
+.foiz_5{
+    width: 300px;
+    border: 1px solid #2563eb;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+
+}
+.foiz_5_1{
+    background-color: #2563eb;
+    width: 65%;
+    text-align: center;
+    height: 10px;
+    border-radius: 20px
+}
+.aa{
+    justify-content: flex-start;
+    gap: 20px;
+}
+.buttonlar{
+    position: absolute;
+    top: 580px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;  
+}
+.button-2{
+    margin-top: 30px;
+    background-color: white;
+    padding: 15px 55px;
+    border-radius: 10px;
+    border: var(--blue) 1px solid;
+    font-size: 20px;
+}
+.button-2:hover{
+    background-color: var(--blue);
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+.button-1{
+    background-color: white;
+    padding: 15px 55px;
+    border-radius: 10px;
+    border: var(--blue) 1px solid;
+    font-size: 20px;
+}
+.button-1:hover{
+    background-color: var(--blue);
+    color: white;
+    transition: all 0.2s ease-in-out;
+}

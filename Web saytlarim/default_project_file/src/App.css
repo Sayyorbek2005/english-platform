@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@700&family=Permanent+Marker&display=swap');
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+
+
+:root {
+  --blue: #1E90FF;
+  --lightblue:#318CE7
+  --darkBlue: #000080;
+  --black: #000;
+  --white: #fff;
+ 
+}
+
+
+
+
+/* back white */
+    
+.App{
+  height: 425vh;
+  }
+.bac {
+  color: white;
+}
+
+/* max widht */
+.max-width {
+  max-width: 1620px;
+  margin: auto;
+}
+
+/* Display */
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/*  gap */
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-20 {
+
+  gap: 20px;
+}
+
+.gap-50 {
+  gap: 50px;
+}
+.color-2{
+  color: #2563eb;
+}
+
+
+li,
+.bx,
+button {
+  cursor: pointer;
+}
+
+/* ? Font Size */
+
+.font-size18 {
+  font-size: 18px;
+}
+
+.font-size20 {
+  font-size: 20px;
+}
+
+.font-size25 {
+  font-size: 25px;
+}
+
+.font-size30 {
+  font-size: 30px;
+}
+
+.font-size40 {
+  font-size: 40px;
+}
+
+.font-size50 {
+  font-size: 50px;
+}
+
+.font-size65 {
+  font-size: 65px;
+}
+
+/* font weight */
+.font-weight400 {
+  font-weight: 400px;
+}
+
+.font-weight500 {
+  font-weight: 500px;
+}
+
+.font-weight600 {
+  font-weight: 600px;
+}
+
+.font-weight700 {
+  font-weight: 700px;
+}
+
+.font-weight800 {
+  font-weight: 800px;
+}
+
+.font-weight900 {
+  font-weight: 900px;
+}

@@ -1,0 +1,51 @@
+ .books1{
+
+   position: relative;
+      left: 400px;
+      top: 100px;
+      padding: 25px;
+      border: 30px solid var(--color-white);
+      background: var(--color-white);
+      color: var(--color-black);
+      border-radius: 15px;
+      width: 80%;
+      height: 550px;
+      overflow: auto;
+      /* scroll bor, lekin yashiramiz */
+      max-width: 1000px;
+      box-shadow: 0px 1px 12px 1px rgba(34, 60, 80, 0.2);
+      font-size: 17px;
+      /* Scroll barni yashirish */
+      scrollbar-width: none;
+      /* Firefox */
+  }
+  
+  .books1 h3{
+    font-weight: 300;
+    font-style: oblique;
+  }
+  
+  /* Chrome, Safari, Edge */
+
+.books1::-webkit-scrollbar {
+    display: none;
+}
+
+.books1-question {
+    margin-top: 30px;
+}
+.books1-question h3{
+    line-height: 40px;
+}
+.books1-question> h4, h2 {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+.books1-question h3 {
+    text-align: center;
+}
+
+
+
+
+

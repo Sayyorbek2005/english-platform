@@ -1,0 +1,238 @@
+.test {
+    position: relative;
+    margin-left: 220px;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+.cardlar {
+    margin-top: 50px;
+}
+
+.cardlar a {
+    text-decoration: none;
+}
+
+.qator-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
+
+.qator-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+    margin-top: 50px;
+}
+
+.qator-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.card1 {
+    font-family: Poppins, sans-serif;
+    border: 1px solid #ccc;
+    color: var(--color-black);
+    width: 350px;
+    height: 50px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0px 1px 12px 1px rgba(34, 60, 80, 0.2);
+    border: none;
+    font-size: 17px;
+}
+
+.card1:hover {
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    transition: 0.3s;
+}
+
+.test>h1 {
+    text-align: center;
+    font-size: 25px;
+}
+
+
+/* ! testlar css ni birlashtirish */
+
+.tasks {
+    position: relative;
+    left: 400px;
+    top: 100px;
+    padding: 25px;
+    border: 30px solid var(--color-white);
+    background: var(--color-white);
+    color: var(--color-black);
+    border-radius: 15px;
+    width: 80%;
+    height: 550px;
+    overflow: auto;
+    /* scroll bor, lekin yashiramiz */
+    max-width: 1000px;
+    box-shadow: 0px 1px 12px 1px rgba(34, 60, 80, 0.2);
+    font-size: 17px;
+    /* Scroll barni yashirish */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+
+/* Chrome, Safari, Edge */
+
+.tasks::-webkit-scrollbar {
+    display: none;
+}
+
+.tasks-question {
+    margin-top: 50px;
+}
+
+.tasks-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+
+.test .tasks-question ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.tasks-question ul li {
+    transition: all .2s ease-in-out;
+    font-size: var(--font-size-20);
+    padding: 5px;
+}
+
+.tasks-question ul li:hover {
+    color: #3498db;
+}
+
+.tasks-question ul>div {
+    margin: 0px 0px;
+    line-height: 30px;
+}
+
+
+/* !taskonega tegishli */
+.taskone-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+.taskone-card li{
+  list-style: none;
+}
+.taskone ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.taskone-question ul li {
+    transition: all .2s ease-in-out;
+    font-size: var(--font-size-20);
+    padding: 5px;
+}
+
+.taskone-question ul li:hover {
+    color: #3498db;
+}
+/* !Task-twoga tegishli stillar */
+.tasktwo-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+.tasktwo-card li{
+  list-style: none;
+}
+.tasktwos ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+
+
+/* !Task-threga tegishli stillar */
+.taskthree-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+.option-text {
+    margin-top: 100px;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-400);
+    max-width: 700px;
+    margin-left: 100px;
+}
+
+.option-text li {
+    cursor: text;
+}
+.taskthree-card li{
+  list-style: none;
+}
+.taskthree-question ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.taskthree-question ul li {
+    transition: all .2s ease-in-out;
+    font-size: var(--font-size-20);
+    padding: 5px;
+}
+
+.taskthree-question ul li:hover {
+    color: #3498db;
+}
+
+/* !taskfourga tegishli */
+.taskfour-question h2 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: var(--font-size-25);
+    font-weight: var(--font-weight-500);
+    max-width: 700px;
+    margin: auto;
+}
+.taskfour-card li{
+  list-style: none;
+}
+
+.taskfour-question ul li {
+    transition: all .2s ease-in-out;
+    font-size: var(--font-size-20);
+    padding: 5px;
+}
+
+
+

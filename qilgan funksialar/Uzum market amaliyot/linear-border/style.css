@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin: 200px;
+}
+
+
+.linear{
+    width: 150px;
+    height: 15px;
+    background-color: aqua;
+}
+
+.one{
+    transform: rotate(90deg);
+    position: absolute;
+    left: 132px;
+    top: 130px;
+}

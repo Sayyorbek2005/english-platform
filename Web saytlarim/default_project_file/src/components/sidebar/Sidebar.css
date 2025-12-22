@@ -1,0 +1,82 @@
+.sidebar{
+    position: relative;
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 7px 0px 38px -9px rgba(34, 60, 80, 0.2);
+    text-align: center;
+    
+}
+.linear{
+    width: 50px;
+    height: 5px;
+    background-color: var(--blue);
+}
+
+.one{
+    transform: rotate(90deg);
+    position: absolute;
+    left: 38px;
+    top: 145px;
+}
+.two{
+    transform: rotate(0deg);
+    position: absolute;
+    left: 61.3px;
+    top:  168px;
+    z-index: 1;
+}
+.three{
+    transform: rotate(0deg);
+    position: absolute;
+    left: 191px;
+    top: 96px;
+}
+.four{
+    transform: rotate(90deg);
+    position: absolute;
+    left: 213.2px;
+    top: 118.7px;
+}
+.Ismoilov{
+    margin-top: 90px;
+}
+.Ismoilov > h3{
+    font-family: "Playwrite AU QLD", cursive;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 30px;
+}
+.ullar{
+        margin-top: 80px;
+        text-align: center;
+}
+li{
+    list-style: none;
+}
+b{
+    cursor: pointer; 
+}
+b:hover{
+    
+}
+.homelar{
+    justify-content: flex-start;
+    margin-left: 60px;
+    margin-top: 40px;
+    gap : 20px;
+}
+.homelar:hover{
+    color: var(--blue);
+    transition: all 0.2s ease-in-out;
+}
+.icon{
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 40px;
+}

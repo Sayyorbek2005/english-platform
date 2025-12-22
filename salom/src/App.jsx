@@ -2,12 +2,52 @@ import './App.css';
 // import heroImg from "./assets/16410.png";
 // import hero2Img from "./assets/3342177.png"
 // import hero3Img from "./assets/img.png"
-import { useState } from 'react';
-import Title from './component/Title';
+// import { useState } from 'react';
+// import Title from './component/Title';
+// import { Routes, Route } from 'react-router-dom';
+// import Home from './component/Home';
+// import About from './component/About';
+// import Dashboard from './component/Dashboard';
+// import Servir from './component/Servir';
+// import Resume from './component/Resume';
+// import Work from './component/Work';
+
+
+import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
+
+//? id 2
+
+import { Slider, Switch } from 'antd';
+
  
 function App() {
+ 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [name, setName] = useState("Ahror");
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  // ? id 2
+  const [reverse, setReverse] = useState(true);
+
+
+// const [isActive, setIsActive] = useState(false);
+
+// const toggleClass = () => {
+//   setIsActive(!isActive);
+// };
+
+ /*  const [name, setName] = useState("Ahror");
 
 
 
@@ -35,12 +75,21 @@ function App() {
 
 
 
-  let subtitle = "All events are here";
+  let subtitle = "All events are here"; */
   return (
     
 
 
     <div className="App">
+       {/*  <h1>Dinamik class</h1>
+        <div className={isActive ? "box-active" : "box"}>
+
+        </div>
+          <button onClick={toggleClass}>toggle Class</button> */}
+
+
+
+
       <div className='none'>
 
         {/*  <div className="backround">
@@ -175,7 +224,7 @@ function App() {
             </div>
             </div> */}
       </div>
-        <Title title="Akhrors Kingdom🐹 Events" subtitle={subtitle}/>
+      {/*   <Title title="Akhrors Kingdom🐹 Events" subtitle={subtitle}/>
         <br />  
         {showConent && <button onClick={() => setShowContent(false)}>Hide Content</button>}
         {!showConent && <button onClick={() => setShowContent(true)}>Show Content</button>}
@@ -200,8 +249,17 @@ function App() {
         )}
         <button onClick={() => setModal(true)}>Open Modal</button>
         <br />
-
         
+        { modal && (
+          <div className="modal">
+            <h2>What's up broo </h2>
+            <button onClick={() => setModal(false)}>Close Modal</button>
+
+          </div>
+          
+        )}
+        <button onClick={() => setModal() }>Open Modal</button>     
+         */}
           
 
       {/* <div className="container">
@@ -215,8 +273,39 @@ function App() {
           <button onClick={() => handleDelete(event.id)}>Delete</button>
         </div>
       ))} */}
-
-
+    {/* <div>
+<Routes>
+ <Route path="/home" element={<Home />} />
+ <Route path ="/about" element={<About />} />
+ <Route path="/dashboard" element={<Dashboard />} />
+ <Route path="/servir" element={<Servir />} />
+ <Route path="/resume" element={<Resume />} />
+ <Route path="/work" element={<Work />} />
+</Routes>
+ </div>
+ */}
+ <>
+      <Button type="primary" onClick={showModal}>
+        Open Modal
+      </Button>
+      <Modal
+        title="Basic Modal"
+        closable={{ 'aria-label': 'Custom Close Button' }}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </>
+    {/* ? id  */}
+    <>
+      <Slider defaultValue={30} reverse={reverse} />
+      <Slider range defaultValue={[20, 50]} reverse={reverse} />
+      Reversed: <Switch size="small" checked={reverse} onChange={setReverse} />
+    </>
 
     </div>
   );

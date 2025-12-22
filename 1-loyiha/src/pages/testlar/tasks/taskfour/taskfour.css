@@ -1,0 +1,20 @@
+
+.taskfour-btn{
+  padding: 5px 10px;
+    font-size: 20px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    border: none;
+    margin-top: 20px;
+    margin-left: 350px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.taskfour-btn:hover{
+  transform: scaleX(1.04);
+}
+
+.taskfour-input{
+  width: 200px;
+}
