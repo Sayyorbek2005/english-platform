@@ -1,15 +1,17 @@
 .teacher-page {
 
     position: relative;
-    top: 110px;
     left: 250px;
-    max-width: 1270px;
-    padding: 25px;
-    
+    right: 0px;
+    padding-top: 150px !important;
+    width: calc(100% - 250px);
+    height: 100%;
+
+
 }
 
-.teacher-page > h1{
-    
+.teacher-page>h1 {
+
     text-align: center;
     font-size: var(--font-size-50);
     font-weight: 400;
@@ -19,17 +21,17 @@
 
 /* ? t-p-test-one-card */
 
-.t-p-test-cards{
+.t-p-test-cards {
     margin-top: 30px;
     padding: 20px;
     border: 1px solid var(--primary-color-hover);
     border-radius: 10px;
     height: 400px;
     overflow-y: scroll;
-     scrollbar-width: none;
+    scrollbar-width: none;
 }
 
-.t-p-test-cards > h1{
+.t-p-test-cards>h1 {
     font-size: var(--font-size-25);
     font-weight: 400;
 }

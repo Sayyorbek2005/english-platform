@@ -7,7 +7,7 @@ import './home.css'
 const Home = () => {
   return (
     
-    <div data-aos="fade-left" className='home'>
+    <div data-aos="fade-left" className='home background'>
       <div className="home1">
 
      <div className="markaz-nomi">

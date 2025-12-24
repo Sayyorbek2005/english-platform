@@ -1,78 +1,20 @@
 import '../../test.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Taskone = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState(''); 
   const [selectedAnswers, setSelectedAnswers] = useState({}); 
 
   const [answers] = useState([
-    {
-      id: 1,
-      question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?',
-      optionsA: 'a) He finds it exciting',
-      optionsB: 'b) He finds it annoying',
-      optionsC: 'c) He feels honored',
-      optionsD: 'd) He is nervous and unsure',
-    },
-    {
-      id: 2,
-      question: '2.What is the relationship between Kathleen and Bosengate?',
-      optionsA: 'a) She is his daughter',
-      optionsB: 'b) She is his niece',
-      optionsC: 'c) She is his wife',
-      optionsD: 'd) She is his mistress',
-    },
-    {
-      id: 3,
-      question: '3.What is the accused man’s name in the story?',
-      optionsA: 'a) Owen Lewis',
-      optionsB: 'b) Mr. Bosengate',
-      optionsC: 'c) George',
-      optionsD: 'd) Kathleen ',
-    },
-    {
-      id: 4,
-      question: '4.What is Owen Lewis accused of? ',
-      optionsA: 'a) He escaped from the army',
-      optionsB: 'b) He committed suicide',
-      optionsC: 'c) He attempted theft',
-      optionsD: 'd) He trespassed the border',
-    },
-    {
-      id: 5,
-      question: '5.  What was Owen Lewis job before joining the army?',
-      optionsA: 'a) Hairdresser',
-      optionsB: 'b) Carpenter',
-      optionsC: 'c) Lawyer',
-      optionsD: 'd) Teacher',
-    },
-    {
-      id: 6,
-      question: '6.  What was the reason for Owen Lewis committing suicide?',
-      optionsA: 'a) He was afraid of going to the front line',
-      optionsB: 'b) His commanding officer tormented him',
-      optionsC: 'c) He was depressed because of the separation from his wife',
-      optionsD: 'd) He had serious health problems',
-    },
-    {
-      id: 7,
-      question: '7.On what condition did Mr.Bosengate agree on signing the verdict?',
-      optionsA: 'a) Owen was declared not guilty',
-      optionsB: 'b) The jury recommends mercy',
-      optionsC: 'c) That the case be re-tried',
-      optionsD: 'd) That the soldier is fined ',
-    },
-    {
-      id: 8, 
-      question: '8.What did Mr.Bosengate realize by the end of the story?',
-      optionsA: 'a) The laws of the government should be strict',
-      optionsB: 'b) The laws should be strict',
-      optionsC: 'c) Society needs to be kind and helpful to people',
-      optionsD: 'd) Military service is more important to empathy ',
-    },
+    { id: 1, question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?', optionsA: 'a) He finds it exciting', optionsB: 'b) He finds it annoying', optionsC: 'c) He feels honored', optionsD: 'd) He is nervous and unsure' },
+    { id: 2, question: '2.What is the relationship between Kathleen and Bosengate?', optionsA: 'a) She is his daughter', optionsB: 'b) She is his niece', optionsC: 'c) She is his wife', optionsD: 'd) She is his mistress' },
+    { id: 3, question: '3.What is the accused man’s name in the story?', optionsA: 'a) Owen Lewis', optionsB: 'b) Mr. Bosengate', optionsC: 'c) George', optionsD: 'd) Kathleen ' },
+    { id: 4, question: '4.What is Owen Lewis accused of? ', optionsA: 'a) He escaped from the army', optionsB: 'b) He committed suicide', optionsC: 'c) He attempted theft', optionsD: 'd) He trespassed the border' },
+    { id: 5, question: '5. What was Owen Lewis job before joining the army?', optionsA: 'a) Hairdresser', optionsB: 'b) Carpenter', optionsC: 'c) Lawyer', optionsD: 'd) Teacher' },
+    { id: 6, question: '6. What was the reason for Owen Lewis committing suicide?', optionsA: 'a) He was afraid of going to the front line', optionsB: 'b) His commanding officer tormented him', optionsC: 'c) He was depressed because of the separation from his wife', optionsD: 'd) He had serious health problems' },
+    { id: 7, question: '7.On what condition did Mr.Bosengate agree on signing the verdict?', optionsA: 'a) Owen was declared not guilty', optionsB: 'b) The jury recommends mercy', optionsC: 'c) That the case be re-tried', optionsD: 'd) That the soldier is fined ' },
+    { id: 8, question: '8.What did Mr.Bosengate realize by the end of the story?', optionsA: 'a) The laws of the government should be strict', optionsB: 'b) The laws should be strict', optionsC: 'c) Society needs to be kind and helpful to people', optionsD: 'd) Military service is more important to empathy ' },
   ]);
 
   const handleSelect = (qId, variant) => {
@@ -88,8 +30,8 @@ const Taskone = () => {
     const result = {
       user: userName,
       answers: selectedAnswers,
-      level: 'Literal', // Darajasi
-      taskType: 'Task 1', // TeacherPage birinchi blokda ko'rishi uchun
+      level: 'Literal',
+      taskType: 'Task 1',
       date: new Date().toLocaleString()
     };
 
@@ -98,9 +40,11 @@ const Taskone = () => {
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
     toast.success("Javoblar yuborildi");
-    navigate('/teacherPage');
+    
+    // O'ZGARTIRILGAN: navigate o'rniga faqat reset qilamiz
+    setUserName('');
+    setSelectedAnswers({});
   };
-
   return (
     <div data-aos="fade-left" className='tasks taskone'>
       <div className="taskone-card">

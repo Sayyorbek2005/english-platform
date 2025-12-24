@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './twobook.css'
 
+import { FaArrowDown } from "react-icons/fa";
+
 
 const Twobook = () => {
   const [books, setBooks] = useState([
@@ -14,14 +16,18 @@ const Twobook = () => {
 
 
   return (
-    <div data-aos="fade-left" className='twobook2'>
-      <div className="twobook-card">
+    <div data-aos="fade-left" className='book background'>
+      <div className="book-card">
         {books.map((item, index) =>(
-          <div className="twobook2-question">
+          <div className="book-question">
             <h2>{item.books}</h2>
-            <h4>{item.bookss}</h4>
+            <br />
+            <h3>{item.bookss}</h3>
           </div>
         ))}
+        <div className="arrowBottom">
+          <FaArrowDown />
+        </div>
       </div>
 
     </div>

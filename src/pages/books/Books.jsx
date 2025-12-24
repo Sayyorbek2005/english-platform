@@ -1,4 +1,5 @@
 import './books.css'
+import { FaArrowDown } from "react-icons/fa";
 
 import { useState } from 'react'
 const Books1 = () => {
@@ -123,16 +124,20 @@ In his own room Mr. Bosengate sat at his wide open window, smoking a cigarette; 
   ])
 
   return (
-    <div data-aos="fade-left" className="books1">
+    <div data-aos="fade-left" className="book background">
 
-      <div className="books1-card">
+      <div className="book-card">
         {books.map((item, index) =>(
-          <div className="books1-question">
+          <div className="book-question">
             <h2>{item.books}</h2><br />
             <h4>{item.bookss}</h4><br />
             <h3>{item.booksss}</h3>
           </div>
         ))}
+        <div className="arrowBottom">
+          <FaArrowDown />
+
+        </div>
 
       </div>
 

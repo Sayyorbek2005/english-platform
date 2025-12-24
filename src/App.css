@@ -93,6 +93,11 @@ svg {
 }
 
 
+/* ? background */
+.background{
+    background-image: linear-gradient(to bottom right, white, #04133a);
+    
+}
 
 
 /* ! go back */
