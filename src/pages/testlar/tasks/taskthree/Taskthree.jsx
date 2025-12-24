@@ -1,16 +1,14 @@
 import '../../test.css'
 import './taskthree.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Taskthree = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  
-  // Part 1 va Part 2 javoblarini bitta ob'ektda saqlaymiz
   const [allAnswers, setAllAnswers] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // ... (answers, questions, texts state-lari o'zgarishsiz qoladi)
   const [answers] = useState([
     { id: 1, partA:'Part-1', question: '1.Words from the story-Antonym choices "Lustreless"', optionsA: 'Upbright', optionsB: 'bent', optionsC: 'stooped' },
     { id: 2, question: '2.Words from the story-Antonym choices "Hunched"', optionsA: 'shiny', optionsB: 'dull', optionsC: 'dim' },
@@ -39,30 +37,42 @@ const Taskthree = () => {
     }
   ]);
 
-  // Part 1 tanlash funksiyasi
   const handlePart1 = (qId, variant) => {
+    if (isSubmitted) return;
     setAllAnswers(prev => ({ ...prev, [`P1-Q${qId}`]: variant }));
   };
 
-  // Part 2 input o'zgarishi
-  const handlePart2 = (tId, val) => {
-    setAllAnswers(prev => ({ ...prev, [`P2-T${tId}`]: val }));
+  const handlePart2 = (num, val) => {
+    if (isSubmitted) return;
+    setAllAnswers(prev => ({ ...prev, [`P2-T${num}`]: val }));
   };
 
   const handleSubmit = () => {
+    // 1. Agar allaqachon yuborilgan bo'lsa, ogohlantirish berish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
+      return; // Funksiyani to'xtatish
+    }
+
+    // 2. Ism tekshiruvi
     if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+      toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // TeacherPage uchun javoblarni formatlash
+    // 3. Javoblar belgilanganini tekshirish
+    if (Object.keys(allAnswers).length === 0) {
+      toast.warning("Iltimos, javoblarni belgilang!");
+      return;
+    }
+
     const formattedAnswers = Object.entries(allAnswers).map(([key, val]) => `${key}: ${val}`);
 
     const resultData = {
       user: userName,
-      answers: formattedAnswers, // results emas, answers
-      level: 'Inferential',       // Darajasi: Inferential
-      taskType: 'Task 1',         // Saqlash joyi: Task 1 answers
+      answers: formattedAnswers,
+      level: 'Inferential',
+      taskType: 'Task 1',
       date: new Date().toLocaleString()
     };
 
@@ -70,8 +80,8 @@ const Taskthree = () => {
     oldData.push(resultData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Natijalar Task 1 (Inferential) bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
   };
 
   return (
@@ -89,19 +99,28 @@ const Taskthree = () => {
                   <li 
                     className='a' 
                     onClick={() => handlePart1(item.id, 'a')}
-                    style={{ color: allAnswers[`P1-Q${item.id}`] === 'a' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ 
+                      color: allAnswers[`P1-Q${item.id}`] === 'a' ? '#007bff' : '', 
+                      cursor: isSubmitted ? 'default' : 'pointer'
+                    }}
                   >a. {item.optionsA}</li>
                   <li 
                     className='b' 
                     onClick={() => handlePart1(item.id, 'b')}
-                    style={{ color: allAnswers[`P1-Q${item.id}`] === 'b' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ 
+                      color: allAnswers[`P1-Q${item.id}`] === 'b' ? '#007bff' : '', 
+                      cursor: isSubmitted ? 'default' : 'pointer'
+                    }}
                   >b. {item.optionsB}</li>
                 </div>
                 <div>
                   <li 
                     className='c' 
                     onClick={() => handlePart1(item.id, 'c')}
-                    style={{ color: allAnswers[`P1-Q${item.id}`] === 'c' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ 
+                      color: allAnswers[`P1-Q${item.id}`] === 'c' ? '#007bff' : '', 
+                      cursor: isSubmitted ? 'default' : 'pointer'
+                    }}
                   >c. {item.optionsC}</li>
                 </div>
               </ul>
@@ -140,6 +159,8 @@ const Taskthree = () => {
                       className='taskthree-input' 
                       type="text" 
                       placeholder='Your answer'
+                      value={allAnswers[`P2-T${num}`] || ''}
+                      disabled={isSubmitted}
                       onChange={(e) => handlePart2(num, e.target.value)}
                     />
                   </div>
@@ -149,14 +170,29 @@ const Taskthree = () => {
           </div>
         ))}
 
-        <input 
-          type="text" 
-          className="inp" 
-          placeholder='What is your name ?' 
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <button className='taskthree-btn' onClick={handleSubmit}>Yuborish</button>
+        {/* SUBMIT BOX */}
+        <div className="submit-box" style={{marginTop: '30px', textAlign: 'center'}}>
+          <input 
+            type="text" 
+            className="inp" 
+            placeholder='What is your name ?' 
+            value={userName}
+            disabled={isSubmitted}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button 
+            className='taskthree-btn' 
+            onClick={handleSubmit}
+            style={{ 
+              display: 'block', 
+              margin: '20px auto 0', 
+              opacity: isSubmitted ? 0.7 : 1,
+              cursor: 'pointer' 
+            }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -1,11 +1,10 @@
 import './tasktwo2.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Tasktwo2 = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
   
   const [userAnswers, setUserAnswers] = useState({
     ans1: '', ans2: '', ans3: '', ans4: '',
@@ -13,17 +12,30 @@ const Tasktwo2 = () => {
   });
 
   const handleInputChange = (key, value) => {
+    if (isSubmitted) return; // Yuborilgandan keyin o'zgartirishni bloklash
     setUserAnswers(prev => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = () => {
-    if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+    // 1. Allaqachon yuborilganini tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
-    // TeacherPage kodingizdagi .includes("Task 1.") filtriga tushib, 
-    // Task 2 blokida ko'rinishi uchun taskType ga nuqta qo'shildi.
+    // 2. Ism tekshiruvi
+    if (!userName.trim()) {
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    // 3. Bo'sh javoblar tekshiruvi (ixtiyoriy, lekin foydali)
+    const hasAnswers = Object.values(userAnswers).some(val => val.trim() !== '');
+    if (!hasAnswers) {
+      toast.warning("Iltimos, kamida bitta javobni kiriting!");
+      return;
+    }
+
     const finalData = {
       user: userName,
       answers: userAnswers,
@@ -36,8 +48,8 @@ const Tasktwo2 = () => {
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Natijalar Task 2 bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true); // Holatni bloklash
   };
 
   const [answerstwo] = useState([
@@ -55,8 +67,8 @@ const Tasktwo2 = () => {
     <div data-aos="fade-left" className='tasks tasktwo2'>
       <div className="tasktwo2-card">
         <div className="tasktwo2-question">
-          <h2>1. Reordering Events Chronologically</h2>
-          <p>Rearrange the events into the correct chronological order (e.g., A/B/D/C).</p>
+          <h2 style={{textAlign: 'center'}}>1. Reordering Events Chronologically</h2>
+          <p style={{textAlign: 'center'}}>Rearrange the events into the correct chronological order (e.g., A/B/D/C).</p>
         </div>
 
         {answerstwo.map((item) => (
@@ -72,21 +84,34 @@ const Tasktwo2 = () => {
                 type="text" 
                 placeholder='Sequence (e.g. A/B/D/C)' 
                 value={userAnswers[item.key]}
+                disabled={isSubmitted}
                 onChange={(e) => handleInputChange(item.key, e.target.value)}
               />
             </div>
           </div>
         ))}
 
-        <div className="submit-box" style={{marginTop: '30px'}}>
+        <div className="submit-box" style={{marginTop: '30px', textAlign: 'center'}}>
           <input 
             type="text" 
             className="inp" 
             placeholder='What is your name?' 
             value={userName}
+            disabled={isSubmitted}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button className='tasktwo2-btn' onClick={handleSubmit}>Yuborish</button>
+          <button 
+            className='tasktwo2-btn' 
+            onClick={handleSubmit}
+            style={{ 
+              display: 'block', 
+              margin: '20px auto 0 auto',
+              opacity: isSubmitted ? 0.7 : 1,
+              cursor: 'pointer'
+            }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
         </div>
       </div>
     </div>

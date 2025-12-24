@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 const Taskone = () => {
   const [userName, setUserName] = useState(''); 
   const [selectedAnswers, setSelectedAnswers] = useState({}); 
+  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganini tekshirish uchun
 
   const [answers] = useState([
     { id: 1, question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?', optionsA: 'a) He finds it exciting', optionsB: 'b) He finds it annoying', optionsC: 'c) He feels honored', optionsD: 'd) He is nervous and unsure' },
@@ -18,12 +19,18 @@ const Taskone = () => {
   ]);
 
   const handleSelect = (qId, variant) => {
+    if (isSubmitted) return; // Yuborib bo'lingan bo'lsa, tanlashni to'xtatadi
     setSelectedAnswers({ ...selectedAnswers, [qId]: variant });
   };
 
   const sendResults = () => {
     if (userName.trim() === "") {
-      alert("Iltimos ismingizni kiriting!");
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
@@ -41,10 +48,10 @@ const Taskone = () => {
 
     toast.success("Javoblar yuborildi");
     
-    // O'ZGARTIRILGAN: navigate o'rniga faqat reset qilamiz
-    setUserName('');
-    setSelectedAnswers({});
+    // O'quvchi ma'lumotlari o'chib ketmasligi uchun reset qismini olib tashladik
+    setIsSubmitted(true); 
   };
+
   return (
     <div data-aos="fade-left" className='tasks taskone'>
       <div className="taskone-card">
@@ -54,12 +61,12 @@ const Taskone = () => {
               <h2>{item.question}</h2>
               <ul>
                 <div className='taskone-card'>
-                  <li className='a' onClick={() => handleSelect(item.id, 'A')} style={{ cursor: 'pointer', color: selectedAnswers[item.id] === 'A' ? 'blue' : '' }}>{item.optionsA}</li>
-                  <li className='b' onClick={() => handleSelect(item.id, 'B')} style={{ cursor: 'pointer', color: selectedAnswers[item.id] === 'B' ? 'blue' : '' }}>{item.optionsB}</li>
+                  <li className='a' onClick={() => handleSelect(item.id, 'A')} style={{ cursor: isSubmitted ? 'default' : 'pointer', color: selectedAnswers[item.id] === 'A' ? 'blue' : '' }}>{item.optionsA}</li>
+                  <li className='b' onClick={() => handleSelect(item.id, 'B')} style={{ cursor: isSubmitted ? 'default' : 'pointer', color: selectedAnswers[item.id] === 'B' ? 'blue' : '' }}>{item.optionsB}</li>
                 </div>
                 <div>
-                  <li className='c' onClick={() => handleSelect(item.id, 'C')} style={{ cursor: 'pointer', color: selectedAnswers[item.id] === 'C' ? 'blue' : '' }}>{item.optionsC}</li>
-                  <li className='d' onClick={() => handleSelect(item.id, 'D')} style={{ cursor: 'pointer', color: selectedAnswers[item.id] === 'D' ? 'blue' : '' }}>{item.optionsD}</li>
+                  <li className='c' onClick={() => handleSelect(item.id, 'C')} style={{ cursor: isSubmitted ? 'default' : 'pointer', color: selectedAnswers[item.id] === 'C' ? 'blue' : '' }}>{item.optionsC}</li>
+                  <li className='d' onClick={() => handleSelect(item.id, 'D')} style={{ cursor: isSubmitted ? 'default' : 'pointer', color: selectedAnswers[item.id] === 'D' ? 'blue' : '' }}>{item.optionsD}</li>
                 </div>
               </ul>
             </div>
@@ -73,8 +80,16 @@ const Taskone = () => {
           placeholder='What is your name ?' 
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
+          disabled={isSubmitted} // Yuborgandan keyin ismni o'zgartirib bo'lmaydi
         />
-        <button className='taskthree-btn' onClick={sendResults}>Yuborish</button>
+        {/* Yuborilgandan keyin tugmani yashirish yoki o'chirish */}
+        <button 
+          className='taskthree-btn' 
+          onClick={sendResults}
+          style={{ opacity: isSubmitted ? 0.5 : 1, cursor: isSubmitted ? 'not-allowed' : 'pointer' }}
+        >
+          {isSubmitted ? "Yuborildi" : "Yuborish"}
+        </button>
       </div>
     </div>
   );

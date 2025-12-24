@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import {  Route, Routes } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -73,6 +73,7 @@ function App() {
         <Route path='keyone' element={<Keyone />} />
         <Route path='keytwo'element={<Keytwo/>}/>
         <Route path='teacherPage' element={<TeacherPage />} />
+        
       </Routes>
     </div>
   );

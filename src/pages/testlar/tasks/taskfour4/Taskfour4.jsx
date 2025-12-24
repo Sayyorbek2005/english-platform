@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 const Taskfour4 = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
   
   // Bo'shliqlar uchun statelar
   const [task3Inputs, setTask3Inputs] = useState([]);
@@ -49,6 +50,7 @@ const Taskfour4 = () => {
         {part}
         {index < parts.length - 1 && (
           <input
+            disabled={isSubmitted} // Yuborilgandan keyin bloklash
             type="text"
             className="taskfour-input"
             placeholder={`(${index + 1})`}
@@ -65,12 +67,19 @@ const Taskfour4 = () => {
   };
 
   const handleSubmit = () => {
-    if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+    // 1. Takroriy yuborishni tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
-    // TeacherPage'da chiroyli ko'rinishi uchun bitta obyektga yig'amiz
+    // 2. Ism tekshiruvi
+    if (!userName.trim()) {
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    // Natijalarni yig'ish
     const finalAnswers = {
       "Task 3 (Emotional)": task3Inputs.join(', ') || 'No answer',
       "Task 4 (Social)": task4Inputs.join(', ') || 'No answer',
@@ -82,8 +91,8 @@ const Taskfour4 = () => {
     const finalData = {
       user: userName,
       answers: finalAnswers,
-      level: 'Evaluative', // Siz so'ragan daraja
-      taskType: 'Task 1.4-1.6.', // Nuqtali formatda (TeacherPage yashil blok uchun)
+      level: 'Evaluative', 
+      taskType: 'Task 1.4-1.6.', 
       date: new Date().toLocaleString()
     };
 
@@ -91,8 +100,8 @@ const Taskfour4 = () => {
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Natijalar Task 2 bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
   };
 
   return (
@@ -147,8 +156,9 @@ const Taskfour4 = () => {
               <p><b>{item.id}. {item.q}</b></p>
               <div className="options-grid">
                 {Object.entries(item.options).map(([key, val]) => (
-                  <label key={key} className="radio-option">
+                  <label key={key} className="radio-option" style={{ cursor: isSubmitted ? 'default' : 'pointer' }}>
                     <input 
+                      disabled={isSubmitted} // Testni bloklash
                       type="radio" 
                       name={`question-${item.id}`} 
                       onChange={() => setTestAnswers({...testAnswers, [`Q${item.id}`]: key})} 
@@ -161,15 +171,27 @@ const Taskfour4 = () => {
           ))}
         </div>
 
-        <div className="submit-area" style={{textAlign: 'center'}}>
+        <div className="submit-area" style={{textAlign: 'center', marginTop: '30px'}}>
           <input 
+            disabled={isSubmitted}
             type="text" 
             className="inp" 
             placeholder='What is your name ?' 
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button className='taskfour4-btn' onClick={handleSubmit} style={{display: 'block', margin: '20px auto'}}>Yuborish</button>
+          <button 
+            className='taskfour4-btn' 
+            onClick={handleSubmit} 
+            style={{
+                display: 'block', 
+                margin: '20px auto',
+                opacity: isSubmitted ? 0.7 : 1,
+                cursor: 'pointer'
+            }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
         </div>
       </div>
     </div>

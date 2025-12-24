@@ -1,31 +1,26 @@
 import '../../test.css'
 import './tasktwo.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Tasktwo = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [selections, setSelections] = useState({});
   const [activeWord, setActiveWord] = useState(null);
-
-  // To'g'ri javoblar kaliti (tekshirish uchun yoki shunchaki struktura uchun)
-  const correctPairs = {
-    'Wretched': 'd', 'Indispensable': 'c', 'Afflicted': 'e', 'Yearning': 'b', 'Shambling': 'a',
-    'Drab': 'b2', 'Hunched': 'd2', 'Underlip': 'e2', 'Muttering': 'a2', 'Foreman': 'c2'
-  };
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleWordClick = (word) => {
+    if (isSubmitted) return; 
     setActiveWord(word);
   };
 
   const handleOptionClick = (optionKey) => {
+    if (isSubmitted) return; 
     if (activeWord) {
       setSelections(prev => ({ ...prev, [activeWord]: optionKey }));
       setActiveWord(null);
     } else {
-      alert("Avval yuqori qismdan so'zni tanlang!");
+      toast.warning("Avval yuqori qismdan so'zni tanlang!");
     }
   };
 
@@ -41,12 +36,24 @@ const Tasktwo = () => {
   };
 
   const handleSubmit = () => {
+    // 1. MANA SHU QISM QO'SHILDI: Avval yuborilganini tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
+      return; // Funksiyani shu joyda to'xtatish
+    }
+
+    // 2. Ism tekshiruvi
     if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+      toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // Tanlangan barcha juftliklarni matn ko'rinishiga keltirish
+    // 3. Javoblar tanlanganini tekshirish
+    if (Object.keys(selections).length === 0) {
+      toast.info("Iltimos, javoblarni belgilang!");
+      return;
+    }
+
     const finalAnswers = Object.entries(selections).map(
       ([word, option]) => `${word} -> ${option.replace('2', '').toUpperCase()}`
     );
@@ -54,8 +61,8 @@ const Tasktwo = () => {
     const finalData = {
       user: userName,
       answers: finalAnswers,
-      level: 'Reorganization', // Darajasi: Reorganization
-      taskType: 'Task 1',      // Bo'lim: Task 1 answers (Taskone bilan bir xil joyga tushadi)
+      level: 'Reorganization', 
+      taskType: 'Task 1', 
       date: new Date().toLocaleString()
     };
 
@@ -63,8 +70,8 @@ const Tasktwo = () => {
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Natijalar Task 1 (Reorganization) bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi");
+    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
   };
 
   return (
@@ -73,35 +80,63 @@ const Tasktwo = () => {
         <h2 style={{textAlign: 'center', color: '#2c3e50'}}>Vocabulary Matching (Task 1.2)</h2>
         <p style={{textAlign: 'center', color: '#7f8c8d'}}>Click a word, then click its definition</p>
         
-        {/* PART 1 */}
         <div className="tasktwo-question display-flex" style={{marginBottom: '30px', justifyContent: 'space-around'}}>
           <ul className='salom'>
             {['1. Wretched', '2. Indispensable', '3. Afflicted', '4. Yearning', '5. Shambling'].map(word => (
-              <li key={word} style={getTextColor('word', word)} onClick={() => handleWordClick(word)}>{word}</li>
+              <li key={word} 
+                  style={{...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer'}} 
+                  onClick={() => handleWordClick(word)}>
+                {word}
+              </li>
             ))}
           </ul>
           <ul className='salom'>
-            <li style={getTextColor('option', 'a')} onClick={() => handleOptionClick('a')}>a) moving in a slow, awkward way</li>
-            <li style={getTextColor('option', 'b')} onClick={() => handleOptionClick('b')}>b) a strong longing</li>
-            <li style={getTextColor('option', 'c')} onClick={() => handleOptionClick('c')}>c) absolutely necessary</li>
-            <li style={getTextColor('option', 'd')} onClick={() => handleOptionClick('d')}>d) very unhappy</li>
-            <li style={getTextColor('option', 'e')} onClick={() => handleOptionClick('e')}>e) suffering from</li>
+            {['a', 'b', 'c', 'd', 'e'].map((key) => {
+              const labels = {
+                a: 'a) moving in a slow, awkward way',
+                b: 'b) a strong longing',
+                c: 'c) absolutely necessary',
+                d: 'd) very unhappy',
+                e: 'e) suffering from'
+              };
+              return (
+                <li key={key} 
+                    style={{...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer'}} 
+                    onClick={() => handleOptionClick(key)}>
+                  {labels[key]}
+                </li>
+              )
+            })}
           </ul>
         </div>
 
-        {/* PART 2 */}
         <div className="tasktwo-question display-flex" style={{justifyContent: 'space-around'}}>
           <ul className='salom'>
             {['1. Drab', '2. Hunched', '3. Underlip', '4. Muttering', '5. Foreman'].map(word => (
-              <li key={word} style={getTextColor('word', word)} onClick={() => handleWordClick(word)}>{word}</li>
+              <li key={word} 
+                  style={{...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer'}} 
+                  onClick={() => handleWordClick(word)}>
+                {word}
+              </li>
             ))}
           </ul>
           <ul className='salom'>
-            <li style={getTextColor('option', 'a2')} onClick={() => handleOptionClick('a2')}>a) speaking in a low voice</li>
-            <li style={getTextColor('option', 'b2')} onClick={() => handleOptionClick('b2')}>b) dull and without color</li>
-            <li style={getTextColor('option', 'c2')} onClick={() => handleOptionClick('c2')}>c) person in charge of workers</li>
-            <li style={getTextColor('option', 'd2')} onClick={() => handleOptionClick('d2')}>d) bending forward</li>
-            <li style={getTextColor('option', 'e2')} onClick={() => handleOptionClick('e2')}>e) the lower lip</li>
+            {['a2', 'b2', 'c2', 'd2', 'e2'].map((key) => {
+              const labels = {
+                a2: 'a) speaking in a low voice',
+                b2: 'b) dull and without color',
+                c2: 'c) person in charge of workers',
+                d2: 'd) bending forward',
+                e2: 'e) the lower lip'
+              };
+              return (
+                <li key={key} 
+                    style={{...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer'}} 
+                    onClick={() => handleOptionClick(key)}>
+                  {labels[key]}
+                </li>
+              )
+            })}
           </ul>
         </div>
 
@@ -111,9 +146,21 @@ const Tasktwo = () => {
             className="inp" 
             placeholder='Your name' 
             value={userName}
+            disabled={isSubmitted}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button className='tasktwo-btn' onClick={handleSubmit}>Yuborish</button>
+          <button 
+            className='tasktwo-btn' 
+            onClick={handleSubmit}
+            style={{ 
+              opacity: isSubmitted ? 0.7 : 1, 
+              cursor: 'pointer', // Foydalanuvchi yana bosa olishi uchun pointer qoldirildi
+              display: 'block',    
+              margin: '20px auto 0' 
+            }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
         </div>
       </div>
     </div>

@@ -1,13 +1,12 @@
 import '../../test.css' 
 import './taskfive.css'
 import { useState } from 'react' 
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Taskfive = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
 
   const [answers] = useState([
     { id: 1, question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?', optionsA: 'a) He finds it exciting', optionsB: 'b) He finds it annoying', optionsC: 'c) He feels honored', optionsD: 'd) He is nervous and unsure' },
@@ -21,12 +20,26 @@ const Taskfive = () => {
   ]);
 
   const handleSelect = (qId, variant) => {
+    if (isSubmitted) return; // Yuborilgan bo'lsa tanlashni taqiqlash
     setSelectedAnswers(prev => ({ ...prev, [qId]: variant }));
   };
 
   const handleSubmit = () => {
+    // 1. Allaqachon yuborilganini tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
+      return;
+    }
+
+    // 2. Ism tekshiruvi (alert o'rniga toast)
     if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    // 3. Javoblar tanlanganini tekshirish
+    if (Object.keys(selectedAnswers).length === 0) {
+      toast.warning("Iltimos, javoblarni belgilang!");
       return;
     }
 
@@ -46,8 +59,8 @@ const Taskfive = () => {
     oldData.push(finalResult);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Task 5 natijalari Task 1 bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true); // Yuborilgan holatni tasdiqlash
   };
 
   return (
@@ -60,18 +73,18 @@ const Taskfive = () => {
               <ul>
                 <div>
                   <li onClick={() => handleSelect(item.id, 'A')}
-                    style={{ color: selectedAnswers[item.id] === 'A' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ color: selectedAnswers[item.id] === 'A' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
                   >{item.optionsA}</li>
                   <li onClick={() => handleSelect(item.id, 'B')}
-                    style={{ color: selectedAnswers[item.id] === 'B' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ color: selectedAnswers[item.id] === 'B' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
                   >{item.optionsB}</li> 
                 </div>
                 <div>
                   <li onClick={() => handleSelect(item.id, 'C')}
-                    style={{ color: selectedAnswers[item.id] === 'C' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ color: selectedAnswers[item.id] === 'C' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
                   >{item.optionsC}</li>
                   <li onClick={() => handleSelect(item.id, 'D')}
-                    style={{ color: selectedAnswers[item.id] === 'D' ? '#007bff' : '', cursor: 'pointer' }}
+                    style={{ color: selectedAnswers[item.id] === 'D' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
                   >{item.optionsD}</li>
                 </div>
               </ul>
@@ -86,20 +99,20 @@ const Taskfive = () => {
             className="inp" 
             placeholder='What is your name ?' 
             value={userName}
+            disabled={isSubmitted} // Yuborilgandan keyin inputni bloklash
             onChange={(e) => setUserName(e.target.value)}
-            // Input o'z holida qoldi
           />
           
-          {/* FAQAT BUTTON O'RTAGA SURILDI */}
           <button 
             className='taskfive-btn' 
             onClick={handleSubmit}
             style={{ 
               display: 'block', 
-              margin: '20px auto 0 auto' // Tepadan 20px masofa, yonlardan avto
+              margin: '20px auto 0 auto',
+              opacity: isSubmitted ? 0.7 : 1
             }}
           >
-            Yuborish
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>
         </div>
       </div>

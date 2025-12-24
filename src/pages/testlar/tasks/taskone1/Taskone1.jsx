@@ -7,6 +7,7 @@ const Taskone1 = () => {
     const navigate = useNavigate();
     const [userName, setUserName] = useState('');
     const [allAnswers, setAllAnswers] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
 
     const [answers] = useState([
         {
@@ -56,17 +57,33 @@ const Taskone1 = () => {
     ])
 
     const handleData = (key, val) => {
+        if (isSubmitted) return; // Yuborilgandan keyin o'zgartirishni bloklash
         setAllAnswers(prev => ({ ...prev, [key]: val }));
     }
 
     const handleSubmit = () => {
-        if (!userName.trim()) return alert("Ismingizni kiriting!");
+        // 1. Allaqachon yuborilganini tekshirish
+        if (isSubmitted) {
+            toast.info("Siz allaqachon javob yuborgansiz.");
+            return;
+        }
+
+        // 2. Ism tekshiruvi
+        if (!userName.trim()) {
+            toast.error("Iltimos ismingizni kiriting!");
+            return;
+        }
+
+        // 3. Javoblar belgilanganini tekshirish
+        if (Object.keys(allAnswers).length === 0) {
+            toast.warning("Iltimos, javoblarni to'ldiring!");
+            return;
+        }
         
         const finalData = {
             user: userName,
-            answers: allAnswers, // TeacherPage'dagi Object.entries mantiqi uchun obyekt shaklida qoldirdik
+            answers: allAnswers,
             level: 'Literal', 
-            // TeacherPage'dagi item.taskType?.includes("Task 1.") shartini bajarish uchun:
             taskType: 'Task 1.1', 
             date: new Date().toLocaleString()
         };
@@ -74,8 +91,9 @@ const Taskone1 = () => {
         const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
         oldData.push(finalData);
         localStorage.setItem('allTests', JSON.stringify(oldData));
-        toast.success("Natijalar Task 2 bo'limiga yuborildi!");
-        navigate('/teacherPage');
+        
+        toast.success("Natijalar yuborildi!");
+        setIsSubmitted(true); // Yuborilgan holatga o'tkazish
     }
 
     return (
@@ -88,15 +106,15 @@ const Taskone1 = () => {
                             <h1>{item.task1}</h1>
                             <div className='answer-1'>
                                 <h3>1. {item.questionA}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q1', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q1', e.target.value)} />
                                 <h3>2. {item.questionB}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q2', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q2', e.target.value)} />
                                 <h3>3. {item.questionC}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q3', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q3', e.target.value)} />
                                 <h3>4. {item.questionD}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q4', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q4', e.target.value)} />
                                 <h3>5. {item.questionE}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q5', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q5', e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -111,15 +129,15 @@ const Taskone1 = () => {
                             <div className='answer-1'>
                                 <h3 style={{color: 'green'}}>{itemtwo.word}</h3>
                                 <h3>1. {itemtwo.questionA}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q1', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q1', e.target.value)} />
                                 <h3>2. {itemtwo.questionB}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q2', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q2', e.target.value)} />
                                 <h3>3. {itemtwo.questionC}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q3', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q3', e.target.value)} />
                                 <h3>4. {itemtwo.questionD}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q4', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q4', e.target.value)} />
                                 <h3>5. {itemtwo.questionE}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q5', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P2-Q5', e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -133,15 +151,15 @@ const Taskone1 = () => {
                             <h1>{itemthree.task3}</h1>
                             <div className='answer-1'>
                                 <h3>1. {itemthree.questionA}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q1', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q1', e.target.value)} />
                                 <h3>2. {itemthree.questionB}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q2', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q2', e.target.value)} />
                                 <h3>3. {itemthree.questionC}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q3', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q3', e.target.value)} />
                                 <h3>4. {itemthree.questionD}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q4', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q4', e.target.value)} />
                                 <h3>5. {itemthree.questionE}</h3>
-                                <input className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q5', e.target.value)} />
+                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P3-Q5', e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -156,21 +174,21 @@ const Taskone1 = () => {
                             <ul>
                                 <div>
                                     <li 
-                                        style={{ cursor: 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'A' ? '#007bff' : '' }} 
+                                        style={{ cursor: isSubmitted ? 'default' : 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'A' ? '#007bff' : '' }} 
                                         onClick={() => handleData(`P4-Q${itemfour.id}`, 'A')}
                                     >A. {itemfour.optionA}</li>
                                     <li 
-                                        style={{ cursor: 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'B' ? '#007bff' : '' }} 
+                                        style={{ cursor: isSubmitted ? 'default' : 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'B' ? '#007bff' : '' }} 
                                         onClick={() => handleData(`P4-Q${itemfour.id}`, 'B')}
                                     >B. {itemfour.optionB}</li>
                                 </div>
                                 <div>
                                     <li 
-                                        style={{ cursor: 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'C' ? '#007bff' : '' }} 
+                                        style={{ cursor: isSubmitted ? 'default' : 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'C' ? '#007bff' : '' }} 
                                         onClick={() => handleData(`P4-Q${itemfour.id}`, 'C')}
                                     >C. {itemfour.optionC}</li>
                                     <li 
-                                        style={{ cursor: 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'D' ? '#007bff' : '' }} 
+                                        style={{ cursor: isSubmitted ? 'default' : 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === 'D' ? '#007bff' : '' }} 
                                         onClick={() => handleData(`P4-Q${itemfour.id}`, 'D')}
                                     >D. {itemfour.optionD}</li><br />
                                 </div>
@@ -179,8 +197,9 @@ const Taskone1 = () => {
                     </div>
                 ))}
 
-                <div style={{marginTop: '30px'}}>
+                <div style={{marginTop: '30px', textAlign: 'center'}}>
                   <input 
+                      disabled={isSubmitted}
                       type="text" 
                       className="inp" 
                       placeholder='What is your name ?' 
@@ -190,9 +209,14 @@ const Taskone1 = () => {
                   <button 
                       className='taskone1-btn' 
                       onClick={handleSubmit}
-                      style={{ display: 'block', margin: '20px auto 0 auto' }}
+                      style={{ 
+                          display: 'block', 
+                          margin: '20px auto 0 auto',
+                          opacity: isSubmitted ? 0.7 : 1,
+                          cursor: 'pointer'
+                      }}
                   >
-                      Yuborish
+                      {isSubmitted ? "Yuborildi" : "Yuborish"}
                   </button>
                 </div>
             </div>

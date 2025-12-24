@@ -1,13 +1,12 @@
 import '../../test.css'
 import './taskfour.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Taskfour = () => {
-  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  const [userAnswers, setUserAnswers] = useState({}); // Inputlar uchun holat
+  const [userAnswers, setUserAnswers] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [answers] = useState([
     {
@@ -36,18 +35,30 @@ const Taskfour = () => {
     },
   ]);
 
-  // Input qiymatini saqlash
   const handleChange = (qKey, value) => {
+    if (isSubmitted) return;
     setUserAnswers(prev => ({ ...prev, [qKey]: value }));
   };
 
   const handleSubmit = () => {
-    if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+    // 1. Allaqachon yuborilganini tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
-    // Natijalarni TeacherPage uchun massiv shakliga keltirish (Q1: javob, Q2: javob...)
+    // 2. Ism tekshiruvi
+    if (!userName.trim()) {
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    // 3. Bo'sh javoblar tekshiruvi
+    if (Object.keys(userAnswers).length === 0) {
+      toast.warning("Iltimos, javoblarni to'ldiring!");
+      return;
+    }
+
     const formattedAnswers = Object.entries(userAnswers).map(
       ([key, val]) => `${key}: ${val}`
     );
@@ -55,8 +66,8 @@ const Taskfour = () => {
     const finalData = {
       user: userName,
       answers: formattedAnswers,
-      level: 'Evaluative', // Darajasi: Evaluative
-      taskType: 'Task 1',    // Bo'lim: Task 1 answers (Oldingilar bilan bir xil joyga tushadi)
+      level: 'Evaluative',
+      taskType: 'Task 1',
       date: new Date().toLocaleString()
     };
 
@@ -64,8 +75,8 @@ const Taskfour = () => {
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Task 4 javoblari Task 1 bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true);
   };
 
   return (
@@ -74,19 +85,22 @@ const Taskfour = () => {
         {answers.map((item, index) => (
           <div key={index} className="taskfour-question">
             <div>
-              <h2>{item.question}</h2><br />
+              <h2 style={{color: '#2c3e50', textAlign: 'center'}}>{item.question}</h2><br />
               <ul>
                 {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((letter, idx) => (
-                  <div key={letter}>
+                  <div key={letter} style={{marginBottom: '20px'}}>
                     <li>{idx + 1}. {item[`question${letter}`]}</li>
-                    <li style={{color: '#7f8c8d', fontSize: '14px'}}>Word bank: {item[`option${letter}`]}</li>
+                    <li style={{color: '#7f8c8d', fontSize: '14px', fontStyle: 'italic'}}>
+                      Word bank: {item[`option${letter}`]}
+                    </li>
                     <input 
                       className='taskfour-input' 
                       type="text" 
                       placeholder='Your answer'
+                      value={userAnswers[`Q${idx + 1}`] || ''}
+                      disabled={isSubmitted}
                       onChange={(e) => handleChange(`Q${idx + 1}`, e.target.value)}
                     />
-                    <br /><br />
                   </div>
                 ))}
               </ul>
@@ -94,15 +108,27 @@ const Taskfour = () => {
           </div>
         ))}
         
-        <div style={{textAlign: 'center', marginTop: '20px'}}>
+        <div className="submit-box" style={{textAlign: 'center', marginTop: '30px'}}>
           <input 
             type="text" 
             className="inp" 
             placeholder='What is your name ?' 
             value={userName}
+            disabled={isSubmitted}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button className='taskfour-btn' onClick={handleSubmit}>Yuborish</button>
+          <button 
+            className='taskfour-btn' 
+            onClick={handleSubmit}
+            style={{ 
+              display: 'block', 
+              margin: '20px auto 0',
+              opacity: isSubmitted ? 0.7 : 1,
+              cursor: 'pointer'
+            }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
         </div>
       </div>
     </div>

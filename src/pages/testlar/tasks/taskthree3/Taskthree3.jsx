@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 const Taskthree3 = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
   
   // Statelar
   const [ans1, setAns1] = useState('');
@@ -17,8 +18,15 @@ const Taskthree3 = () => {
   const [ans6B, setAns6B] = useState('');
 
   const handleSubmit = () => {
+    // 1. Allaqachon yuborilganini tekshirish
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
+      return;
+    }
+
+    // 2. Ism tekshiruvi
     if (!userName.trim()) {
-      alert("Iltimos ismingizni kiriting!");
+      toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
@@ -35,16 +43,17 @@ const Taskthree3 = () => {
     const finalData = {
       user: userName,
       answers: userAnswers,
-      level: 'Inferential', // Siz aytgan daraja
-      taskType: 'Task 1.3', // TeacherPage'da Task 2 (yashil blok)ga tushishi uchun nuqtali Task 1.x bo'lishi shart
+      level: 'Inferential', 
+      taskType: 'Task 1.3', 
       date: new Date().toLocaleString()
     };
 
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
-    toast.success("Natijalar Task 2 bo'limiga yuborildi!");
-    navigate('/teacherPage');
+    
+    toast.success("Natijalar yuborildi!");
+    setIsSubmitted(true); // Yuborilgan holatni tasdiqlash
   };
 
   // Qatorlar orasini ochish va chiziq bilan ajratish uchun stil
@@ -102,7 +111,13 @@ const Taskthree3 = () => {
               <h2 style={cellStyle}>What lasting effect does the story leave?</h2>
             </div>
           </div>
-          <textarea className='taskone3-input' placeholder='Write your review...' value={ans1} onChange={(e) => setAns1(e.target.value)}></textarea>
+          <textarea 
+            disabled={isSubmitted}
+            className='taskone3-input' 
+            placeholder='Write your review...' 
+            value={ans1} 
+            onChange={(e) => setAns1(e.target.value)}
+          ></textarea>
         </div>
 
         {/* TASK 1.4: Position Paper */}
@@ -138,7 +153,13 @@ const Taskthree3 = () => {
               <h2 style={cellStyle}>Synthesis and evaluative closure</h2>
             </div>
           </div>
-          <textarea className='taskone3-input' placeholder='Write your position paper...' value={ans2} onChange={(e) => setAns2(e.target.value)}></textarea>
+          <textarea 
+            disabled={isSubmitted}
+            className='taskone3-input' 
+            placeholder='Write your position paper...' 
+            value={ans2} 
+            onChange={(e) => setAns2(e.target.value)}
+          ></textarea>
         </div>
 
         {/* Debate Preparation */}
@@ -170,7 +191,13 @@ const Taskthree3 = () => {
               <h2 style={cellStyle}>Defend stance</h2>
             </div>
           </div>
-          <textarea className='taskone3-input' placeholder='Prepare your debate...' value={ans3} onChange={(e) => setAns3(e.target.value)}></textarea>
+          <textarea 
+            disabled={isSubmitted}
+            className='taskone3-input' 
+            placeholder='Prepare your debate...' 
+            value={ans3} 
+            onChange={(e) => setAns3(e.target.value)}
+          ></textarea>
         </div>
 
         {/* 6. Letter Options */}
@@ -179,23 +206,47 @@ const Taskthree3 = () => {
           <div className='answer-1' style={{border: '1px solid orange', padding: '15px', borderRadius: '10px', marginBottom: '20px'}}>
             <h3 style={{color: '#e67e22'}}>Option A — Letter to Ray Bradbury</h3>
             <p style={{fontSize: '14px'}}>Explain: Emotional impression, moving details, what story says about life, and style appreciation.</p>
-            <textarea className='taskone3-input' placeholder='Letter to Author...' value={ans6A} onChange={(e) => setAns6A(e.target.value)}></textarea>
+            <textarea 
+                disabled={isSubmitted}
+                className='taskone3-input' 
+                placeholder='Letter to Author...' 
+                value={ans6A} 
+                onChange={(e) => setAns6A(e.target.value)}
+            ></textarea>
           </div>
           <div className='answer-1' style={{border: '1px solid #3498db', padding: '15px', borderRadius: '10px'}}>
             <h3 style={{color: '#2980b9'}}>Option B — Letter to a Character</h3>
             <p style={{fontSize: '14px'}}>Explain: Emotional state, how their calmness affected you, and lessons learned from them.</p>
-            <textarea className='taskone3-input' placeholder='Letter to Character...' value={ans6B} onChange={(e) => setAns6B(e.target.value)}></textarea>
+            <textarea 
+                disabled={isSubmitted}
+                className='taskone3-input' 
+                placeholder='Letter to Character...' 
+                value={ans6B} 
+                onChange={(e) => setAns6B(e.target.value)}
+            ></textarea>
           </div>
         </div>
 
         <div className="submit-area" style={{padding: '20px 0', textAlign: 'center'}}>
-          <input type="text" className="inp" placeholder='Your Name' value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <input 
+            disabled={isSubmitted}
+            type="text" 
+            className="inp" 
+            placeholder='Your Name' 
+            value={userName} 
+            onChange={(e) => setUserName(e.target.value)} 
+          />
           <button 
             className='taskthree3-btn' 
             onClick={handleSubmit}
-            style={{ display: 'block', margin: '20px auto 0 auto' }}
+            style={{ 
+                display: 'block', 
+                margin: '20px auto 0 auto',
+                opacity: isSubmitted ? 0.7 : 1,
+                cursor: 'pointer'
+            }}
           >
-            Yuborish
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>
         </div>
       </div>
