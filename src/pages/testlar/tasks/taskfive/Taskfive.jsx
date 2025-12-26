@@ -2,11 +2,13 @@ import '../../test.css'
 import './taskfive.css'
 import { useState } from 'react' 
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Taskfive = () => {
   const [userName, setUserName] = useState('');
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [answers] = useState([
     { id: 1, question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?', optionsA: 'a) He finds it exciting', optionsB: 'b) He finds it annoying', optionsC: 'c) He feels honored', optionsD: 'd) He is nervous and unsure' },
@@ -20,47 +22,54 @@ const Taskfive = () => {
   ]);
 
   const handleSelect = (qId, variant) => {
-    if (isSubmitted) return; // Yuborilgan bo'lsa tanlashni taqiqlash
+    if (isSubmitted) return;
     setSelectedAnswers(prev => ({ ...prev, [qId]: variant }));
   };
 
   const handleSubmit = () => {
-    // 1. Allaqachon yuborilganini tekshirish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
-    // 2. Ism tekshiruvi (alert o'rniga toast)
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // 3. Javoblar tanlanganini tekshirish
     if (Object.keys(selectedAnswers).length === 0) {
       toast.warning("Iltimos, javoblarni belgilang!");
       return;
     }
 
-    const formattedAnswers = Object.entries(selectedAnswers).map(
-      ([id, val]) => `Q${id}: ${val}`
-    );
+    // 🔹 Telegramga yuborish matni
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Appreciative
+📝 Task: Task 5
+📅 Sana: ${new Date().toLocaleString()}
 
-    const finalResult = {
-      user: userName,
-      answers: formattedAnswers,
-      level: 'Appreciative',
-      taskType: 'Task 1',
-      date: new Date().toLocaleString()
-    };
+📊 Javoblar:\n`;
 
+    Object.entries(selectedAnswers).forEach(([id, val]) => {
+      telegramText += `Q${id}: ${val}\n`;
+    });
+
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(finalResult);
+    oldData.push({
+      user: userName,
+      answers: selectedAnswers,
+      level: 'Appreciative',
+      taskType: 'Task 5',
+      date: new Date().toLocaleString()
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
     toast.success("Javoblar yuborildi!");
-    setIsSubmitted(true); // Yuborilgan holatni tasdiqlash
+    setIsSubmitted(true);
   };
 
   return (
@@ -93,24 +102,20 @@ const Taskfive = () => {
           </div>
         ))}
 
-        <div style={{ marginTop: '30px' }}>
+        <div style={{ marginTop: '30px', textAlign: 'center' }}>
           <input 
             type="text" 
             className="inp" 
             placeholder='What is your name ?' 
             value={userName}
-            disabled={isSubmitted} // Yuborilgandan keyin inputni bloklash
+            disabled={isSubmitted}
             onChange={(e) => setUserName(e.target.value)}
           />
           
           <button 
             className='taskfive-btn' 
             onClick={handleSubmit}
-            style={{ 
-              display: 'block', 
-              margin: '20px auto 0 auto',
-              opacity: isSubmitted ? 0.7 : 1
-            }}
+            style={{ display: 'block', margin: '20px auto 0 auto', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>

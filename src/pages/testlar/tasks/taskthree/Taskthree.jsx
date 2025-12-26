@@ -2,13 +2,15 @@ import '../../test.css'
 import './taskthree.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Taskthree = () => {
   const [userName, setUserName] = useState('');
   const [allAnswers, setAllAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // ... (answers, questions, texts state-lari o'zgarishsiz qoladi)
+  // --- PART 1 ---
   const [answers] = useState([
     { id: 1, partA:'Part-1', question: '1.Words from the story-Antonym choices "Lustreless"', optionsA: 'Upbright', optionsB: 'bent', optionsC: 'stooped' },
     { id: 2, question: '2.Words from the story-Antonym choices "Hunched"', optionsA: 'shiny', optionsB: 'dull', optionsC: 'dim' },
@@ -17,10 +19,12 @@ const Taskthree = () => {
     { id: 5, question: '5.Words from the story-Antonym choices "Curtly"', optionsA: 'politely', optionsB: 'abruptly', optionsC: 'briefly' },
   ]);
 
+  // --- PART 2 ---
   const [questions] = useState([
     { id: 2.1, partB: "Part-2", question: 'Put the words in the blanks of the text. ', optionA: "Mercy", optionB: "Women", optionC: "Hairdresser", optionD: "Separation", optionE: "Owen Lewis", optionF: "Harry", optionG: "Kathleen" },
   ]);
 
+  // --- TEXT ---
   const [texts] = useState([
     {
       id: 2.2,
@@ -48,40 +52,50 @@ const Taskthree = () => {
   };
 
   const handleSubmit = () => {
-    // 1. Agar allaqachon yuborilgan bo'lsa, ogohlantirish berish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
-      return; // Funksiyani to'xtatish
+      return;
     }
 
-    // 2. Ism tekshiruvi
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // 3. Javoblar belgilanganini tekshirish
     if (Object.keys(allAnswers).length === 0) {
       toast.warning("Iltimos, javoblarni belgilang!");
       return;
     }
 
-    const formattedAnswers = Object.entries(allAnswers).map(([key, val]) => `${key}: ${val}`);
+    // 🔹 Telegram matni tayyorlash
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Inferential
+📝 Task: Task 3
+📅 Sana: ${new Date().toLocaleString()}
 
-    const resultData = {
-      user: userName,
-      answers: formattedAnswers,
-      level: 'Inferential',
-      taskType: 'Task 1',
-      date: new Date().toLocaleString()
-    };
+📊 Javoblar:\n`;
 
+    Object.entries(allAnswers).forEach(([key, val]) => {
+      telegramText += `${key}: ${val}\n`;
+    });
+
+    // 🔹 Telegramga yuborish
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(resultData);
+    oldData.push({
+      user: userName,
+      answers: allAnswers,
+      level: 'Inferential',
+      taskType: 'Task 3',
+      date: new Date().toLocaleString()
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
-    toast.success("Javoblar yuborildi!");
-    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
+    toast.success("Javoblar yuborildi");
+    setIsSubmitted(true);
   };
 
   return (
@@ -96,32 +110,20 @@ const Taskthree = () => {
               <h2>{item.question}</h2>
               <ul>
                 <div>
-                  <li 
-                    className='a' 
-                    onClick={() => handlePart1(item.id, 'a')}
-                    style={{ 
-                      color: allAnswers[`P1-Q${item.id}`] === 'a' ? '#007bff' : '', 
-                      cursor: isSubmitted ? 'default' : 'pointer'
-                    }}
-                  >a. {item.optionsA}</li>
-                  <li 
-                    className='b' 
-                    onClick={() => handlePart1(item.id, 'b')}
-                    style={{ 
-                      color: allAnswers[`P1-Q${item.id}`] === 'b' ? '#007bff' : '', 
-                      cursor: isSubmitted ? 'default' : 'pointer'
-                    }}
-                  >b. {item.optionsB}</li>
+                  <li className='a' onClick={() => handlePart1(item.id, 'a')}
+                      style={{ color: allAnswers[`P1-Q${item.id}`] === 'a' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}>
+                    a. {item.optionsA}
+                  </li>
+                  <li className='b' onClick={() => handlePart1(item.id, 'b')}
+                      style={{ color: allAnswers[`P1-Q${item.id}`] === 'b' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}>
+                    b. {item.optionsB}
+                  </li>
                 </div>
                 <div>
-                  <li 
-                    className='c' 
-                    onClick={() => handlePart1(item.id, 'c')}
-                    style={{ 
-                      color: allAnswers[`P1-Q${item.id}`] === 'c' ? '#007bff' : '', 
-                      cursor: isSubmitted ? 'default' : 'pointer'
-                    }}
-                  >c. {item.optionsC}</li>
+                  <li className='c' onClick={() => handlePart1(item.id, 'c')}
+                      style={{ color: allAnswers[`P1-Q${item.id}`] === 'c' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}>
+                    c. {item.optionsC}
+                  </li>
                 </div>
               </ul>
             </div>
@@ -148,6 +150,7 @@ const Taskthree = () => {
           </div>
         ))}
 
+        {/* --- TEXT --- */}
         {texts.map((itemthree, indexthree) => (
           <div key={indexthree} className="option-text">
             <div>
@@ -170,7 +173,7 @@ const Taskthree = () => {
           </div>
         ))}
 
-        {/* SUBMIT BOX */}
+        {/* --- SUBMIT BOX --- */}
         <div className="submit-box" style={{marginTop: '30px', textAlign: 'center'}}>
           <input 
             type="text" 
@@ -183,12 +186,7 @@ const Taskthree = () => {
           <button 
             className='taskthree-btn' 
             onClick={handleSubmit}
-            style={{ 
-              display: 'block', 
-              margin: '20px auto 0', 
-              opacity: isSubmitted ? 0.7 : 1,
-              cursor: 'pointer' 
-            }}
+            style={{ display: 'block', margin: '20px auto 0', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>

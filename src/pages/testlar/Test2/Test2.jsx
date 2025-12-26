@@ -45,12 +45,12 @@ const Test2 = () => {
 
                 <div className="qator-3">
 
-                   {/*  <NavLink to="/taskfive5">
+                    <NavLink to="/taskfive5">
 
                         <div className="card1">
                             <h1> Appreciative</h1>
                         </div>
-                    </NavLink> */}
+                    </NavLink>
 
                 </div>
 

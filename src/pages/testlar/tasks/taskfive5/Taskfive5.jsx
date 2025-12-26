@@ -1,11 +1,128 @@
-import React from 'react'
+import '../../test.css' 
+import './taskfive5.css'
+import { useState } from 'react' 
+import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
-const Taskfive5 = () => {
+const Taskfive = () => {
+  const [userName, setUserName] = useState('');
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [answers] = useState([
+    { id: 1, question: '1.What was the attitude of Mr. Bosengate toward being summoned as a jury?', optionsA: 'a) He finds it exciting', optionsB: 'b) He finds it annoying', optionsC: 'c) He feels honored', optionsD: 'd) He is nervous and unsure' },
+    { id: 2, question: '2.What is the relationship between Kathleen and Bosengate?', optionsA: 'a) She is his daughter', optionsB: 'b) She is his niece', optionsC: 'c) She is his wife', optionsD: 'd) She is his mistress' },
+    { id: 3, question: '3.What is the accused man’s name in the story?', optionsA: 'a) Owen Lewis', optionsB: 'b) Mr. Bosengate', optionsC: 'c) George', optionsD: 'd) Kathleen ' },
+    { id: 4, question: '4.What is Owen Lewis accused of? ', optionsA: 'a) He escaped from the army', optionsB: 'b) He committed suicide', optionsC: 'c) He attempted theft', optionsD: 'd) He trespassed the border' },
+    { id: 5, question: '5. What was Owen Lewis job before joining the army?', optionsA: 'a) Hairdresser', optionsB: 'b) Carpenter', optionsC: 'c) Lawyer', optionsD: 'd) Teacher' },
+    { id: 6, question: '6. What was the reason for Owen Lewis committing suicide?', optionsA: 'a) He was afraid of going to the front line', optionsB: 'b) His commanding officer tormented him', optionsC: 'c) He was depressed because of the separation from his wife', optionsD: 'd) He had serious health problems' },
+    { id: 7, question: '7.On what condition did Mr.Bosengate agree on signing the verdict?', optionsA: 'a) Owen was declared not guilty', optionsB: 'b) The jury recommends mercy', optionsC: 'c) That the case be re-tried', optionsD: 'd) That the soldier is fined ' },
+    { id: 8, question: '8.What did Mr.Bosengate realize by the end of the story?', optionsA: 'a) The laws of the government should be strict', optionsB: 'b) The laws should be strict', optionsC: 'c) Society needs to be kind and helpful to people', optionsD: 'd) Military service is more important to empathy ' },
+  ]);
+
+  const handleSelect = (qId, variant) => {
+    if (isSubmitted) return;
+    setSelectedAnswers(prev => ({ ...prev, [qId]: variant }));
+  };
+
+  const handleSubmit = () => {
+    if (isSubmitted) {
+      toast.info("Siz allaqachon javob yuborgansiz.");
+      return;
+    }
+
+    if (!userName.trim()) {
+      toast.error("Iltimos ismingizni kiriting!");
+      return;
+    }
+
+    if (Object.keys(selectedAnswers).length === 0) {
+      toast.warning("Iltimos, javoblarni belgilang!");
+      return;
+    }
+
+    // 🔹 Telegramga yuborish matni
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Appreciative
+📝 Task: Task 5
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:\n`;
+
+    Object.entries(selectedAnswers).forEach(([id, val]) => {
+      telegramText += `Q${id}: ${val}\n`;
+    });
+
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
+    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
+    oldData.push({
+      user: userName,
+      answers: selectedAnswers,
+      level: 'Appreciative',
+      taskType: 'Task 5',
+      date: new Date().toLocaleString()
+    });
+    localStorage.setItem('allTests', JSON.stringify(oldData));
+
+    toast.success("Javoblar yuborildi!");
+    setIsSubmitted(true);
+  };
+
   return (
-    <div data-aos="fade-left" className='tasks'>
-      
+    <div data-aos="fade-left" className='tasks taskfive'>
+      <div className="taskfive-card">
+        {answers.map((item, index) => (
+          <div key={index} className="taskfive-question">
+            <div>
+              <h2>{item.question}</h2>
+              <ul>
+                <div>
+                  <li onClick={() => handleSelect(item.id, 'A')}
+                    style={{ color: selectedAnswers[item.id] === 'A' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
+                  >{item.optionsA}</li>
+                  <li onClick={() => handleSelect(item.id, 'B')}
+                    style={{ color: selectedAnswers[item.id] === 'B' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
+                  >{item.optionsB}</li> 
+                </div>
+                <div>
+                  <li onClick={() => handleSelect(item.id, 'C')}
+                    style={{ color: selectedAnswers[item.id] === 'C' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
+                  >{item.optionsC}</li>
+                  <li onClick={() => handleSelect(item.id, 'D')}
+                    style={{ color: selectedAnswers[item.id] === 'D' ? '#007bff' : '', cursor: isSubmitted ? 'default' : 'pointer' }}
+                  >{item.optionsD}</li>
+                </div>
+              </ul>
+            </div>
+            <br /><hr />
+          </div>
+        ))}
+
+        <div style={{ marginTop: '30px', textAlign: 'center' }}>
+          <input 
+            type="text" 
+            className="inp" 
+            placeholder='What is your name ?' 
+            value={userName}
+            disabled={isSubmitted}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          
+          <button 
+            className='taskfive-btn' 
+            onClick={handleSubmit}
+            style={{ display: 'block', margin: '20px auto 0 auto', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
+          >
+            {isSubmitted ? "Yuborildi" : "Yuborish"}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Taskfive5
+export default Taskfive;

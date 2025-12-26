@@ -1,4 +1,9 @@
 /* !taskone1ga tegishli */
+
+.tasks-cont{
+    background-color: #3498db !important;
+}
+
 .taskone1-question h2 {
     text-align: center;
     margin-bottom: 30px !important;

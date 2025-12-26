@@ -1,6 +1,8 @@
 import '../../test.css';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Taskone = () => {
   const [userName, setUserName] = useState(''); 
@@ -46,9 +48,25 @@ const Taskone = () => {
     oldData.push(result);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
+    // 🔹 Telegram uchun text tayyorlash
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Literal
+📝 Task: Task 1
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:
+`;
+
+    answers.forEach((q) => {
+      const userAnswer = selectedAnswers[q.id] || "❌ belgilanmagan";
+      telegramText += `\n${q.question}\n➡️ Javob: ${userAnswer}\n`;
+    });
+
+    // 🔹 Telegram botga yuborish
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
     toast.success("Javoblar yuborildi");
-    
-    // O'quvchi ma'lumotlari o'chib ketmasligi uchun reset qismini olib tashladik
     setIsSubmitted(true); 
   };
 
@@ -82,7 +100,6 @@ const Taskone = () => {
           onChange={(e) => setUserName(e.target.value)}
           disabled={isSubmitted} // Yuborgandan keyin ismni o'zgartirib bo'lmaydi
         />
-        {/* Yuborilgandan keyin tugmani yashirish yoki o'chirish */}
         <button 
           className='taskthree-btn' 
           onClick={sendResults}

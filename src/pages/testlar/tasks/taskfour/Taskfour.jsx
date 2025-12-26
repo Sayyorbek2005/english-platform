@@ -2,6 +2,8 @@ import '../../test.css'
 import './taskfour.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Taskfour = () => {
   const [userName, setUserName] = useState('');
@@ -41,38 +43,45 @@ const Taskfour = () => {
   };
 
   const handleSubmit = () => {
-    // 1. Allaqachon yuborilganini tekshirish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
 
-    // 2. Ism tekshiruvi
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // 3. Bo'sh javoblar tekshiruvi
     if (Object.keys(userAnswers).length === 0) {
       toast.warning("Iltimos, javoblarni to'ldiring!");
       return;
     }
 
-    const formattedAnswers = Object.entries(userAnswers).map(
-      ([key, val]) => `${key}: ${val}`
-    );
+    // 🔹 Telegramga yuborish matni
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Evaluative
+📝 Task: Task 4
+📅 Sana: ${new Date().toLocaleString()}
 
-    const finalData = {
-      user: userName,
-      answers: formattedAnswers,
-      level: 'Evaluative',
-      taskType: 'Task 1',
-      date: new Date().toLocaleString()
-    };
+📊 Javoblar:\n`;
 
+    Object.entries(userAnswers).forEach(([key, val]) => {
+      telegramText += `${key}: ${val}\n`;
+    });
+
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(finalData);
+    oldData.push({
+      user: userName,
+      answers: userAnswers,
+      level: 'Evaluative',
+      taskType: 'Task 4',
+      date: new Date().toLocaleString()
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
     toast.success("Javoblar yuborildi!");
@@ -87,7 +96,7 @@ const Taskfour = () => {
             <div>
               <h2 style={{color: '#2c3e50', textAlign: 'center'}}>{item.question}</h2><br />
               <ul>
-                {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((letter, idx) => (
+                {['A','B','C','D','E','F','G','H','I','J'].map((letter, idx) => (
                   <div key={letter} style={{marginBottom: '20px'}}>
                     <li>{idx + 1}. {item[`question${letter}`]}</li>
                     <li style={{color: '#7f8c8d', fontSize: '14px', fontStyle: 'italic'}}>
@@ -97,9 +106,9 @@ const Taskfour = () => {
                       className='taskfour-input' 
                       type="text" 
                       placeholder='Your answer'
-                      value={userAnswers[`Q${idx + 1}`] || ''}
+                      value={userAnswers[`Q${idx+1}`] || ''}
                       disabled={isSubmitted}
-                      onChange={(e) => handleChange(`Q${idx + 1}`, e.target.value)}
+                      onChange={(e) => handleChange(`Q${idx+1}`, e.target.value)}
                     />
                   </div>
                 ))}
@@ -120,12 +129,7 @@ const Taskfour = () => {
           <button 
             className='taskfour-btn' 
             onClick={handleSubmit}
-            style={{ 
-              display: 'block', 
-              margin: '20px auto 0',
-              opacity: isSubmitted ? 0.7 : 1,
-              cursor: 'pointer'
-            }}
+            style={{ display: 'block', margin: '20px auto 0', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>

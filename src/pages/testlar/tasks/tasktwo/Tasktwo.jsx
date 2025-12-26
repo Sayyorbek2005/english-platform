@@ -2,6 +2,8 @@ import '../../test.css'
 import './tasktwo.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"
+import { BOT_1 } from "../../../../telegramConfig"
 
 const Tasktwo = () => {
   const [userName, setUserName] = useState('');
@@ -10,12 +12,12 @@ const Tasktwo = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleWordClick = (word) => {
-    if (isSubmitted) return; 
+    if (isSubmitted) return;
     setActiveWord(word);
   };
 
   const handleOptionClick = (optionKey) => {
-    if (isSubmitted) return; 
+    if (isSubmitted) return;
     if (activeWord) {
       setSelections(prev => ({ ...prev, [activeWord]: optionKey }));
       setActiveWord(null);
@@ -27,28 +29,30 @@ const Tasktwo = () => {
   const getTextColor = (type, value) => {
     for (let word in selections) {
       const option = selections[word];
-      if ((type === 'word' && word === value) || (type === 'option' && option === value)) {
+      if (
+        (type === 'word' && word === value) ||
+        (type === 'option' && option === value)
+      ) {
         return { color: '#007bff', fontWeight: 'bold' };
       }
     }
-    if (type === 'word' && value === activeWord) return { color: 'orange' };
+    if (type === 'word' && value === activeWord) {
+      return { color: 'orange' };
+    }
     return {};
   };
 
   const handleSubmit = () => {
-    // 1. MANA SHU QISM QO'SHILDI: Avval yuborilganini tekshirish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
-      return; // Funksiyani shu joyda to'xtatish
+      return;
     }
 
-    // 2. Ism tekshiruvi
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // 3. Javoblar tanlanganini tekshirish
     if (Object.keys(selections).length === 0) {
       toast.info("Iltimos, javoblarni belgilang!");
       return;
@@ -61,35 +65,64 @@ const Tasktwo = () => {
     const finalData = {
       user: userName,
       answers: finalAnswers,
-      level: 'Reorganization', 
-      taskType: 'Task 1', 
+      level: 'Reorganization',
+      taskType: 'Task 2',
       date: new Date().toLocaleString()
     };
 
+    // LocalStorage
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
     oldData.push(finalData);
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
+    // Telegram text
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Reorganization
+📝 Task: Task 2
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:
+`;
+
+    finalAnswers.forEach(ans => {
+      telegramText += `\n${ans}`;
+    });
+
+    // Telegramga yuborish
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
     toast.success("Javoblar yuborildi");
-    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
+    setIsSubmitted(true);
   };
 
   return (
     <div data-aos="fade-left" className='tasks task-two'>
       <div className="tasktwo-card">
-        <h2 style={{textAlign: 'center', color: '#2c3e50'}}>Vocabulary Matching (Task 1.2)</h2>
-        <p style={{textAlign: 'center', color: '#7f8c8d'}}>Click a word, then click its definition</p>
-        
-        <div className="tasktwo-question display-flex" style={{marginBottom: '30px', justifyContent: 'space-around'}}>
+        <h2 style={{textAlign: 'center', color: '#2c3e50'}}>
+          Vocabulary Matching (Task 1.2)
+        </h2>
+        <p style={{textAlign: 'center', color: '#7f8c8d'}}>
+          Click a word, then click its definition
+        </p>
+
+        <div
+          className="tasktwo-question display-flex"
+          style={{marginBottom: '30px', justifyContent: 'space-around'}}
+        >
           <ul className='salom'>
-            {['1. Wretched', '2. Indispensable', '3. Afflicted', '4. Yearning', '5. Shambling'].map(word => (
-              <li key={word} 
-                  style={{...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer'}} 
-                  onClick={() => handleWordClick(word)}>
-                {word}
-              </li>
-            ))}
+            {['1. Wretched', '2. Indispensable', '3. Afflicted', '4. Yearning', '5. Shambling']
+              .map(word => (
+                <li
+                  key={word}
+                  style={{ ...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer' }}
+                  onClick={() => handleWordClick(word)}
+                >
+                  {word}
+                </li>
+              ))}
           </ul>
+
           <ul className='salom'>
             {['a', 'b', 'c', 'd', 'e'].map((key) => {
               const labels = {
@@ -100,9 +133,11 @@ const Tasktwo = () => {
                 e: 'e) suffering from'
               };
               return (
-                <li key={key} 
-                    style={{...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer'}} 
-                    onClick={() => handleOptionClick(key)}>
+                <li
+                  key={key}
+                  style={{ ...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer' }}
+                  onClick={() => handleOptionClick(key)}
+                >
                   {labels[key]}
                 </li>
               )
@@ -110,16 +145,23 @@ const Tasktwo = () => {
           </ul>
         </div>
 
-        <div className="tasktwo-question display-flex" style={{justifyContent: 'space-around'}}>
+        <div
+          className="tasktwo-question display-flex"
+          style={{ justifyContent: 'space-around' }}
+        >
           <ul className='salom'>
-            {['1. Drab', '2. Hunched', '3. Underlip', '4. Muttering', '5. Foreman'].map(word => (
-              <li key={word} 
-                  style={{...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer'}} 
-                  onClick={() => handleWordClick(word)}>
-                {word}
-              </li>
-            ))}
+            {['1. Drab', '2. Hunched', '3. Underlip', '4. Muttering', '5. Foreman']
+              .map(word => (
+                <li
+                  key={word}
+                  style={{ ...getTextColor('word', word), cursor: isSubmitted ? 'default' : 'pointer' }}
+                  onClick={() => handleWordClick(word)}
+                >
+                  {word}
+                </li>
+              ))}
           </ul>
+
           <ul className='salom'>
             {['a2', 'b2', 'c2', 'd2', 'e2'].map((key) => {
               const labels = {
@@ -130,9 +172,11 @@ const Tasktwo = () => {
                 e2: 'e) the lower lip'
               };
               return (
-                <li key={key} 
-                    style={{...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer'}} 
-                    onClick={() => handleOptionClick(key)}>
+                <li
+                  key={key}
+                  style={{ ...getTextColor('option', key), cursor: isSubmitted ? 'default' : 'pointer' }}
+                  onClick={() => handleOptionClick(key)}
+                >
                   {labels[key]}
                 </li>
               )
@@ -141,22 +185,22 @@ const Tasktwo = () => {
         </div>
 
         <div className="submit-box" style={{marginTop: '30px', textAlign: 'center'}}>
-          <input 
-            type="text" 
-            className="inp" 
-            placeholder='Your name' 
+          <input
+            type="text"
+            className="inp"
+            placeholder='Your name'
             value={userName}
             disabled={isSubmitted}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button 
-            className='tasktwo-btn' 
+          <button
+            className='tasktwo-btn'
             onClick={handleSubmit}
-            style={{ 
-              opacity: isSubmitted ? 0.7 : 1, 
-              cursor: 'pointer', // Foydalanuvchi yana bosa olishi uchun pointer qoldirildi
-              display: 'block',    
-              margin: '20px auto 0' 
+            style={{
+              opacity: isSubmitted ? 0.7 : 1,
+              cursor: 'pointer',
+              display: 'block',
+              margin: '20px auto 0'
             }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
