@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 export const sendToTelegram = async (token, chatId, text) => {
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
@@ -8,7 +10,8 @@ export const sendToTelegram = async (token, chatId, text) => {
     },
     body: JSON.stringify({
       chat_id: chatId,
-      text: text,
+      text: text,message,
+      
     }),
   });
 };

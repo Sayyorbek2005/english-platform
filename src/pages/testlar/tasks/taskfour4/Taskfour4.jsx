@@ -2,6 +2,8 @@ import './taskfour4.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from '../../../../telegram'
+import { BOT_1 } from '../../../../telegramConfig'
 
 const Taskfour4 = () => {
   const navigate = useNavigate();
@@ -67,19 +69,15 @@ const Taskfour4 = () => {
   };
 
   const handleSubmit = () => {
-    // 1. Takroriy yuborishni tekshirish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
-
-    // 2. Ism tekshiruvi
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
 
-    // Natijalarni yig'ish
     const finalAnswers = {
       "Task 3 (Emotional)": task3Inputs.join(', ') || 'No answer',
       "Task 4 (Social)": task4Inputs.join(', ') || 'No answer',
@@ -88,20 +86,31 @@ const Taskfour4 = () => {
       "Task 6 (Test Q2)": testAnswers.Q2 || 'No answer'
     };
 
-    const finalData = {
-      user: userName,
-      answers: finalAnswers,
-      level: 'Evaluative', 
-      taskType: 'Task 1.4-1.6.', 
-      date: new Date().toLocaleString()
-    };
+    // 🔹 Telegramga yuborish
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Evaluative
+📝 Task: Task 1.4-1.6
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:\n`;
+    Object.entries(finalAnswers).forEach(([key, val]) => {
+      telegramText += `${key}: ${val}\n`;
+    });
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
 
     const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(finalData);
+    oldData.push({
+      user: userName,
+      answers: finalAnswers,
+      level: 'Evaluative',
+      taskType: 'Task 1.4-1.6',
+      date: new Date().toLocaleString()
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
     toast.success("Javoblar yuborildi!");
-    setIsSubmitted(true); // Yuborilgan holatga o'tkazish
+    setIsSubmitted(true);
   };
 
   return (
@@ -158,7 +167,7 @@ const Taskfour4 = () => {
                 {Object.entries(item.options).map(([key, val]) => (
                   <label key={key} className="radio-option" style={{ cursor: isSubmitted ? 'default' : 'pointer' }}>
                     <input 
-                      disabled={isSubmitted} // Testni bloklash
+                      disabled={isSubmitted}
                       type="radio" 
                       name={`question-${item.id}`} 
                       onChange={() => setTestAnswers({...testAnswers, [`Q${item.id}`]: key})} 
@@ -198,4 +207,4 @@ const Taskfour4 = () => {
   )
 }
 
-export default Taskfour4;
+export default Taskfour4

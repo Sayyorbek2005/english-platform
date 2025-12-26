@@ -2,6 +2,8 @@ import './taskthree3.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Taskthree3 = () => {
   const navigate = useNavigate();
@@ -30,33 +32,46 @@ const Taskthree3 = () => {
       return;
     }
 
-    // TeacherPage Object.entries orqali o'qishi uchun obyekt shaklida yuboramiz
+    // Javoblarni telegramga yuborish uchun tayyorlash
     const userAnswers = {
       "1. Critical Review": ans1 || 'no answer',
       "2. Position Paper": ans2 || 'no answer',
       "3. Debate Prep": ans3 || 'no answer',
-      "4. Creative Writing": ans5 || 'no answer',
+      "4. Creative Writing": ans4 || 'no answer',
       "5. Letter to Author": ans6A || 'no answer',
       "6. Letter to Character": ans6B || 'no answer'
     };
 
-    const finalData = {
+    // 🔹 Telegramga yuborish matni
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Inferential
+📝 Task: Task 1.3
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:\n`;
+
+    Object.entries(userAnswers).forEach(([key, val]) => {
+      telegramText += `${key}: ${val}\n`;
+    });
+
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
+    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
+    oldData.push({
       user: userName,
       answers: userAnswers,
-      level: 'Inferential', 
-      taskType: 'Task 1.3', 
+      level: 'Inferential',
+      taskType: 'Task 1.3',
       date: new Date().toLocaleString()
-    };
-
-    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(finalData);
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
-    
+
     toast.success("Natijalar yuborildi!");
     setIsSubmitted(true); // Yuborilgan holatni tasdiqlash
   };
 
-  // Qatorlar orasini ochish va chiziq bilan ajratish uchun stil
   const cellStyle = { 
     lineHeight: '1.6', 
     minHeight: '100px', 
@@ -200,7 +215,7 @@ const Taskthree3 = () => {
           ></textarea>
         </div>
 
-        {/* 6. Letter Options */}
+        {/* Letters */}
         <div className="taskthree3-question">
           <h1>Letter of Appreciation (Choose Option A or B)</h1>
           <div className='answer-1' style={{border: '1px solid orange', padding: '15px', borderRadius: '10px', marginBottom: '20px'}}>

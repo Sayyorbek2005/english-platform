@@ -1,10 +1,12 @@
 import './tasktwo2.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
+import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
 
 const Tasktwo2 = () => {
   const [userName, setUserName] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
+  const [isSubmitted, setIsSubmitted] = useState(false);
   
   const [userAnswers, setUserAnswers] = useState({
     ans1: '', ans2: '', ans3: '', ans4: '',
@@ -12,44 +14,53 @@ const Tasktwo2 = () => {
   });
 
   const handleInputChange = (key, value) => {
-    if (isSubmitted) return; // Yuborilgandan keyin o'zgartirishni bloklash
+    if (isSubmitted) return;
     setUserAnswers(prev => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = () => {
-    // 1. Allaqachon yuborilganini tekshirish
     if (isSubmitted) {
       toast.info("Siz allaqachon javob yuborgansiz.");
       return;
     }
-
-    // 2. Ism tekshiruvi
     if (!userName.trim()) {
       toast.error("Iltimos ismingizni kiriting!");
       return;
     }
-
-    // 3. Bo'sh javoblar tekshiruvi (ixtiyoriy, lekin foydali)
     const hasAnswers = Object.values(userAnswers).some(val => val.trim() !== '');
     if (!hasAnswers) {
       toast.warning("Iltimos, kamida bitta javobni kiriting!");
       return;
     }
 
-    const finalData = {
+    // 🔹 Telegramga yuborish matni
+    let telegramText = `🧑‍🎓 Test natijalari
+👤 Ism: ${userName}
+📘 Level: Reorganization
+📝 Task: Task 1.2
+📅 Sana: ${new Date().toLocaleString()}
+
+📊 Javoblar:\n`;
+
+    Object.entries(userAnswers).forEach(([key, val]) => {
+      telegramText += `${key}: ${val}\n`;
+    });
+
+    sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
+
+    // 🔹 LocalStorage ga saqlash
+    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
+    oldData.push({
       user: userName,
       answers: userAnswers,
-      level: 'Reorganization', 
-      taskType: 'Task 1.2', 
+      level: 'Reorganization',
+      taskType: 'Task 1.2',
       date: new Date().toLocaleString()
-    };
-
-    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push(finalData);
+    });
     localStorage.setItem('allTests', JSON.stringify(oldData));
 
     toast.success("Javoblar yuborildi!");
-    setIsSubmitted(true); // Holatni bloklash
+    setIsSubmitted(true);
   };
 
   const [answerstwo] = useState([
@@ -73,21 +84,19 @@ const Tasktwo2 = () => {
 
         {answerstwo.map((item) => (
           <div key={item.id} className="tasktwo2-question">
-            <div className="answer-1">
-              <h2 style={{color: '#2c3e50', marginBottom: '10px'}}>{item.title}</h2>
-              <p>A. {item.q[0]}</p>
-              <p>B. {item.q[1]}</p>
-              <p>C. {item.q[2]}</p>
-              <p>D. {item.q[3]}</p>
-              <input 
-                className='taskone1-input' 
-                type="text" 
-                placeholder='Sequence (e.g. A/B/D/C)' 
-                value={userAnswers[item.key]}
-                disabled={isSubmitted}
-                onChange={(e) => handleInputChange(item.key, e.target.value)}
-              />
-            </div>
+            <h2 style={{color: '#2c3e50', marginBottom: '10px'}}>{item.title}</h2>
+            <p>A. {item.q[0]}</p>
+            <p>B. {item.q[1]}</p>
+            <p>C. {item.q[2]}</p>
+            <p>D. {item.q[3]}</p>
+            <input 
+              className='taskone1-input' 
+              type="text" 
+              placeholder='Sequence (e.g. A/B/D/C)' 
+              value={userAnswers[item.key]}
+              disabled={isSubmitted}
+              onChange={(e) => handleInputChange(item.key, e.target.value)}
+            />
           </div>
         ))}
 
