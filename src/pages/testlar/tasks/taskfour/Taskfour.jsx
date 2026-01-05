@@ -2,40 +2,34 @@ import '../../test.css'
 import './taskfour.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
-import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
+import { sendToTelegram } from "../../../../telegram"; 
+import { BOT_1 } from "../../../../telegramConfig"; 
 
 const Taskfour = () => {
   const [userName, setUserName] = useState('');
   const [userAnswers, setUserAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [answers] = useState([
+  const questions = [
     {
       id: 1,
-      question: 'Fill in the blanks in the tasks with the words from the word bank.',
-      questionA: 'During the Great War, Mr. Henry Bosengate is summoned to serve as a ______ at the local assizes (court), which he feels is an annoying waste of his time.',
-      optionA: 'juror, judge, soldier, lawyer',
-      questionB: 'Mr. Bosengate’s wife, named ______, stands under the porch in a lilac linen dress to see him off on the morning of the trial.',
-      optionB: 'Kathleen, Margaret, Elizabeth, Jane',
-      questionC: 'His two young children, Kate and ______, run along the garden wall and wave goodbye to him as he drives away in his car.',
-      optionC: 'Harry, William, Michael, Henry ',
-      questionD: 'The defendant in the trial is a nervous young Welsh soldier named ______ ______, who is brought before the court in his ill-fitting uniform',
-      optionD: 'Owen Lewis, David Evans, William Jones, Robert Lewis',
-      questionE: 'In court, the soldier was desperately unhappy and explains to the audience that he had to commit suicide, as he couldn’t bear being separated from his  ______.',
-      optionE: 'wife, regiment, children, parents',
-      questionF: 'The soldier’s previous job was _______ before he was called up to the army',
-      optionF: 'hairdresser, mechanic, farmer, teacher ',
-      questionG: 'During the Process of verdict discussion, Mr. Bosengate claims recommending_______ for the soldier before he confirms the jury’s deliberations. ',
-      optionG: 'mercy, punishment, conviction, discharge',
-      questionH: 'The soldier was convicted because he tried to commit_____ when he served in the army, which was considered a serious offense.',
-      optionH: 'suicide, theft, desertion, mutiny',
-      questionI: 'Once the decision was announced, the soldier was instructed to return to the_______ and serve for the country, instead of being sent to prison. ',
-      optionI: 'regiment, home, prison, office ',
-      questionJ: 'Judging by the events, Mr. Bosengate had experienced, he concluded that people should be kind and _______ each other.  ',
-      optionJ: 'help, obey, judge, admire  '
+      title: "1. Law vs Leniency (Qonun va Rahmdillik)",
+      clue: "Bosengate strictly asks mercy for the soldier, though the law and punishment are determined for committing suicide.",
+      question: "What is your opinion in this case? Is showing mercy more important than strict legal duties?"
     },
-  ]);
+    {
+      id: 2,
+      title: "2. Justice vs Law (Adolat va Qonun)",
+      clue: "Another juror: 'According to the law, committing suicide is a crime'. Bosengate replies: 'Justice is sometimes different from law'.",
+      question: "Do you agree with Bosengate’s opinion about justice? Do you think that following the law could sometimes fail to bring justice?"
+    },
+    {
+      id: 3,
+      title: "3. Emotional Interference (Hissiyotlarning ta'siri)",
+      clue: "Bosengate brings his own children to mind while observing Owen’s suffering.",
+      question: "To what extent is it true that personal experience influences the decisions related to the law and justice system?"
+    }
+  ];
 
   const handleChange = (qKey, value) => {
     if (isSubmitted) return;
@@ -43,81 +37,137 @@ const Taskfour = () => {
   };
 
   const handleSubmit = () => {
-    if (isSubmitted) {
-      toast.info("Siz allaqachon javob yuborgansiz.");
-      return;
-    }
+    if (isSubmitted) return toast.info("Siz allaqachon javob yuborgansiz.");
+    if (!userName.trim()) return toast.error("Iltimos ismingizni kiriting!");
 
-    if (!userName.trim()) {
-      toast.error("Iltimos ismingizni kiriting!");
-      return;
-    }
-
-    if (Object.keys(userAnswers).length === 0) {
-      toast.warning("Iltimos, javoblarni to'ldiring!");
-      return;
-    }
-
-    // 🔹 Telegramga yuborish matni
-    let telegramText = `🧑‍🎓 Test natijalari
-👤 Ism: ${userName}
-📘 Level: Evaluative
-📝 Task: Task 4
-📅 Sana: ${new Date().toLocaleString()}
-
-📊 Javoblar:\n`;
-
-    Object.entries(userAnswers).forEach(([key, val]) => {
-      telegramText += `${key}: ${val}\n`;
+    let telegramText = `🧑‍🎓 EVALUATIVE LEVEL RESULT\n👤 Student: ${userName}\n\n`;
+    
+    telegramText += `📊 TASK 1: ANALYSIS\n`;
+    questions.forEach((q) => {
+      telegramText += `📌 Q${q.id}: ${userAnswers[`Q${q.id}`] || "N/A"}\n`;
     });
+
+    telegramText += `\n📝 TASK 2: STORY REVIEW\n${userAnswers['T2_Review'] || "N/A"}\n`;
+    telegramText += `\n📢 TASK 3: DEBATE POINT\n${userAnswers['T3_Debate'] || "N/A"}\n`;
+    telegramText += `\n🖋️ TASK 4: CRITICAL ESSAY\n${userAnswers['T4_Essay'] || "N/A"}\n`;
 
     sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
-
-    // 🔹 LocalStorage ga saqlash
-    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push({
-      user: userName,
-      answers: userAnswers,
-      level: 'Evaluative',
-      taskType: 'Task 4',
-      date: new Date().toLocaleString()
-    });
-    localStorage.setItem('allTests', JSON.stringify(oldData));
-
-    toast.success("Javoblar yuborildi!");
+    toast.success("Hamma topshiriqlar muvaffaqiyatli yuborildi!");
     setIsSubmitted(true);
+  };
+
+  // Textarea uchun chiroyli dizayn
+  const inputStyle = {
+    width: '100%',
+    padding: '15px',
+    borderRadius: '10px',
+    border: '1.5px solid #d1d8e0',
+    fontSize: '15px',
+    lineHeight: '1.6',
+    outline: 'none',
+    marginTop: '10px',
+    fontFamily: 'inherit',
+    backgroundColor: isSubmitted ? '#f1f2f6' : '#fff',
+    transition: 'border-color 0.3s'
   };
 
   return (
     <div data-aos="fade-left" className='tasks taskfour'>
       <div className="taskfour-card">
-        {answers.map((item, index) => (
-          <div key={index} className="taskfour-question">
-            <div>
-              <h2 style={{color: '#2c3e50', textAlign: 'center'}}>{item.question}</h2><br />
-              <ul>
-                {['A','B','C','D','E','F','G','H','I','J'].map((letter, idx) => (
-                  <div key={letter} style={{marginBottom: '20px'}}>
-                    <li>{idx + 1}. {item[`question${letter}`]}</li>
-                    <li style={{color: '#7f8c8d', fontSize: '14px', fontStyle: 'italic'}}>
-                      Word bank: {item[`option${letter}`]}
-                    </li>
-                    <input 
-                      className='taskfour-input' 
-                      type="text" 
-                      placeholder='Your answer'
-                      value={userAnswers[`Q${idx+1}`] || ''}
-                      disabled={isSubmitted}
-                      onChange={(e) => handleChange(`Q${idx+1}`, e.target.value)}
-                    />
-                  </div>
-                ))}
-              </ul>
-            </div>
+        
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ color: '#2c3e50', fontSize: '28px' }}>Evaluative Level</h1>
+        </div>
+
+        {/* --- TASK 1: ANALYSIS --- */}
+        <h2 style={{ color: '#2c3e50', marginBottom: '25px', borderBottom: '2px solid #3498db', display: 'inline-block' }}>Task 1. Analysis Questions</h2>
+        {questions.map((item) => (
+          <div key={item.id} className="taskfour-question" style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#fdfdfd', borderRadius: '10px' }}>
+            <h4 style={{ color: '#2980b9' }}>{item.title}</h4>
+            <p style={{ fontSize: '14px', color: '#636e72', fontStyle: 'italic' }}>Context: {item.clue}</p>
+            <p style={{ fontWeight: 'bold', marginTop: '10px' }}>{item.question}</p>
+            <textarea 
+              className='taskfour-input' 
+              style={inputStyle}
+              placeholder='Your answer...'
+              value={userAnswers[`Q${item.id}`] || ''}
+              disabled={isSubmitted}
+              onChange={(e) => handleChange(`Q${item.id}`, e.target.value)}
+            />
           </div>
         ))}
-        
-        <div className="submit-box" style={{textAlign: 'center', marginTop: '30px'}}>
+
+        <hr style={{ margin: '40px 0', opacity: '0.2' }} />
+
+        {/* --- TASK 2: STORY REVIEW --- */}
+        <div className="taskfour-question">
+          <h2 style={{ color: '#2c3e50', marginBottom: '15px' }}>Task 2. Story Review Writing</h2>
+          <div style={{ backgroundColor: '#f9f9f9', padding: '20px', borderRadius: '10px', fontSize: '14px', border: '1px solid #eee', lineHeight: '1.6', marginBottom: '15px' }}>
+            <strong>Guidelines:</strong> Intro (Title, Author, Summary, Main Point), Key Points Evaluation (Themes, Characters, Style, Emotional Influence), Personal Outcomes (Experience, Law vs Justice), and Conclusion.
+          </div>
+          <textarea 
+            className='taskfour-input' 
+            style={{ ...inputStyle, minHeight: '250px' }}
+            placeholder='Write your review here...'
+            value={userAnswers['T2_Review'] || ''}
+            disabled={isSubmitted}
+            onChange={(e) => handleChange('T2_Review', e.target.value)}
+          />
+        </div>
+
+        <hr style={{ margin: '40px 0', opacity: '0.2' }} />
+
+        {/* --- TASK 3: DEBATE --- */}
+        <div className="taskfour-question">
+          <h2 style={{ color: '#2c3e50', marginBottom: '15px' }}>Task 3. Class Debate</h2>
+          <p style={{ fontWeight: 'bold', color: '#e67e22' }}>Motion: “Leniency, not punishment, is the true way to justice”</p>
+          
+          <div style={{ display: 'flex', gap: '20px', marginTop: '15px', marginBottom: '15px' }}>
+            <div style={{ flex: 1, backgroundColor: '#e8f5e9', padding: '15px', borderRadius: '10px', fontSize: '13px' }}>
+              <strong style={{ color: '#2e7d32' }}>Team FOR (Mercy):</strong>
+              <p>Argue mental strain, human-centered justice. Evidence: bandaged wrist, Bosengate’s thoughts, final judge's sentence.</p>
+            </div>
+            <div style={{ flex: 1, backgroundColor: '#ffebee', padding: '15px', borderRadius: '10px', fontSize: '13px' }}>
+              <strong style={{ color: '#c62828' }}>Team AGAINST (Punishment):</strong>
+              <p>Violation of law, prevents indiscipline. Evidence: strict judge, cowardice arguments, wartime discipline.</p>
+            </div>
+          </div>
+          <p style={{ fontSize: '13px', color: '#555', fontStyle: 'italic' }}>Discussion: Does mercy undermine discipline? Is suffering more important than duty? Was the judge's compromise fair?</p>
+          <textarea 
+            className='taskfour-input' 
+            style={{ ...inputStyle, minHeight: '150px' }}
+            placeholder='Your debate arguments...'
+            value={userAnswers['T3_Debate'] || ''}
+            disabled={isSubmitted}
+            onChange={(e) => handleChange('T3_Debate', e.target.value)}
+          />
+        </div>
+
+        <hr style={{ margin: '40px 0', opacity: '0.2' }} />
+
+        {/* --- TASK 4: CRITICAL ESSAY --- */}
+        <div className="taskfour-question">
+          <h2 style={{ color: '#2c3e50', marginBottom: '15px' }}>Task 4. Critical Essay</h2>
+          <div style={{ backgroundColor: '#fffbe6', padding: '20px', borderRadius: '10px', fontSize: '14px', border: '1px solid #ffe58f', lineHeight: '1.6', marginBottom: '15px' }}>
+            <p><strong>Explain:</strong> Evaluate ideas, themes, and characters. What message does the story deliver?</p>
+            <p><strong>Structure:</strong> 
+              <br/>• <strong>Intro:</strong> Brief explanation + Thesis statement.
+              <br/>• <strong>Body:</strong> Topic sentence + Evidence (examples/quotes) + Evaluation.
+              <br/>• <strong>Conclusion:</strong> Recap + Wider perspective (life, justice, humanity).
+            </p>
+          </div>
+          <textarea 
+            className='taskfour-input' 
+            style={{ ...inputStyle, minHeight: '350px' }}
+            placeholder='Write your critical essay here...'
+            value={userAnswers['T4_Essay'] || ''}
+            disabled={isSubmitted}
+            onChange={(e) => handleChange('T4_Essay', e.target.value)}
+          />
+        </div>
+
+        {/* --- SUBMIT BOX (DESIGN UNCHANGED) --- */}
+        <div className="submit-box">
           <input 
             type="text" 
             className="inp" 
@@ -129,14 +179,14 @@ const Taskfour = () => {
           <button 
             className='taskfour-btn' 
             onClick={handleSubmit}
-            style={{ display: 'block', margin: '20px auto 0', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>
         </div>
+
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Taskfour;

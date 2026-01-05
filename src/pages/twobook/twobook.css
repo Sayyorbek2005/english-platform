@@ -45,6 +45,16 @@
     font-weight: 300;
     font-style: oblique;
   }
-
+.twobook-btn{
+      padding: 5px 10px;
+    font-size: 20px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    border: none;
+    margin-top: 20px;
+    margin-left: 350px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 

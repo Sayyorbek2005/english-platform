@@ -2,265 +2,182 @@ import './taskthree3.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
-import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
+import { sendToTelegram } from "../../../../telegram"; 
+import { BOT_1 } from "../../../../telegramConfig"; 
 
 const Taskthree3 = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
+  const [isSubmitted, setIsSubmitted] = useState(false);
   
-  // Statelar
-  const [ans1, setAns1] = useState('');
-  const [ans2, setAns2] = useState('');
-  const [ans3, setAns3] = useState('');
-  const [ans4, setAns4] = useState('');
-  const [ans5, setAns5] = useState('');
-  const [ans6A, setAns6A] = useState('');
-  const [ans6B, setAns6B] = useState('');
+  // Task States
+  const [activeAns, setActiveAns] = useState('');
+  const [passiveAns, setPassiveAns] = useState('');
+  const [calmAns, setCalmAns] = useState('');
+  const [fearfulAns, setFearfulAns] = useState('');
+  const [feelings, setFeelings] = useState({ q1: '', q2: '', q3: '', q4: '', q5: '' });
+  const [socialGaps, setSocialGaps] = useState({ s1: '', s2: '', s3: '', s4: '', s5: '' });
+  const [finalGaps, setFinalGaps] = useState({ f1: '', f2: '', f3: '', f4: '', f5: '' });
+  const [testAnswers, setTestAnswers] = useState({ t1: '', t2: '', t3: '', t4: '', t5: '' });
+  const [symbolAnswers, setSymbolAnswers] = useState({ s1: '', s2: '', s3: '', s4: '', s5: '', s6: '' });
+
+  const handleInputChange = (setter, key, val) => {
+    if (isSubmitted) return;
+    setter(prev => ({ ...prev, [key]: val }));
+  };
+
+  const handleTestSelect = (setter, qKey, option) => {
+    if (isSubmitted) return;
+    setter(prev => ({ ...prev, [qKey]: option }));
+  };
 
   const handleSubmit = () => {
-    // 1. Allaqachon yuborilganini tekshirish
-    if (isSubmitted) {
-      toast.info("Siz allaqachon javob yuborgansiz.");
-      return;
-    }
+    if (isSubmitted) return toast.info("Siz allaqachon yuborgansiz.");
+    if (!userName.trim()) return toast.error("Ismingizni kiriting!");
 
-    // 2. Ism tekshiruvi
-    if (!userName.trim()) {
-      toast.error("Iltimos ismingizni kiriting!");
-      return;
-    }
-
-    // Javoblarni telegramga yuborish uchun tayyorlash
-    const userAnswers = {
-      "1. Critical Review": ans1 || 'no answer',
-      "2. Position Paper": ans2 || 'no answer',
-      "3. Debate Prep": ans3 || 'no answer',
-      "4. Creative Writing": ans4 || 'no answer',
-      "5. Letter to Author": ans6A || 'no answer',
-      "6. Letter to Character": ans6B || 'no answer'
-    };
-
-    // 🔹 Telegramga yuborish matni
-    let telegramText = `🧑‍🎓 Test natijalari
-👤 Ism: ${userName}
-📘 Level: Inferential
-📝 Task: Task 1.3
-📅 Sana: ${new Date().toLocaleString()}
-
-📊 Javoblar:\n`;
-
-    Object.entries(userAnswers).forEach(([key, val]) => {
-      telegramText += `${key}: ${val}\n`;
-    });
+    let telegramText = `🧑‍🎓 Level: Inferential\n👤 Ism: ${userName}\n\n`;
+    telegramText += `📊 T1 (Categorization): ${activeAns}, ${passiveAns}, ${calmAns}, ${fearfulAns}\n\n`;
+    telegramText += `📊 T2 (Internal): ${Object.values(feelings).join(', ')}\n\n`;
+    telegramText += `📊 T3 (Social): ${Object.values(socialGaps).join(', ')}\n\n`;
+    telegramText += `📊 T4 (Final Scene): ${Object.values(finalGaps).join(', ')}\n\n`;
+    telegramText += `📊 T5 (Dialogue): ${Object.values(testAnswers).join(', ')}\n\n`;
+    telegramText += `📊 T6 (Symbols): ${Object.values(symbolAnswers).join(', ')}`;
 
     sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
-
-    // 🔹 LocalStorage ga saqlash
-    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push({
-      user: userName,
-      answers: userAnswers,
-      level: 'Inferential',
-      taskType: 'Task 1.3',
-      date: new Date().toLocaleString()
-    });
-    localStorage.setItem('allTests', JSON.stringify(oldData));
-
-    toast.success("Natijalar yuborildi!");
-    setIsSubmitted(true); // Yuborilgan holatni tasdiqlash
+    toast.success("Barcha javoblar yuborildi!");
+    setIsSubmitted(true);
   };
 
-  const cellStyle = { 
-    lineHeight: '1.6', 
-    minHeight: '100px', 
-    display: 'flex', 
-    alignItems: 'center', 
-    padding: '15px 10px',
-    borderBottom: '1px solid #eee',
-    fontSize: '15px',
-    margin: '0'
-  };
-
-  const headerStyle = {
-    ...cellStyle,
-    fontWeight: 'bold',
-    backgroundColor: '#f1f2f6',
-    borderBottom: '2px solid #2f3542',
-    minHeight: '50px'
-  };
+  const headerStyle = { fontWeight: 'bold', backgroundColor: '#f1f2f6', borderBottom: '2px solid #2f3542', minHeight: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' };
+  const cellStyle = { minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px', borderBottom: '1px solid #eee' };
+  const passageInputStyle = { border: 'none', borderBottom: '2px solid', background: 'transparent', textAlign: 'center', outline: 'none', fontWeight: '500', fontSize: '16px' };
 
   return (
     <div data-aos="fade-left" className="tasks taskthree3">
-      <div className="taskthree3-card">
+      <div className="taskthree3-card" style={{padding: '30px', backgroundColor: '#fff', borderRadius: '20px'}}>
         
-        {/* TASK 1.3: Critical Review */}
-        <div className="taskthree3-question">
-          <h1>Instruction:</h1>
-          <p>Write a short critical review (250–350 words) of “The Last Night of the World” by Ray Bradbury. Your review must include an evaluation, supported by examples from the text. Avoid retelling the plot.</p>
-          <h3>Review Structure</h3>
-          <div className='jadval' style={{border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden'}}>
-            <div className='jadval-1'>
-              <h2 style={headerStyle}>Section</h2>
-              <h2 style={cellStyle}>Introduction</h2>
-              <h2 style={cellStyle}>The theme</h2>
-              <h2 style={cellStyle}>Character portrayal</h2>
-              <h2 style={cellStyle}>Style and Tone</h2>
-              <h2 style={cellStyle}>Personal response/conclusion</h2>
-            </div>
-            <div className="jadval-2">
-              <h2 style={headerStyle}>What to write</h2>
-              <h2 style={cellStyle}>State you overall judgement of the story</h2>
-              <h2 style={cellStyle}>Identify the central idea and explain how effectively Bradbury conveys them</h2>
-              <h2 style={cellStyle}>Evaluate how realistically and meaningfully the characters are represented</h2>
-              <h2 style={cellStyle}>Comment on Bradbury’s writing style (Simple? Poetic? Quiet?)</h2>
-              <h2 style={cellStyle}>Explain how the story effected you personally and why?</h2>
-            </div>
-            <div className="jadval-3">
-              <h2 style={headerStyle}>Evaluative Focus</h2>
-              <h2 style={cellStyle}>Is it powerful, meaningful and subtle?</h2>
-              <h2 style={cellStyle}>How well does the story express its message?</h2>
-              <h2 style={cellStyle}>Are their reactions believable? Emotionally moving?</h2>
-              <h2 style={cellStyle}>Does the tone enhance the emotional effect?</h2>
-              <h2 style={cellStyle}>What lasting effect does the story leave?</h2>
-            </div>
-          </div>
-          <textarea 
-            disabled={isSubmitted}
-            className='taskone3-input' 
-            placeholder='Write your review...' 
-            value={ans1} 
-            onChange={(e) => setAns1(e.target.value)}
-          ></textarea>
+        <div className="task-header" style={{textAlign: 'center', marginBottom: '40px'}}>
+            <h1 style={{color: '#2c3e50', fontSize: '26px'}}>Exercises for the story “The Last Night of the World”</h1>
+            <p style={{color: '#3498db', fontWeight: 'bold', fontSize: '20px'}}>Level: Inferential</p>
         </div>
 
-        {/* TASK 1.4: Position Paper */}
-        <div className="taskthree3-question">
-          <h1>Position Paper: Is the Couple’s Calm Response Justified?</h1>
-          <p>Write a position paper (300–400 words) defending your stance. Take a clear position → defend it → address opposing viewpoints.</p>
-          <div className='jadval' style={{border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden'}}>
-            <div className='jadval-1'>
-              <h2 style={headerStyle}>Section</h2>
-              <h2 style={cellStyle}>Claim (Thesis)</h2>
-              <h2 style={cellStyle}>Reasoning</h2>
-              <h2 style={cellStyle}>Support from text</h2>
-              <h2 style={cellStyle}>Counterargument</h2>
-              <h2 style={cellStyle}>Rebuttal</h2>
-              <h2 style={cellStyle}>Conclusion</h2>
-            </div>
-            <div className="jadval-2">
-              <h2 style={headerStyle}>What students do</h2>
-              <h2 style={cellStyle}>State your position clearly</h2>
-              <h2 style={cellStyle}>Explain why this view</h2>
-              <h2 style={cellStyle}>Use a scene, dialogue line, or behaviour as evidence</h2>
-              <h2 style={cellStyle}>Recognize an alternate interpretation</h2>
-              <h2 style={cellStyle}>Show why your stance is stronger or more valid</h2>
-              <h2 style={cellStyle}>Restate your final position</h2>
-            </div>
-            <div className="jadval-3">
-              <h2 style={headerStyle}>Evaluative level</h2>
-              <h2 style={cellStyle}>Judging/taking a stance</h2>
-              <h2 style={cellStyle}>Rational justification</h2>
-              <h2 style={cellStyle}>Using criteria to defend judgement</h2>
-              <h2 style={cellStyle}>Comparing viewpoints</h2>
-              <h2 style={cellStyle}>Defending evaluation</h2>
-              <h2 style={cellStyle}>Synthesis and evaluative closure</h2>
-            </div>
-          </div>
-          <textarea 
-            disabled={isSubmitted}
-            className='taskone3-input' 
-            placeholder='Write your position paper...' 
-            value={ans2} 
-            onChange={(e) => setAns2(e.target.value)}
-          ></textarea>
-        </div>
-
-        {/* Debate Preparation */}
-        <div className="taskthree3-question">
-          <h3>Debate Preparation Organizer:</h3>
-          <div className='jadval' style={{border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden'}}>
-            <div className='jadval-1'>
-              <h2 style={headerStyle}>Step</h2>
-              <h2 style={cellStyle}>Team thesis statement</h2>
-              <h2 style={cellStyle}>Three supporting arguments</h2>
-              <h2 style={cellStyle}>Textual evidence</h2>
-              <h2 style={cellStyle}>Counterargument strategy</h2>
-              <h2 style={cellStyle}>Rebuttal points</h2>
-            </div>
-            <div className="jadval-2">
-              <h2 style={headerStyle}>What students prepare</h2>
-              <h2 style={cellStyle}>Short, strong claim</h2>
-              <h2 style={cellStyle}>Based on text, psychology, or logic</h2>
-              <h2 style={cellStyle}>Lines of arguments or described actions</h2>
-              <h2 style={cellStyle}>What the other side might say</h2>
-              <h2 style={cellStyle}>How to weaken opposing claims</h2>
-            </div>
-            <div className="jadval-3">
-              <h2 style={headerStyle}>Purpose</h2>
-              <h2 style={cellStyle}>Establish stance</h2>
-              <h2 style={cellStyle}>Build case</h2>
-              <h2 style={cellStyle}>Ground argument</h2>
-              <h2 style={cellStyle}>Anticipate opposition</h2>
-              <h2 style={cellStyle}>Defend stance</h2>
-            </div>
-          </div>
-          <textarea 
-            disabled={isSubmitted}
-            className='taskone3-input' 
-            placeholder='Prepare your debate...' 
-            value={ans3} 
-            onChange={(e) => setAns3(e.target.value)}
-          ></textarea>
-        </div>
-
-        {/* Letters */}
-        <div className="taskthree3-question">
-          <h1>Letter of Appreciation (Choose Option A or B)</h1>
-          <div className='answer-1' style={{border: '1px solid orange', padding: '15px', borderRadius: '10px', marginBottom: '20px'}}>
-            <h3 style={{color: '#e67e22'}}>Option A — Letter to Ray Bradbury</h3>
-            <p style={{fontSize: '14px'}}>Explain: Emotional impression, moving details, what story says about life, and style appreciation.</p>
-            <textarea 
-                disabled={isSubmitted}
-                className='taskone3-input' 
-                placeholder='Letter to Author...' 
-                value={ans6A} 
-                onChange={(e) => setAns6A(e.target.value)}
-            ></textarea>
-          </div>
-          <div className='answer-1' style={{border: '1px solid #3498db', padding: '15px', borderRadius: '10px'}}>
-            <h3 style={{color: '#2980b9'}}>Option B — Letter to a Character</h3>
-            <p style={{fontSize: '14px'}}>Explain: Emotional state, how their calmness affected you, and lessons learned from them.</p>
-            <textarea 
-                disabled={isSubmitted}
-                className='taskone3-input' 
-                placeholder='Letter to Character...' 
-                value={ans6B} 
-                onChange={(e) => setAns6B(e.target.value)}
-            ></textarea>
+        {/* Task 1 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #3498db', paddingLeft: '15px'}}>Task 1. Categorise the characters into each of the following types: Active, Passive, Calm, and Fearful.</h3>
+          <div className='jadval' style={{border: '1px solid #ccc', borderRadius: '10px', overflow: 'hidden', display: 'flex', marginTop: '20px'}}>
+            <div style={{flex: 1, borderRight: '1px solid #ccc'}}><h2 style={headerStyle}>Active</h2><div style={cellStyle}><input className='taskone1-input' style={{width: '90%'}} disabled={isSubmitted} value={activeAns} onChange={(e) => setActiveAns(e.target.value)} /></div></div>
+            <div style={{flex: 1, borderRight: '1px solid #ccc'}}><h2 style={headerStyle}>Passive</h2><div style={cellStyle}><input className='taskone1-input' style={{width: '90%'}} disabled={isSubmitted} value={passiveAns} onChange={(e) => setPassiveAns(e.target.value)} /></div></div>
+            <div style={{flex: 1, borderRight: '1px solid #ccc'}}><h2 style={headerStyle}>Calm</h2><div style={cellStyle}><input className='taskone1-input' style={{width: '90%'}} disabled={isSubmitted} value={calmAns} onChange={(e) => setCalmAns(e.target.value)} /></div></div>
+            <div style={{flex: 1}}><h2 style={headerStyle}>Fearful</h2><div style={cellStyle}><input className='taskone1-input' style={{width: '90%'}} disabled={isSubmitted} value={fearfulAns} onChange={(e) => setFearfulAns(e.target.value)} /></div></div>
           </div>
         </div>
 
-        <div className="submit-area" style={{padding: '20px 0', textAlign: 'center'}}>
-          <input 
-            disabled={isSubmitted}
-            type="text" 
-            className="inp" 
-            placeholder='Your Name' 
-            value={userName} 
-            onChange={(e) => setUserName(e.target.value)} 
-          />
-          <button 
-            className='taskthree3-btn' 
-            onClick={handleSubmit}
-            style={{ 
-                display: 'block', 
-                margin: '20px auto 0 auto',
-                opacity: isSubmitted ? 0.7 : 1,
-                cursor: 'pointer'
-            }}
-          >
+        {/* Task 2 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #e67e22', paddingLeft: '15px'}}>Task 2. Fill in each blank with a phrase that expresses what the characters might be feeling or thinking.</h3>
+          <div style={{ lineHeight: '2.5', fontSize: '18px', backgroundColor: '#fffcf9', padding: '30px', borderRadius: '15px', border: '1px solid #ffe8cc', marginTop: '20px' }}>
+            The husband sat quietly with his coffee, watching the children play. He did not speak at first, because he was thinking about 
+            <input type="text" style={{...passageInputStyle, width: '220px', borderColor: '#e67e22', color: '#d35400'}} placeholder="(1)" value={feelings.q1} onChange={(e) => handleInputChange(setFeelings, 'q1', e.target.value)} disabled={isSubmitted} />. 
+            When he finally told his wife about the dream, he spoke calmly, almost gently, as if he did not want to disturb the peace of the evening. The wife listened without panic, perhaps because she sensed that 
+            <input type="text" style={{...passageInputStyle, width: '260px', borderColor: '#e67e22', color: '#d35400'}} placeholder="(2)" value={feelings.q2} onChange={(e) => handleInputChange(setFeelings, 'q2', e.target.value)} disabled={isSubmitted} />. 
+            She looked at her daughters, and instead of fear, she felt 
+            <input type="text" style={{...passageInputStyle, width: '180px', borderColor: '#e67e22', color: '#d35400'}} placeholder="(3)" value={feelings.q3} onChange={(e) => handleInputChange(setFeelings, 'q3', e.target.value)} disabled={isSubmitted} />, 
+            knowing that their night would remain ordinary. Later, when they washed the dishes together, they did not hurry or avoid silence. They moved slowly, carefully, as though 
+            <input type="text" style={{...passageInputStyle, width: '280px', borderColor: '#e67e22', color: '#d35400'}} placeholder="(4)" value={feelings.q4} onChange={(e) => handleInputChange(setFeelings, 'q4', e.target.value)} disabled={isSubmitted} />. 
+            And when the house became quiet, they both understood that there was nothing more to do than 
+            <input type="text" style={{...passageInputStyle, width: '220px', borderColor: '#e67e22', color: '#d35400'}} placeholder="(5)" value={feelings.q5} onChange={(e) => handleInputChange(setFeelings, 'q5', e.target.value)} disabled={isSubmitted} />.
+          </div>
+        </div>
+
+        {/* Task 3 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #3498db', paddingLeft: '15px'}}>Task 3. Filling the Social Gaps. Infer how the dream spread among people.</h3>
+          <div style={{ lineHeight: '2.5', fontSize: '18px', backgroundColor: '#f1f9ff', padding: '30px', borderRadius: '15px', border: '1px solid #d1e9ff', marginTop: '20px' }}>
+            The husband explained that he was not the only one who had the dream. At work, Stan Willis came in looking pale, and immediately the husband knew that 
+            <input type="text" style={{...passageInputStyle, width: '220px', borderColor: '#3498db', color: '#2980b9'}} placeholder="(1)" value={socialGaps.s1} onChange={(e) => handleInputChange(setSocialGaps, 's1', e.target.value)} disabled={isSubmitted} />. 
+            They exchanged only a few words — they didn’t need more — because each recognized 
+            <input type="text" style={{...passageInputStyle, width: '240px', borderColor: '#3498db', color: '#2980b9'}} placeholder="(2)" value={socialGaps.s2} onChange={(e) => handleInputChange(setSocialGaps, 's2', e.target.value)} disabled={isSubmitted} />. <br/><br/>
+            Meanwhile, the women in the neighborhood had also spoken about the dream. It spread quietly, not through news or officials, but through 
+            <input type="text" style={{...passageInputStyle, width: '240px', borderColor: '#3498db', color: '#2980b9'}} placeholder="(3)" value={socialGaps.s3} onChange={(e) => handleInputChange(setSocialGaps, 's3', e.target.value)} disabled={isSubmitted} />. 
+            No one tried to make an announcement or cause alarm, perhaps because they all understood that 
+            <input type="text" style={{...passageInputStyle, width: '280px', borderColor: '#3498db', color: '#2980b9'}} placeholder="(4)" value={socialGaps.s4} onChange={(e) => handleInputChange(setSocialGaps, 's4', e.target.value)} disabled={isSubmitted} />. 
+            Even the newspapers and radios said nothing, not out of ignorance but because 
+            <input type="text" style={{...passageInputStyle, width: '240px', borderColor: '#3498db', color: '#2980b9'}} placeholder="(5)" value={socialGaps.s5} onChange={(e) => handleInputChange(setSocialGaps, 's5', e.target.value)} disabled={isSubmitted} />.
+          </div>
+        </div>
+
+        {/* Task 4 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #9b59b6', paddingLeft: '15px'}}>Task 4. Filling the Final Moments Gaps. Infer what is unspoken in the final scene.</h3>
+          <div style={{ lineHeight: '2.5', fontSize: '18px', backgroundColor: '#fdfaff', padding: '30px', borderRadius: '15px', border: '1px solid #efdbff', marginTop: '20px' }}>
+            They climbed into bed without speaking. The wife remembered suddenly that she had left the water running in the kitchen, and she rose to turn it off. When she returned, they both laughed softly, because 
+            <input type="text" style={{...passageInputStyle, width: '220px', borderColor: '#9b59b6', color: '#8e44ad'}} placeholder="(1)" value={finalGaps.f1} onChange={(e) => handleInputChange(setFinalGaps, 'f1', e.target.value)} disabled={isSubmitted} />. 
+            They did not say any grand final statements, because 
+            <input type="text" style={{...passageInputStyle, width: '280px', borderColor: '#9b59b6', color: '#8e44ad'}} placeholder="(2)" value={finalGaps.f2} onChange={(e) => handleInputChange(setFinalGaps, 'f2', e.target.value)} disabled={isSubmitted} />. <br/><br/>
+            In the silence before sleep, each of them must have been thinking about 
+            <input type="text" style={{...passageInputStyle, width: '250px', borderColor: '#9b59b6', color: '#8e44ad'}} placeholder="(3)" value={finalGaps.f3} onChange={(e) => handleInputChange(setFinalGaps, 'f3', e.target.value)} disabled={isSubmitted} />. 
+            And when they closed their eyes, there was no fear, only 
+            <input type="text" style={{...passageInputStyle, width: '180px', borderColor: '#9b59b6', color: '#8e44ad'}} placeholder="(4)" value={finalGaps.f4} onChange={(e) => handleInputChange(setFinalGaps, 'f4', e.target.value)} disabled={isSubmitted} />, 
+            because they knew that 
+            <input type="text" style={{...passageInputStyle, width: '240px', borderColor: '#9b59b6', color: '#8e44ad'}} placeholder="(5)" value={finalGaps.f5} onChange={(e) => handleInputChange(setFinalGaps, 'f5', e.target.value)} disabled={isSubmitted} />.
+          </div>
+        </div>
+
+        {/* Task 5 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #ff4757', paddingLeft: '15px', marginBottom: '25px'}}>Task 5. Read each dialogue line and choose the best interpretation from the options provided.</h3>
+          {[
+            { id: 't1', q: "Husband: “What would you do if you knew this was the last night of the world?”", sub: "What is the husband actually trying to find out?", opts: ["Whether his wife would be frightened", "Whether she had the same dream and already knows", "Whether she wants to go outside", "Whether she is angry with him"] },
+            { id: 't2', q: "Wife: “I always thought I would be afraid, but I’m not.”", sub: "What does her reaction suggest?", opts: ["She does not believe the world will really end", "She has emotionally prepared for death long before", "She feels the end is natural and not something to resist", "She is hiding her fear to comfort her husband"] },
+            { id: 't3', q: "Husband: “It’s not a matter of deserving; things just didn’t work out.”", sub: "What does this imply about his view of humanity?", opts: ["Humans are guilty and deserve punishment", "The end is random and meaningless", "Life is neither reward nor punishment — it simply ends", "He is angry at the world"] },
+            { id: 't4', q: "Wife: “We haven’t been too bad, have we?”", sub: "Why does she ask this?", opts: ["She wants reassurance they lived a kind life", "She is asking whether people will remember them", "She is unsure if their children will forgive them", "She regrets not traveling more"] },
+            { id: 't5', q: "Husband describing the office: “Everyone was just sitting around, waiting.”", sub: "What does this behavior reveal?", opts: ["People are confused and need instructions", "The shared dream removed the purpose of working", "The workday was unusually quiet", "The office was preparing for a holiday"] }
+          ].map((item, idx) => (
+            <div key={item.id} style={{marginBottom: '25px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '12px', border: '1px solid #eee'}}>
+              <p style={{fontWeight: 'bold', fontSize: '17px'}}>{idx + 1}. {item.q}</p>
+              <p style={{fontSize: '15px', color: '#666', fontStyle: 'italic', marginBottom: '15px'}}>{item.sub}</p>
+              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+                {item.opts.map((opt, i) => (
+                  <button key={i} onClick={() => handleTestSelect(setTestAnswers, item.id, String.fromCharCode(65 + i))}
+                    style={{ padding: '12px', textAlign: 'left', borderRadius: '8px', border: '1px solid #ddd', backgroundColor: testAnswers[item.id] === String.fromCharCode(65 + i) ? '#ff4757' : '#fff', color: testAnswers[item.id] === String.fromCharCode(65 + i) ? '#fff' : '#333', cursor: 'pointer' }}>
+                    {String.fromCharCode(65 + i)}. {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Task 6 */}
+        <div className="task-section" style={{marginBottom: '50px'}}>
+          <h3 style={{borderLeft: '5px solid #2ecc71', paddingLeft: '15px', marginBottom: '25px'}}>Task 6. Symbol and image interpretation. Identify what each symbol represents.</h3>
+          {[
+            { id: 's1', q: "1. The Coffee Cups", sub: "The husband and wife calmly drink coffee together. What does this symbolize?", opts: ["They are too tired to react emotionally", "They are trying to avoid thinking about reality", "They are accepting the end with peace and normalcy", "They are pretending everything is fine to fool the children"] },
+            { id: 's2', q: "2. The Children Playing on the Rug", sub: "The daughters play quietly, unaware of anything unusual. What do they represent?", opts: ["The future of humanity", "Innocence untouched by fear or knowledge", "Anxiety disguised as play", "A reminder of responsibility and guilt"] },
+            { id: 's3', q: "3. The Shared Dream", sub: "Everyone has the same dream about the end of the world. What does the dream symbolize?", opts: ["A government announcement", "A collective imagination", "A universal human intuition or acceptance", "A shared hallucination caused by stress"] },
+            { id: 's4', q: "4. Washing the Dishes", sub: "The couple washes the dishes together as usual. This action suggests:", opts: ["They are trying to distract themselves", "They value simple shared routines even at the end", "They are in denial", "They are trying to appear normal for neighbors"] },
+            { id: 's5', q: "5. The Running Water in the Sink", sub: "The wife returns to turn off the water she forgot. What does this symbolize?", opts: ["Fear disguised as humor", "Awareness that they should conserve resources", "The persistence of gentle human habits even at the end of life", "Confusion and loss of control"] },
+            { id: 's6', q: "6. The Kiss Before Bed", sub: "The husband kisses his wife quietly before sleep. What does the kiss symbolize?", opts: ["A final goodbye full of fear", "Ordinary love continuing even during extraordinary circumstances", "A ritual meant to avoid thinking about death", "Regret for the past"] }
+          ].map((item, idx) => (
+            <div key={item.id} style={{marginBottom: '25px', padding: '20px', backgroundColor: '#f0fcf4', borderRadius: '12px', border: '1px solid #e0f2e9'}}>
+              <p style={{fontWeight: 'bold', fontSize: '17px'}}>{item.q}</p>
+              <p style={{fontSize: '15px', color: '#666', fontStyle: 'italic', marginBottom: '15px'}}>{item.sub}</p>
+              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+                {item.opts.map((opt, i) => (
+                  <button key={i} onClick={() => handleTestSelect(setSymbolAnswers, item.id, String.fromCharCode(65 + i))}
+                    style={{ padding: '12px', textAlign: 'left', borderRadius: '8px', border: '1px solid #ddd', backgroundColor: symbolAnswers[item.id] === String.fromCharCode(65 + i) ? '#2ecc71' : '#fff', color: symbolAnswers[item.id] === String.fromCharCode(65 + i) ? '#fff' : '#333', cursor: 'pointer' }}>
+                    {String.fromCharCode(65 + i)}. {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Submit Area */}
+        <div className="submit-area" style={{padding: '40px 0', textAlign: 'center', borderTop: '2px solid #eee'}}>
+          <input disabled={isSubmitted} type="text" className="inp" placeholder='Enter your name' value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <button className='taskthree3-btn' onClick={handleSubmit} style={{ display: 'block', margin: '25px auto 0 auto', opacity: isSubmitted ? 0.7 : 1, cursor: isSubmitted ? 'default' : 'pointer' }}>
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>
         </div>

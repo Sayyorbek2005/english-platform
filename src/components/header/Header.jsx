@@ -12,7 +12,7 @@ const Header = () => {
             <h2 >English Platform</h2>
 
             <div className="admin display-flex" data-aos="fade-left">
-              <button className='header-btn'>Teacher</button>
+            {/*   <button className='header-btn'>Teacher</button> */}
             </div>
 
         </header>

@@ -8,203 +8,161 @@ import { BOT_1 } from '../../../../telegramConfig'
 const Taskfour4 = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false); // Yuborilganlik holati
+  const [isSubmitted, setIsSubmitted] = useState(false);
   
-  // Bo'shliqlar uchun statelar
-  const [task3Inputs, setTask3Inputs] = useState([]);
-  const [task4Inputs, setTask4Inputs] = useState([]);
-  const [task5Inputs, setTask5Inputs] = useState([]);
-  
-  // Testlar (Multiple choice) uchun state
-  const [testAnswers, setTestAnswers] = useState({});
-
-  const answers1 = [{
-    id: 1,
-    narrit: 'Narrative gap-filling exercises. ',
-    task3: 'Task 3. Filling the emotional gaps. ',
-    text: 'Fill in each blank with a phrase that expresses what the characters might be feeling or thinking.',
-    question: `The husband sat quietly with his coffee, watching the children play. He did not speak at first, because he was thinking about  __________. When he finally told his wife about the dream, he spoke calmly, almost gently, as if he did not want to disturb the peace of the evening. The wife listened without panic, perhaps because she sensed that  __________. She looked at her daughters, and instead of fear, she felt  __________, knowing that their night would remain ordinary. Later, when they washed the dishes together, they did not hurry or avoid silence. They moved slowly, carefully, as though  __________. And when the house became quiet, they both understood that there was nothing more to do than  __________.`
-  }];
-
-  const answers2 = [{
-    id: 1,
-    task: 'Task 4. Filling the Social Gaps',
-    infer: 'Infer how the dream spread among people.',
-    question: `The husband explained that he was not the only one who had the dream. At work, Stan Willis came in looking pale, and immediately the husband knew that  __________. They exchanged only a few words — they didn’t need more — because each recognized  __________. Meanwhile, the women in the neighborhood had also spoken about the dream. It spread quietly, not through news or officials, but through  __________. No one tried to make an announcement or cause alarm, perhaps because they all understood that  __________. Even the newspapers and radios said nothing, not out of ignorance but because  __________.`
-  }];
-
-  const answers3 = [{
-    id: 1,
-    task: 'Task 5. Filling the Final Moments Gaps',
-    infer: 'Infer what is unspoken in the final scene.',
-    question: `They climbed into bed without speaking. The wife remembered suddenly that she had left the water running in the kitchen, and she rose to turn it off. When she returned, they both laughed softly, because  __________. The lights were off, but they could still sense each other’s presence, hands finding hands in the dark. They did not say any grand final statements, because  __________. Instead, their goodnight was simple and familiar, just as it had always been. In the silence before sleep, each of them must have been thinking about  __________. And when they closed their eyes, there was no fear, only  __________, because they knew that  __________.`
-  }];
-
-  const task6Questions = [
-    { id: 1, q: 'What is the husband actually trying to find out?', options: { A: 'Whether his wife would be frightened', B: 'Whether she had the same dream and already knows', C: 'Whether she wants to go outside', D: 'Whether she is angry with him' } },
-    { id: 2, q: 'What does her reaction suggest?', options: { A: 'She does not believe the world will really end', B: 'She has emotionally prepared for death long before', C: 'She feels the end is natural and not something to resist', D: 'She is hiding her fear to comfort her husband' } }
-  ];
-
-  const renderWithInputs = (text, inputs, setInputs) => {
-    const parts = text.split('__________');
-    return parts.map((part, index) => (
-      <span key={index}>
-        {part}
-        {index < parts.length - 1 && (
-          <input
-            disabled={isSubmitted} // Yuborilgandan keyin bloklash
-            type="text"
-            className="taskfour-input"
-            placeholder={`(${index + 1})`}
-            value={inputs[index] || ''}
-            onChange={(e) => {
-              const newInputs = [...inputs];
-              newInputs[index] = e.target.value;
-              setInputs(newInputs);
-            }}
-          />
-        )}
-      </span>
-    ));
-  };
+  const [task1Review, setTask1Review] = useState('');
+  const [task2Position, setTask2Position] = useState('');
+  const [task3Essay, setTask3Essay] = useState('');
 
   const handleSubmit = () => {
-    if (isSubmitted) {
-      toast.info("Siz allaqachon javob yuborgansiz.");
-      return;
-    }
-    if (!userName.trim()) {
-      toast.error("Iltimos ismingizni kiriting!");
-      return;
+    if (isSubmitted) return toast.info("Siz allaqachon javob yuborgansiz.");
+    if (!userName.trim()) return toast.error("Iltimos ismingizni kiriting!");
+    if (!task1Review.trim() || !task2Position.trim() || !task3Essay.trim()) {
+      return toast.error("Iltimos barcha topshiriqlarni to'liq to'ldiring!");
     }
 
-    const finalAnswers = {
-      "Task 3 (Emotional)": task3Inputs.join(', ') || 'No answer',
-      "Task 4 (Social)": task4Inputs.join(', ') || 'No answer',
-      "Task 5 (Final)": task5Inputs.join(', ') || 'No answer',
-      "Task 6 (Test Q1)": testAnswers.Q1 || 'No answer',
-      "Task 6 (Test Q2)": testAnswers.Q2 || 'No answer'
-    };
+    let telegramText = `🧑‍🎓 EVALUATIVE LEVEL RESULTS\n👤 Ism: ${userName}\n\n`;
+    telegramText += `📝 TASK 1 (Critical Review):\n${task1Review}\n\n`;
+    telegramText += `📝 TASK 2 (Position Paper):\n${task2Position}\n\n`;
+    telegramText += `📝 TASK 3 (Critical Essay):\n${task3Essay}`;
 
-    // 🔹 Telegramga yuborish
-    let telegramText = `🧑‍🎓 Test natijalari
-👤 Ism: ${userName}
-📘 Level: Evaluative
-📝 Task: Task 1.4-1.6
-📅 Sana: ${new Date().toLocaleString()}
-
-📊 Javoblar:\n`;
-    Object.entries(finalAnswers).forEach(([key, val]) => {
-      telegramText += `${key}: ${val}\n`;
-    });
     sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
-
-    const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-    oldData.push({
-      user: userName,
-      answers: finalAnswers,
-      level: 'Evaluative',
-      taskType: 'Task 1.4-1.6',
-      date: new Date().toLocaleString()
-    });
-    localStorage.setItem('allTests', JSON.stringify(oldData));
-
-    toast.success("Javoblar yuborildi!");
+    toast.success("Barcha javoblar muvaffaqiyatli yuborildi!");
     setIsSubmitted(true);
   };
+
+  const tableStyle = { width: '100%', borderCollapse: 'collapse', backgroundColor: '#fff', fontSize: '14px' };
+  const tdStyle = { padding: '12px', border: '1px solid #dee2e6' };
+  const thStyle = { padding: '12px', border: '1px solid #dee2e6', backgroundColor: '#f1f2f6', textAlign: 'left' };
+  const textareaStyle = { width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #d1d8e0', outline: 'none', fontFamily: 'inherit', marginTop: '15px' };
 
   return (
     <div data-aos="fade-left" className="tasks taskfour4">
       <div className="taskfour4-card">
         
-        {/* TASK 3 */}
-        {answers1.map(item => (
-          <div key={item.id} className="taskfour4-question">
-            <div className="answer-1">
-              <h3>{item.narrit}</h3>
-              <h3>{item.task3}</h3>
-              <p>{item.text}</p>
-            </div>
-            <h2 className="passage-text">
-              {renderWithInputs(item.question, task3Inputs, setTask3Inputs)}
-            </h2>
-          </div>
-        ))}
-
-        {/* TASK 4 */}
-        {answers2.map(item => (
-          <div key={item.id} className="taskfour4-question">
-            <div className="answer-1">
-              <h3>{item.task}</h3>
-              <p>{item.infer}</p>
-            </div>
-            <h2 className="passage-text">
-              {renderWithInputs(item.question, task4Inputs, setTask4Inputs)}
-            </h2>
-          </div>
-        ))}
-
-        {/* TASK 5 */}
-        {answers3.map(item => (
-          <div key={item.id} className="taskfour4-question">
-            <div className="answer-1">
-              <h3>{item.task}</h3>
-              <p>{item.infer}</p>
-            </div>
-            <h2 className="passage-text">
-              {renderWithInputs(item.question, task5Inputs, setTask5Inputs)}
-            </h2>
-          </div>
-        ))}
-
-        {/* TEST SECTION */}
-        <div className="test-section">
-          <h3 className="test-title">Task 6. Dialogue interpretation</h3>
-          {task6Questions.map((item) => (
-            <div key={item.id} className="test-block">
-              <p><b>{item.id}. {item.q}</b></p>
-              <div className="options-grid">
-                {Object.entries(item.options).map(([key, val]) => (
-                  <label key={key} className="radio-option" style={{ cursor: isSubmitted ? 'default' : 'pointer' }}>
-                    <input 
-                      disabled={isSubmitted}
-                      type="radio" 
-                      name={`question-${item.id}`} 
-                      onChange={() => setTestAnswers({...testAnswers, [`Q${item.id}`]: key})} 
-                    />
-                    <span>{key}) {val}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="answer-1" style={{textAlign: 'center', marginBottom: '40px'}}>
+            <h2 style={{color: '#2c3e50', fontSize: '26px'}}>The Last Night of the World</h2>
+            <h3 style={{color: '#e67e22', marginTop: '10px'}}>Evaluative Level Assessment</h3>
         </div>
 
-        <div className="submit-area" style={{textAlign: 'center', marginTop: '30px'}}>
+        {/* --- TASK 1 --- */}
+        <div style={{marginBottom: '60px'}}>
+            <div style={{marginBottom: '20px', padding: '15px', borderLeft: '5px solid #3498db', backgroundColor: '#f0f7ff'}}>
+                <h4 style={{margin: '0 0 10px 0'}}>Task 1. Write a short critical review (250–350 words) of “The Last Night of the World” by Ray Bradbury.</h4>
+                <p style={{margin: '0', color: '#555'}}>Your review must include an evaluation, supported by examples from the text. Avoid retelling the plot.</p>
+            </div>
+
+            <div style={{overflow: 'hidden', borderRadius: '12px', border: '1px solid #dee2e6'}}>
+                <table style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th style={thStyle}>Section</th>
+                            <th style={thStyle}>What to write</th>
+                            <th style={thStyle}>Evaluative Focus & Your Input</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style={tdStyle}><strong>1. Introduction</strong></td><td style={tdStyle}>State your overall judgement of the story</td><td style={tdStyle}>Is it powerful, meaningful and subtle?</td></tr>
+                        <tr><td style={tdStyle}><strong>2. The theme</strong></td><td style={tdStyle}>Identify the central idea and explain how effectively Bradbury conveys them</td><td style={tdStyle}>How well does the story express its message?</td></tr>
+                        <tr><td style={tdStyle}><strong>3. Character portrayal</strong></td><td style={tdStyle}>Evaluate how realistically and meaningfully the characters are represented</td><td style={tdStyle}>Are their reactions believable? Emotionally moving?</td></tr>
+                        <tr><td style={tdStyle}><strong>4. Style and Tone</strong></td><td style={tdStyle}>Comment on Bradbury’s writing style (Simple? Poetic? Quiet?)</td><td style={tdStyle}>Does the tone enhance the emotional effect?</td></tr>
+                        <tr><td style={tdStyle}><strong>5. Conclusion</strong></td><td style={tdStyle}>Explain how the story effected you personally and why?</td><td style={tdStyle}>What lasting effect does the story leave?</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <textarea 
+                placeholder="Write your critical review here..." 
+                style={{...textareaStyle, minHeight: '220px'}}
+                disabled={isSubmitted} value={task1Review}
+                onChange={(e) => setTask1Review(e.target.value)}
+            />
+        </div>
+
+        {/* --- TASK 2 --- */}
+        <div style={{marginBottom: '60px'}}>
+            <div style={{marginBottom: '20px', padding: '15px', borderLeft: '5px solid #e67e22', backgroundColor: '#fff9f4'}}>
+                <h4 style={{margin: '0 0 10px 0'}}>Task 2. Position Paper: Is the Couple’s Calm Response Justified?</h4>
+                <p style={{margin: '0', color: '#555'}}>Write a position paper (300–400 words) defending your stance. Take a clear position → defend it → address opposing viewpoints.</p>
+            </div>
+
+            <div style={{overflow: 'hidden', borderRadius: '12px', border: '1px solid #dee2e6'}}>
+                <table style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th style={thStyle}>Section</th>
+                            <th style={thStyle}>What students do</th>
+                            <th style={thStyle}>Evaluative level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style={tdStyle}><strong>Claim (Thesis)</strong></td><td style={tdStyle}>State your position clearly</td><td style={tdStyle}>Judging/taking a stance</td></tr>
+                        <tr><td style={tdStyle}><strong>Reasoning</strong></td><td style={tdStyle}>Explain why this view</td><td style={tdStyle}>Rational justification</td></tr>
+                        <tr><td style={tdStyle}><strong>Support from text</strong></td><td style={tdStyle}>Use a scene, dialogue line, or behaviour as evidence</td><td style={tdStyle}>Using criteria to defend judgement</td></tr>
+                        <tr><td style={tdStyle}><strong>Counterargument</strong></td><td style={tdStyle}>Recognize an alternate interpretation</td><td style={tdStyle}>Comparing viewpoints</td></tr>
+                        <tr><td style={tdStyle}><strong>Rebuttal</strong></td><td style={tdStyle}>Show why your stance is stronger or more valid</td><td style={tdStyle}>Defending evaluation</td></tr>
+                        <tr><td style={tdStyle}><strong>Conclusion</strong></td><td style={tdStyle}>Restate your final position</td><td style={tdStyle}>Synthesis and evaluative closure</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <textarea 
+                placeholder="Write your position paper here..." 
+                style={{...textareaStyle, minHeight: '220px'}}
+                disabled={isSubmitted} value={task2Position}
+                onChange={(e) => setTask2Position(e.target.value)}
+            />
+        </div>
+
+        {/* --- TASK 3 --- */}
+        <div style={{marginBottom: '40px'}}>
+            <div style={{marginBottom: '20px', padding: '15px', borderLeft: '5px solid #27ae60', backgroundColor: '#f1fcf4'}}>
+                <h4 style={{margin: '0 0 10px 0'}}>Task 3. Critical Essay (350–500 words)</h4>
+                <p style={{margin: '0', color: '#555'}}>Evaluate the effectiveness of Ray Bradbury’s use of ordinary domestic actions to express calm acceptance.</p>
+            </div>
+
+            <div style={{overflow: 'hidden', borderRadius: '12px', border: '1px solid #dee2e6'}}>
+                <table style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th style={thStyle}>Section</th>
+                            <th style={thStyle}>What to write</th>
+                            <th style={thStyle}>Evaluative work expected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style={tdStyle}><strong>Introduction</strong></td><td style={tdStyle}>Present your thesis: Is the calm, ordinary ending effective?</td><td style={tdStyle}>Make a judgment.</td></tr>
+                        <tr><td style={tdStyle}><strong>Body paragraph 1</strong></td><td style={tdStyle}>Discuss one ordinary action (e.g., drinking coffee)</td><td style={tdStyle}>Explain how it conveys meaning</td></tr>
+                        <tr><td style={tdStyle}><strong>Body paragraph 2</strong></td><td style={tdStyle}>Discuss another everyday moment (washing dishes/bedtime)</td><td style={tdStyle}>Evaluate emotional impact.</td></tr>
+                        <tr><td style={tdStyle}><strong>Counterpoint</strong></td><td style={tdStyle}>Consider different interpretation (e.g., "unrealistic")</td><td style={tdStyle}>Compare viewpoints.</td></tr>
+                        <tr><td style={tdStyle}><strong>Conclusion</strong></td><td style={tdStyle}>Reaffirm evaluation and lasting effect</td><td style={tdStyle}>Synthesize insight.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <textarea 
+                placeholder="Write your critical essay here..." 
+                style={{...textareaStyle, minHeight: '280px'}}
+                disabled={isSubmitted} value={task3Essay}
+                onChange={(e) => setTask3Essay(e.target.value)}
+            />
+        </div>
+
+        {/* SUBMIT AREA */}
+        <div className="submit-area" style={{textAlign: 'center', marginTop: '40px'}}>
           <input 
-            disabled={isSubmitted}
-            type="text" 
-            className="inp" 
-            placeholder='What is your name ?' 
-            value={userName}
+            disabled={isSubmitted} type="text" className="inp" 
+            placeholder='What is your name ?' value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
           <button 
-            className='taskfour4-btn' 
-            onClick={handleSubmit} 
-            style={{
-                display: 'block', 
-                margin: '20px auto',
-                opacity: isSubmitted ? 0.7 : 1,
-                cursor: 'pointer'
-            }}
+            className='taskfour4-btn' onClick={handleSubmit} 
+            style={{ display: 'block', margin: '25px auto', opacity: isSubmitted ? 0.7 : 1, cursor: 'pointer' }}
           >
             {isSubmitted ? "Yuborildi" : "Yuborish"}
           </button>
         </div>
+
       </div>
     </div>
   )
 }
 
-export default Taskfour4
+export default Taskfour4;

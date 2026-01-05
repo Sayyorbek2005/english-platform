@@ -30,12 +30,5 @@
     justify-content: center;
     gap: 50px;
 }
-.taskfive-question ul li {
-    transition: all .2s ease-in-out;
-    font-size: var(--font-size-20);
-    padding: 5px;
-}
 
-.taskfive-question ul li:hover {
-    color: #3498db;
-}
+

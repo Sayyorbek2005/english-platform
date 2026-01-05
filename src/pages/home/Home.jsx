@@ -18,7 +18,7 @@ const Home = () => {
       <div className="home-text">   
       <h2>Welcome to Our Learning Platform</h2>
       <p>
-        Explore a variety of educational resources and enhance your knowledge with our curated content. Whether you're looking for books, articles, or interactive lessons, we've got you covered. Dive in and start learning today!
+        Engage with thoughtfully selected texts and structured activities designed in accordance with Barrett’s Taxonomy of Reading Comprehension. The platform supports the gradual development of reading skills, guiding learners from literal understanding to interpretation, evaluation, and appreciative response. Begin your journey toward deeper and more critical reading. or interactive lessons, we've got you covered. Dive in and start learning today!
       </p>
       </div>
       </div>

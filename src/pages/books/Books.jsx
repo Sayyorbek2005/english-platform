@@ -1,22 +1,15 @@
 import './books.css'
 import { FaArrowDown } from "react-icons/fa";
-
 import { useState } from 'react'
+import { jsPDF } from "jspdf"; // 1. Import qilishni unutmang
+
 const Books1 = () => {
-
-  const[books, setBooks] = useState([
+  const [books, setBooks] = useState([
     {
-      id:1,
-      books:` THE JURYMAN by J.Glastworthy`,
-
-
-      bookss:`“Don't you see, brother, I was reading yesterday the Gospel
-     about Christ, the little Father; how He suffered, how He walked
-     on the earth.  I suppose you have heard about it?”
-     “Indeed, I have,” replied Stepanuitch; “but we are people in
-     darkness; we can't read.”—TOLSTOI.`,
-
-      booksss:`Mr. Henry Bosengate, of the London Stock Exchange, seated himself in his car that morning during the great war with a sense of injury. Major in a Volunteer Corps; member of all the local committees; lending this very car to the neighbouring hospital, at times even driving it himself for their benefit; subscribing to funds, so far as his diminished income permitted—he was conscious of being an asset to the country, and one whose time could not be wasted with impunity. To be summoned to sit on a jury at the local assizes, and not even the grand jury at that! It was in the nature of an outrage.
+      id: 1,
+      books: `THE JURYMAN by J.Glastworthy`,
+      bookss: `“Don't you see, brother, I was reading yesterday the Gospel about Christ, the little Father; how He suffered, how He walked on the earth. I suppose you have heard about it?” “Indeed, I have,” replied Stepanuitch; “but we are people in darkness; we can't read.”—TOLSTOI.`,
+      booksss: `Mr. Henry Bosengate, of the London Stock Exchange, seated himself in his car that morning during the great war with a sense of injury. Major in a Volunteer Corps; member of all the local committees; lending this very car to the neighbouring hospital, at times even driving it himself for their benefit; subscribing to funds, so far as his diminished income permitted—he was conscious of being an asset to the country, and one whose time could not be wasted with impunity. To be summoned to sit on a jury at the local assizes, and not even the grand jury at that! It was in the nature of an outrage.
 Strong and upright, with hazel eyes and dark eyebrows, pinkish-brown cheeks, a forehead white, well-shaped, and getting high, with greyish hair glossy and well-brushed, and a trim moustache, he might have been taken for that colonel of Volunteers which indeed he was in a fair way of becoming.
 His wife had followed him out under the porch, and stood bracing her supple body clothed in lilac linen. Red rambler roses formed a sort of crown to her dark head; her ivory-coloured face had in it just a suggestion of the Japanese.
 Mr. Bosengate spoke through the whirr of the engine:
@@ -119,30 +112,84 @@ With a sort of vehemence the single word “No” passed out. A faint, a quizzic
 “I want—I must—Kathleen, I—-”
 She lifted her shoulders again in that little shrug. “Yes—I know; all right!”
 A wave of heat and shame, and of God knows what came over Mr. Bosengate; he fell on his knees and pressed his forehead to her arm; and he was silent, more silent than the grave. Nothing—nothing came from him but two long sighs. Suddenly he felt her hand stroke his cheek—compassionately, it seemed to him. She made a little movement towards him; her lips met his, and he remembered nothing but that....
-In his own room Mr. Bosengate sat at his wide open window, smoking a cigarette; there was no light. Moths went past, the moon was creeping up. He sat very calm, puffing the smoke out in to the night air. Curious thing-life! Curious world! Curious forces in it—making one do the opposite of what one wished; always—always making one do the opposite, it seemed! The furtive light from that creeping moon was getting hold of things down there, stealing in among the boughs of the trees. 'There's something ironical,' he thought, 'which walks about. Things don't come off as you think they will. I meant, I tried but one doesn't change like that all of a sudden, it seems. Fact is, life's too big a thing for one! All the same, I'm not the man I was yesterday—not quite!' He closed his eyes, and in one of those flashes of vision which come when the senses are at rest, he saw himself as it were far down below—down on the floor of a street narrow as a grave, high as a mountain, a deep dark slit of a street walking down there, a black midget of a fellow, among other black midgets—his wife, and the little soldier, the judge, and those jury chaps—fantoches straight up on their tiny feet, wandering down there in that dark, infinitely tall, and narrow street. 'Too much for one!' he thought; 'Too high for one—no getting on top of it. We've got to be kind, and help one another, and not expect too much, and not think too much. That's—all!' And, squeezing out his cigarette, he took six deep breaths of the night air, and got into bed.`
+In his own room Mr. Bosengate sat at his wide open window, smoking a cigarette; there was no light. Moths went past, the moon was creeping up. He sat very calm, puffing the smoke out in to the night air. Curious thing-life! Curious world! Curious forces in it—making one do the opposite of what one wished; always—always making one do the opposite, it seemed! The furtive light from that creeping moon was getting hold of things down there, stealing in among the boughs of the trees. 'There's something ironical,' he thought, 'which walks about. Things don't come off as you think they will. I meant, I tried but one doesn't change like that all of a sudden, it seems. Fact is, life's too big a thing for one! All the same, I'm not the man I was yesterday—not quite!' He closed his eyes, and in one of those flashes of vision which come when the senses are at rest, he saw himself as it were far down below—down on the floor of a street narrow as a grave, high as a mountain, a deep dark slit of a street walking down there, a black midget of a fellow, among other black midgets—his wife, and the little soldier, the judge, and those jury chaps—fantoches straight up on their tiny feet, wandering down there in that dark, infinitely tall, and narrow street. 'Too much for one!' he thought; 'Too high for one—no getting on top of it. We've got to be kind, and help one another, and not expect too much, and not think too much. That's—all!' And, squeezing out his cigarette, he took six deep breaths of the night air, and got into bed.
+` 
+      
     }
   ])
 
+  const generatePDF = (item) => {
+    const doc = new jsPDF();
+    const margin = 20;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const maxWidth = pageWidth - (margin * 2);
+    
+    let cursorY = 20;
+    const lineHeight = 7;
+
+    // 1. Sarlavha (books)
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text(item.books, margin, cursorY);
+    cursorY += 15;
+
+    // 2. Iqtibos qismi (bookss) - Kursivda
+    doc.setFont("times", "italic");
+    doc.setFontSize(11);
+    const splitQuote = doc.splitTextToSize(item.bookss, maxWidth);
+    
+    splitQuote.forEach(line => {
+      if (cursorY > pageHeight - margin) {
+        doc.addPage();
+        cursorY = margin;
+      }
+      doc.text(line, margin, cursorY);
+      cursorY += 6;
+    });
+    cursorY += 10;
+
+    // 3. Asosiy matn (booksss)
+    doc.setFont("times", "normal");
+    doc.setFontSize(12);
+    const splitMainText = doc.splitTextToSize(item.booksss, maxWidth);
+
+    splitMainText.forEach(line => {
+      if (cursorY > pageHeight - margin) {
+        doc.addPage();
+        cursorY = margin;
+      }
+      doc.text(line, margin, cursorY);
+      cursorY += lineHeight;
+    });
+
+    // Yuklab olish
+    doc.save(`${item.books.substring(0, 15)}.pdf`);
+  };
+
   return (
     <div data-aos="fade-left" className="book background">
-
       <div className="book-card">
-        {books.map((item, index) =>(
-          <div className="book-question">
+        {books.map((item, index) => (
+          <div key={item.id} className="book-question">
             <h2>{item.books}</h2><br />
             <h4>{item.bookss}</h4><br />
             <h3>{item.booksss}</h3>
+            
+            {/* Har bir kitob uchun alohida tugma */}
+            <button 
+              className='book-btn' 
+              onClick={() => generatePDF(item)}
+            >
+             PDF yuklab olish
+            </button>
           </div>
         ))}
+        
         <div className="arrowBottom">
           <FaArrowDown />
-
         </div>
-
       </div>
-
-
-
     </div>
   )
 }

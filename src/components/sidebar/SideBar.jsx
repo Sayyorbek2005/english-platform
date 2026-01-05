@@ -16,43 +16,43 @@ const SideBar = () => {
             className={({ isActive }) => isActive ? "active" : ""}
             end
           >
-            <li>Sahifa</li>
+            <li>Page</li>
           </NavLink>
 
           <NavLink 
             to="books"
             className={({ isActive }) => isActive ? "active" : ""}
           >
-            <li>1-kitob</li>
+            <li>Book 1</li>
           </NavLink>
 
           <NavLink 
             to="twobook"
             className={({ isActive }) => isActive ? "active" : ""}
           >
-            <li>2-kitob</li>
+            <li>Book 2</li>
           </NavLink>
 
           <NavLink 
             to="test1"
             className={({ isActive }) => isActive ? "active" : ""}
           >
-            <li>1-test</li>
+            <li>Test 1</li>
           </NavLink>
 
           <NavLink 
             to="test2"
             className={({ isActive }) => isActive ? "active" : ""}
           >
-            <li>2-test</li>
+            <li>Test 2</li>
           </NavLink>
-
+{/* 
           <NavLink 
             to="teacher"
             className={({ isActive }) => isActive ? "active" : ""}
           >
             <li>Teacher</li>
-          </NavLink>
+          </NavLink> */}
         </ul>
       </div>
     </div>
