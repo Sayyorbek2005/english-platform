@@ -4,8 +4,7 @@ const Test2 = () => {
     return (
         <div data-aos="fade-left" className="test">
             <h1>Exercises for the story “The Last Night of the World” by R.Bradbury
-                Week 1 exercises.
-
+               
             </h1>
             <div className="cardlar">
                 <div className="qator-1">

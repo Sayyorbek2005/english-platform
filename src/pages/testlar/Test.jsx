@@ -9,7 +9,7 @@ const Test = () => {
     <div data-aos="fade-left" className="test">
       <h1>Exercises based on the story “The Juryman” by J. Glastworthy
 
-        Week I. Pre-reading activities. Vocabulary exercises
+      
       </h1>
       <div className="cardlar">
         <div className="qator-1">

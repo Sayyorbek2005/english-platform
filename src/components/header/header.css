@@ -11,8 +11,8 @@ header {
    background-color: var(--color-white);
    color: var(--color-black);
    box-shadow: 0 4px 8px rgba(203, 194, 194, 0.2);
-
- 
+   /* text-align: center; */
+   justify-content: center !important;
    
 }
 

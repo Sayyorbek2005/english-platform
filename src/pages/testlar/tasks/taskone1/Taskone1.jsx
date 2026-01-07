@@ -1,63 +1,112 @@
 import './taskone1.css'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { sendToTelegram } from "../../../../telegram"; // Telegram funksiyasi
-import { BOT_1 } from "../../../../telegramConfig"; // Siz yaratgan BOT1
+import { sendToTelegram } from "../../../../telegram"; 
+import { BOT_1 } from "../../../../telegramConfig"; 
 
 const Taskone1 = () => {
     const [userName, setUserName] = useState('');
     const [allAnswers, setAllAnswers] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const [answers] = useState([
-        {
-            id: 1,
-            task1: 'Task1. Decide whether each statement is True, False, or Not Given based on the story.',
-            questionA: 'The story takes place on the evening of October 19, 1969. (True/False/Not Given)',
-            questionB: 'The husband and wife have two young daughters in the story. (True/False/Not Given)',
-            questionC: 'The world is ending because of a nuclear war in the story. (True/False/Not Given)',
-            questionD: 'The parents let their children stay up late instead of following their usual bedtime routine. (True/False/Not Given)',
-            questionE: 'The story clearly explains why the world is ending on that night. (True/False/Not Given)'
-        }
-    ])
+    const task1Questions = [
+        { id: 'T1_1', text: 'The story takes place on the evening of October 19, 1969.' },
+        { id: 'T1_2', text: 'The husband and wife have two young daughters in the story.' },
+        { id: 'T1_3', text: 'The world is ending because of a nuclear war in the story.' },
+        { id: 'T1_4', text: 'The parents let their children stay up late instead of following their usual bedtime routine.' },
+        { id: 'T1_5', text: 'The story clearly explains why the world is ending on that night.' }
+    ];
 
-    const [answerstwo] = useState([
-        {
-            id: 1,
-            fill: 'Fill-in-the-Gaps Questions',
-            task2: 'Complete each sentence with the appropriate word from the story. Use the word bank below if needed.',
-            word: 'Word Bank: 1969, dream, coffee, daughters, book',
-            questionA: 'The husband first learns about the impending event when he discovers that others shared the same _______ he had about the world ending.',
-            questionB: 'The date identified as the last night of the world is October 19, _______.',
-            questionC: 'The couple remain calm and follow their normal routine, even drinking _______ together in the evening as usual.',
-            questionD: 'At 8:30 P.M. on the final night, they put their two young _______ to bed, just as they do every night.',
-            questionE: 'The man describes the end of the world as being like “the closing of a _______,” implying a quiet and simple finish.'
-        }
-    ])
+    const task3Questions = [
+        { id: 'T3_1', text: 'What question does the husband ask his wife at the beginning of the story?' },
+        { id: 'T3_2', text: 'How does the husband realize that others have had the same dream about the world ending?' },
+        { id: 'T3_3', text: 'What time do the husband and wife put their children to bed on the last night?' },
+        { id: 'T3_4', text: 'What do the husband and wife do together after washing the dishes on the final evening?' },
+        { id: 'T3_5', text: 'What final words do the husband and wife exchange before going to sleep?' }
+    ];
 
-    const [answersthree] = useState([
-        {
-            id: 1,
-            short: 'Short Answer Questions',
-            task3: 'Answer each question with a brief factual response based only on details from the story.',
-            questionA: 'What question does the husband ask his wife at the beginning of the story?',
-            questionB: 'How does the husband realize that others have had the same dream about the world ending?',
-            questionC: 'What time do the husband and wife put their children to bed on the last night?',
-            questionD: 'What do the husband and wife do together after washing the dishes on the final evening?',
-            questionE: 'What final words do the husband and wife exchange before going to sleep?'
+    const task4Questions = [
+        { 
+            id: 'T4_1', 
+            question: '1. What are the main characters doing at the beginning of the story?', 
+            options: [
+                { label: 'A', text: 'A. Reading by the fireplace' },
+                { label: 'B', text: 'B. Drinking coffee while their children play' },
+                { label: 'C', text: 'C. Watching television' },
+                { label: 'D', text: 'D. Saying goodbye to neighbours' }
+            ] 
+        },
+        { 
+            id: 'T4_2', 
+            question: '2. What does the husband reveal he experienced four nights ago?', 
+            options: [
+                { label: 'A', text: 'A. A phone call from an old friend' },
+                { label: 'B', text: 'B. A dream about the world ending' },
+                { label: 'C', text: 'C. A sudden illness' },
+                { label: 'D', text: 'D. A power outage' }
+            ] 
+        },
+        { 
+            id: 'T4_3', 
+            question: '3. How does the wife initially respond to the husband’s dream?', 
+            options: [
+                { label: 'A', text: 'A. She panics' },
+                { label: 'B', text: 'B. She laughs it off' },
+                { label: 'C', text: 'C. She’s surprised but calm' },
+                { label: 'D', text: 'D. She accuses him of lying' }
+            ] 
+        },
+        { 
+            id: 'T4_4', 
+            question: '4. What activity do the couple eventually decide to do after their discussion?', 
+            options: [
+                { label: 'A', text: 'A. Go outside for a walk and enjoy the time' },
+                { label: 'B', text: 'B. Call their friends and have a small talk' },
+                { label: 'C', text: 'C. Wash the dishes and put the children to bed' },
+                { label: 'D', text: 'D. Write letters to family' }
+            ] 
+        },
+        { 
+            id: 'T4_5', 
+            question: '5. What is the last thing the couple does before falling asleep?', 
+            options: [
+                { label: 'A', text: 'A. Say goodbye to the children' },
+                { label: 'B', text: 'B. Turn off the radio' },
+                { label: 'C', text: 'C. Share a laugh and say goodnight' },
+                { label: 'D', text: 'D. Turn off the lights and lock the door' }
+            ] 
+        },
+        { 
+            id: 'T4_6', 
+            question: '6. Who else had the same dream, according to the husband?', 
+            options: [
+                { label: 'A', text: 'A. His neighbors' },
+                { label: 'B', text: 'B. His boss and coworkers' },
+                { label: 'C', text: 'C. Everyone in his office' },
+                { label: 'D', text: 'D. Only his wife and children' }
+            ] 
+        },
+        { 
+            id: 'T4_7', 
+            question: '7. Which of the following best summarizes the couple’s emotional state?', 
+            options: [
+                { label: 'A', text: 'A. Anxious and afraid' },
+                { label: 'B', text: 'B. Calm and accepting' },
+                { label: 'C', text: 'C. Confused and angry' },
+                { label: 'D', text: 'D. Excited and hopeful' }
+            ] 
+        },
+        { 
+            id: 'T4_8', 
+            question: '8. What happens after the couple finishes their coffee?', 
+            options: [
+                { label: 'A', text: 'A. They go out to warn others' },
+                { label: 'B', text: 'B. They fall asleep immediately' },
+                { label: 'C', text: 'C. They reflect on life and prepare for bed' },
+                { label: 'D', text: 'D. They write a letter to their children' }
+            ] 
         }
-    ])
-
-    const [answersfour] = useState([
-        { id: 1, question: 'What are the main characters doing at the beginning of the story? ', optionA: 'Reading by the fireplace', optionB: 'Drinking coffee while their children play ', optionC: 'Watching television ', optionD: 'Saying goodbye to neighbours' },
-        { id: 2, question: 'What does the husband reveal he experienced four nights ago? ', optionA: 'A phone call from an old friend', optionB: 'A dream about the world ending', optionC: 'A sudden illness', optionD: 'A power outage' },
-        { id: 3, question: 'How does the wife initially respond to the husband’s dream? ', optionA: 'She panics ', optionB: 'She laughs it off ', optionC: 'She’s surprised but calm', optionD: 'She accuses him of lying' },
-        { id: 4, question: 'What activity do the couple eventually decide to do after their discussion? ', optionA: 'Go outside for a walk and enjoy the time', optionB: 'Call their friends and have a small talk', optionC: 'Wash the dishes and put the children to bed', optionD: 'Write letters to family' },
-        { id: 5, question: 'What is the last thing the couple does before falling asleep? ', optionA: 'Say goodbye to the children', optionB: 'Turn off the radio ', optionC: 'Share a laugh and say goodnight ', optionD: 'Turn off the lights and lock the door' },
-        { id: 6, question: 'Who else had the same dream, according to the husband?', optionA: 'His neighbors', optionB: 'His boss and coworkers', optionC: 'Everyone in his office', optionD: 'Only his wife and children' },
-        { id: 7, question: 'Which of the following best summarizes the couple’s emotional state?', optionA: 'Anxious and afraid ', optionB: 'Calm and accepting ', optionC: 'Confused and angry ', optionD: 'Excited and hopeful' },
-        { id: 8, question: 'What happens after the couple finishes their coffee?', optionA: 'They go out to warn others ', optionB: 'They fall asleep immediately', optionC: 'They reflect on life and prepare for bed ', optionD: 'They write a letter to their children' }
-    ])
+    ];
 
     const handleData = (key, val) => {
         if (isSubmitted) return;
@@ -65,121 +114,125 @@ const Taskone1 = () => {
     }
 
     const handleSubmit = () => {
-        if (isSubmitted) {
-            toast.info("Siz allaqachon javob yuborgansiz.");
-            return;
-        }
-        if (!userName.trim()) {
-            toast.error("Iltimos ismingizni kiriting!");
-            return;
-        }
-        if (Object.keys(allAnswers).length === 0) {
-            toast.warning("Iltimos, javoblarni to'ldiring!");
-            return;
-        }
-
-        // 🔹 Telegramga yuborish matni
-        let telegramText = `🧑‍🎓 Test natijalari
-👤 Ism: ${userName}
-📘 Level: Literal
-📝 Task: Task 1.1
-📅 Sana: ${new Date().toLocaleString()}
-
-📊 Javoblar:\n`;
-
-        Object.entries(allAnswers).forEach(([key, val]) => {
-            telegramText += `${key}: ${val}\n`;
+        if (isSubmitted) return toast.info("Siz allaqachon javob yuborgansiz.");
+        if (!userName.trim()) return toast.error("Iltimos ismingizni kiriting!");
+        
+        let telegramText = `🧑‍🎓 Bradbury Quiz\n👤 Ism: ${userName}\n\n📊 Javoblar:\n`;
+        Object.entries(allAnswers).sort().forEach(([key, val]) => {
+            telegramText += `🔹 ${key}: ${val}\n`;
         });
 
         sendToTelegram(BOT_1.token, BOT_1.chatId, telegramText);
-
-        // 🔹 LocalStorage ga saqlash
-        const oldData = JSON.parse(localStorage.getItem('allTests') || '[]');
-        oldData.push({
-            user: userName,
-            answers: allAnswers,
-            level: 'Literal',
-            taskType: 'Task 1.1',
-            date: new Date().toLocaleString()
-        });
-        localStorage.setItem('allTests', JSON.stringify(oldData));
-
-        toast.success("Natijalar yuborildi!");
         setIsSubmitted(true);
+        toast.success("Natijalar muvaffaqiyatli yuborildi!");
     }
+
+    const taskBoxStyle = {
+        background: '#ffffff',
+        padding: '25px',
+        borderRadius: '12px',
+        border: '1px solid #e0e6ed',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.02)',
+        marginBottom: '30px'
+    };
 
     return (
         <div data-aos="fade-left" className='task-cont'>
             <div className="tasks">
-                <div className="taskone1-card">
-                    {/* PART 1 */}
-                    {answers.map((item, index) => (
-                        <div key={index} className="taskone1-question">
-                            <h1>{item.task1}</h1>
-                            <div className='answer-1'>
-                                <h3>1. {item.questionA}</h3>
-                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q1', e.target.value)} />
-                                <h3>2. {item.questionB}</h3>
-                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q2', e.target.value)} />
-                                <h3>3. {item.questionC}</h3>
-                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q3', e.target.value)} />
-                                <h3>4. {item.questionD}</h3>
-                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q4', e.target.value)} />
-                                <h3>5. {item.questionE}</h3>
-                                <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData('P1-Q5', e.target.value)} />
-                            </div>
-                        </div>
-                    ))}
+                <div className="taskone1-card" style={{ background: '#f8f9fa', padding: '30px' }}>
+                    
+                    <div className="mini-header" style={{ textAlign: 'center', marginBottom: '30px' }}>
+                        <h2 style={{ fontSize: '24px' }}>The Last Night of the World</h2>
+                        <span style={{ fontSize: '14px' }}>LITERAL LEVEL EXERCISES</span>
+                    </div>
 
-                    {/* PART 2 */}
-                    {answerstwo.map((itemtwo, indextwo) => (
-                        <div key={indextwo} className="taskone1-question">
-                            <h1>{itemtwo.fill}</h1>
-                            <h1>{itemtwo.task2}</h1>
-                            <h3 style={{color: 'green'}}>{itemtwo.word}</h3>
-                            {['A','B','C','D','E'].map((letter, idx) => (
-                                <div key={letter}>
-                                    <h3>{idx+1}. {itemtwo[`question${letter}`]}</h3>
-                                    <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData(`P2-Q${idx+1}`, e.target.value)} />
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-
-                    {/* PART 3 */}
-                    {answersthree.map((itemthree, indexthree) => (
-                        <div key={indexthree} className="taskone1-question">
-                            <h1>{itemthree.short}</h1>
-                            <h1>{itemthree.task3}</h1>
-                            {['A','B','C','D','E'].map((letter, idx) => (
-                                <div key={letter}>
-                                    <h3>{idx+1}. {itemthree[`question${letter}`]}</h3>
-                                    <input disabled={isSubmitted} className='taskone1-input' type="text" placeholder='Your answer' onChange={(e) => handleData(`P3-Q${idx+1}`, e.target.value)} />
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-
-                    {/* PART 4 */}
-                    <h1 style={{marginTop: '30px'}}>Multiple choice questions</h1>
-                    {answersfour.map((itemfour, indexfour) => (
-                        <div key={indexfour} className="taskone1-question">
-                            <h2>{itemfour.question}</h2>
-                            <ul>
-                                {['A','B','C','D'].map(option => (
-                                    <li 
-                                        key={option} 
-                                        style={{ cursor: isSubmitted ? 'default' : 'pointer', color: allAnswers[`P4-Q${itemfour.id}`] === option ? '#007bff' : '' }}
-                                        onClick={() => handleData(`P4-Q${itemfour.id}`, option)}
-                                    >
-                                        {option}. {itemfour[`option${option}`]}
-                                    </li>
+                    {/* TASK 1 */}
+                    <div style={taskBoxStyle}>
+                        <p className="task-instruction" style={{ fontSize: '16px', borderLeft: '4px solid #3498db', paddingLeft: '15px', marginBottom: '20px' }}>
+                            <strong>Task 1.</strong> Decide whether each statement is <b>True (T)</b>, <b>False (F)</b>, or <b>Not Given (NG)</b>.
+                        </p>
+                        <table className="quiz-table" style={{ fontSize: '15px', background: 'white' }}>
+                            <tbody>
+                                {task1Questions.map((q, idx) => (
+                                    <tr key={q.id}>
+                                        <td width="40" className="text-center">{idx + 1}</td>
+                                        <td>{q.text}</td>
+                                        <td width="120">
+                                            <input disabled={isSubmitted} className='table-inp' type="text" placeholder='T/F/NG' style={{ textAlign:'center' }} onChange={(e) => handleData(q.id, e.target.value)} />
+                                        </td>
+                                    </tr>
                                 ))}
-                            </ul>
-                        </div>
-                    ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <div style={{marginTop: '30px', textAlign: 'center'}}>
+                    {/* TASK 2 */}
+                    <div style={taskBoxStyle}>
+                        <p className="task-instruction" style={{ fontSize: '16px', borderLeft: '4px solid #e67e22', paddingLeft: '15px', marginBottom: '20px' }}>
+                            <strong>Task 2.</strong> Complete each sentence with the appropriate word from the story.
+                        </p>
+                        <div style={{ fontSize: '14px', background: '#fff9f4', padding: '10px', borderRadius: '8px', color: '#d35400', marginBottom: '25px', textAlign: 'center', border: '1px solid #ffeada' }}>
+                            <strong>Word Bank:</strong> 1969 | dream | coffee | daughters | book
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '15.5px' }}>
+                            <div style={{ lineHeight: '1.8' }}>1. The husband first learns about the impending event when he discovers that others shared the same <input placeholder="answer" disabled={isSubmitted} style={{ width: '110px', borderBottom: '2px solid #e67e22', borderTop:'none', borderLeft:'none', borderRight:'none', outline:'none', textAlign:'center', background:'transparent', fontWeight:'bold' }} onChange={(e) => handleData('T2_1', e.target.value)} /> he had about the world ending.</div>
+                            <div style={{ lineHeight: '1.8' }}>2. The date identified as the last night of the world is October 19, <input placeholder="answer" disabled={isSubmitted} style={{ width: '90px', borderBottom: '2px solid #e67e22', borderTop:'none', borderLeft:'none', borderRight:'none', outline:'none', textAlign:'center', background:'transparent', fontWeight:'bold' }} onChange={(e) => handleData('T2_2', e.target.value)} />.</div>
+                            <div style={{ lineHeight: '1.8' }}>3. The couple remain calm and follow their normal routine, even drinking <input placeholder="answer" disabled={isSubmitted} style={{ width: '110px', borderBottom: '2px solid #e67e22', borderTop:'none', borderLeft:'none', borderRight:'none', outline:'none', textAlign:'center', background:'transparent', fontWeight:'bold' }} onChange={(e) => handleData('T2_3', e.target.value)} /> together in the evening as usual.</div>
+                            <div style={{ lineHeight: '1.8' }}>4. At 8:30 P.M. on the final night, they put their two young <input placeholder="answer" disabled={isSubmitted} style={{ width: '110px', borderBottom: '2px solid #e67e22', borderTop:'none', borderLeft:'none', borderRight:'none', outline:'none', textAlign:'center', background:'transparent', fontWeight:'bold' }} onChange={(e) => handleData('T2_4', e.target.value)} /> to bed, just as they do every night.</div>
+                            <div style={{ lineHeight: '1.8' }}>5. The man describes the end of the world as being like “the closing of a <input placeholder="answer" disabled={isSubmitted} style={{ width: '110px', borderBottom: '2px solid #e67e22', borderTop:'none', borderLeft:'none', borderRight:'none', outline:'none', textAlign:'center', background:'transparent', fontWeight:'bold' }} onChange={(e) => handleData('T2_5', e.target.value)} />,” implying a quiet and simple finish.</div>
+                        </div>
+                    </div>
+
+                    {/* TASK 3 */}
+                    <div style={taskBoxStyle}>
+                        <p className="task-instruction" style={{ fontSize: '16px', borderLeft: '4px solid #27ae60', paddingLeft: '15px', marginBottom: '20px' }}>
+                            <strong>Task 3.</strong> Answer each question with a brief factual response based on the story.
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            {task3Questions.map((q, idx) => (
+                                <div key={q.id}>
+                                    <p style={{ fontSize: '15.5px', marginBottom: '8px', fontWeight: '500' }}>{idx + 1}. {q.text}</p>
+                                    <textarea disabled={isSubmitted} placeholder="Your answer..." style={{ width: '100%', minHeight: '60px', padding: '12px', borderRadius: '8px', border: '1px solid #dcdde1', fontSize: '14.5px', outline: 'none' }} onChange={(e) => handleData(q.id, e.target.value)} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* TASK 4 */}
+                    <div style={taskBoxStyle}>
+                        <p className="task-instruction" style={{ fontSize: '16px', borderLeft: '4px solid #8e44ad', paddingLeft: '15px', marginBottom: '20px' }}>
+                            <strong>Task 4.</strong> Choose the most appropriate answer among the variants.
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                            {task4Questions.map((q) => (
+                                <div key={q.id}>
+                                    <p style={{ fontSize: '15.5px', fontWeight: '600', color: '#2c3e50', marginBottom: '15px' }}>{q.question}</p>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                        {q.options.map((opt) => (
+                                            <div 
+                                                key={opt.label}
+                                                onClick={() => handleData(q.id, opt.label)}
+                                                style={{ 
+                                                    padding: '12px 15px', 
+                                                    borderRadius: '8px', 
+                                                    border: allAnswers[q.id] === opt.label ? '2px solid #8e44ad' : '1px solid #eee',
+                                                    background: allAnswers[q.id] === opt.label ? '#f3e5f5' : '#f9f9f9',
+                                                    cursor: isSubmitted ? 'default' : 'pointer',
+                                                    fontSize: '14.5px',
+                                                    transition: '0.2s'
+                                                }}
+                                            >
+                                                {opt.text}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* SUBMIT SECTION */}
+                    <div className="submit-section">
                         <input 
                             disabled={isSubmitted}
                             type="text" 

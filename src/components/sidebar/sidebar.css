@@ -17,7 +17,7 @@
     text-align: center;
 }
 .sidebar ul{
-    margin-top: 50px;
+    margin-top: 20px;
    
 }
 .sidebar li{
@@ -47,13 +47,14 @@
 
 .sidebar-text img{
     margin-top: 20px;
-    width: 120px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: white;
     background-size: cover;
     object-fit: cover;
-    border-radius: 0px;
+    border-radius: 50%;
 }
 
 

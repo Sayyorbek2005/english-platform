@@ -7,7 +7,7 @@ const Header = () => {
     <HeaderContainer>
         <header data-aos="fade-down"  className='max-width display-flex'>
 
-            <h2 >Baxtiniso </h2>
+          
 
             <h2 >English Platform</h2>
 

@@ -26,7 +26,7 @@ const Taskone = () => {
       setSelections(prev => ({ ...prev, [activeWord]: optionKey }));
       setActiveWord(null);
     } else {
-      toast.warning("Avval yuqori qismdan so'zni tanlang!");
+      toast.warning("Avval so'zni tanlang!");
     }
   };
 
@@ -60,24 +60,16 @@ const Taskone = () => {
   };
 
   const handleSubmit = () => {
-    if (isSubmitted) {
-      toast.info("Siz allaqachon javob yuborgansiz!");
-      return;
-    }
+    if (isSubmitted) return toast.info("Siz allaqachon javob yuborgansiz!");
+    if (!userName.trim()) return toast.error("Iltimos ismingizni kiriting!");
 
-    if (!userName.trim()) {
-      toast.error("Iltimos ismingizni kiriting!");
-      return;
-    }
-
-    const matchingRes = Object.entries(selections).map(([word, option]) => `${word} -> ${option.toUpperCase()}`);
+    const matchingRes = Object.entries(selections).map(([word, option]) => `${word} -> ${option}`);
     const t4Res = Object.entries(gapAnswers).filter(([_, v]) => v).map(([k, v]) => `T4 Q${k}: ${v}`);
     const t5Res = Object.entries(task5Answers).filter(([_, v]) => v).map(([k, v]) => `T5 Q${k}: ${v}`);
     const t6Res = Object.entries(task6Answers).map(([k, v]) => `T6 Q${k}: ${v}`);
 
     let telegramText = `🧑‍🎓 Test natijalari\n👤 Ism: ${userName}\n📘 Level: Literal\n\n` +
-      `🔹 PART 1:\n${matchingRes.filter(r => !r.includes('2')).join('\n') || 'Javob yo\'q'}\n\n` +
-      `🔹 PART 2:\n${matchingRes.filter(r => r.includes('2')).join('\n') || 'Javob yo\'q'}\n\n` +
+      `📝 Matching Tasks (T1, T2, T3):\n${matchingRes.join('\n') || 'Javob yo\'q'}\n\n` +
       `📝 Task 4:\n${t4Res.join('\n') || 'Javob yo\'q'}\n\n` +
       `📝 Task 5:\n${t5Res.join('\n') || 'Javob yo\'q'}\n\n` +
       `✅ Task 6:\n${t6Res.join('\n') || 'Javob yo\'q'}`;
@@ -98,7 +90,6 @@ const Taskone = () => {
     { q: "8. What did Mr.Bosengate realize by the end of the story?", options: ["The laws of the government should be strict", "The laws should be strict", "Society needs to be kind and helpful to people", "Military service is more important to empathy"] }
   ];
 
-  // Task 5 to'liq Word Bank savollari
   const task5Questions = [
     {q: "1. Mr. Bosengate is summoned as a ______.", b: "juror, judge, soldier, lawyer"},
     {q: "2. The defendant is a soldier named ______ ______.", b: "Owen Lewis, David Evans, William Jones"},
@@ -116,51 +107,108 @@ const Taskone = () => {
     <div data-aos="fade-left" className='tasks task-two'>
       <div className="tasktwo-card">
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', flexWrap: 'wrap' }}>
-          
+        {/* TASK 1 */}
+        <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+          <h2 style={{ fontSize: '18px', display: 'inline-block', borderRight: '5px solid #27ae60', paddingRight: '15px' }}>
+            Task 1. Match the words with their synonyms.
+          </h2>
+        </div>
+        <section style={{ marginBottom: '30px', padding: '15px', background: '#f9f9f9', borderRadius: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                <ul className='salom' style={{listStyle: 'none', padding: 0}}>
+                    {['Wretched', 'Clamour', 'Composure', 'Effluvium', 'Shambling'].map(word => (
+                        <li key={word} style={{...getTextColor('word', word), cursor: 'pointer', marginBottom: '8px'}} onClick={() => handleWordClick(word)}>{word}</li>
+                    ))}
+                </ul>
+                <ul className='salom' style={{listStyle: 'none', padding: 0}}>
+                    {[
+                        { k: 'miserable', l: 'a) Cheerful; b) miserable; c) energetic' },
+                        { k: 'noise', l: 'a) Silence; b) noise; c) whisper' },
+                        { k: 'calmness', l: 'a) calmness; b) anxiety; c) restlessness' },
+                        { k: 'stench', l: 'a) fragrance; b) stench; c) light breeze' },
+                        { k: 'shuffling', l: 'a) shuffling; b) sprinting; c) gliding' }
+                    ].map((item) => (
+                        <li key={item.k} style={{...getTextColor('option', item.k), cursor: 'pointer', marginBottom: '8px'}} onClick={() => handleOptionClick(item.k)}>{item.l}</li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+
+        {/* TASK 2 */}
+        <div style={{ textAlign: 'left', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '18px', display: 'inline-block', borderRight: '5px solid #3498db', paddingRight: '15px' }}>
+            Task 2. Match the words with their definitions.
+          </h2>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', flexWrap: 'wrap', marginBottom: '40px' }}>
           <section style={{ flex: '1', minWidth: '300px' }}>
             <div style={{textAlign: 'center', marginBottom: '20px'}}>
                 <h1 style={{color: '#3498db', fontSize: '24px', borderBottom: '2px solid #3498db', display: 'inline-block'}}>PART 1</h1>
             </div>
-            <h3 style={{marginBottom: '15px', fontSize: '16px'}}>Vocabulary Matching</h3>
             <div className="tasktwo-question display-flex" style={{justifyContent: 'space-around'}}>
-              <ul className='salom'>
+              <ul className='salom' style={{listStyle: 'none', padding: 0}}>
                 {['1. Wretched', '2. Indispensable', '3. Afflicted', '4. Yearning', '5. Shambling'].map(word => (
-                  <li key={word} style={{...getTextColor('word', word), cursor: 'pointer'}} onClick={() => handleWordClick(word)}>{word}</li>
+                  <li key={word} style={{...getTextColor('word', word), cursor: 'pointer', marginBottom: '5px'}} onClick={() => handleWordClick(word)}>{word}</li>
                 ))}
               </ul>
-              <ul className='salom'>
+              <ul className='salom' style={{listStyle: 'none', padding: 0}}>
                 {['a', 'b', 'c', 'd', 'e'].map((key) => {
                   const labels = { a: 'a) slow/awkward', b: 'b) strong longing', c: 'c) necessary', d: 'd) very unhappy', e: 'e) suffering' };
-                  return ( <li key={key} style={{...getTextColor('option', key), cursor: 'pointer', fontSize: '13px'}} onClick={() => handleOptionClick(key)}>{labels[key]}</li> )
+                  return ( <li key={key} style={{...getTextColor('option', key), cursor: 'pointer', marginBottom: '5px'}} onClick={() => handleOptionClick(key)}>{labels[key]}</li> )
                 })}
               </ul>
             </div>
           </section>
-
           <section style={{ flex: '1', minWidth: '300px' }}>
             <div style={{textAlign: 'center', marginBottom: '20px'}}>
                 <h1 style={{color: '#3498db', fontSize: '24px', borderBottom: '2px solid #3498db', display: 'inline-block'}}>PART 2</h1>
             </div>
-            <h3 style={{marginBottom: '15px', fontSize: '16px'}}>Vocabulary Matching</h3>
             <div className="tasktwo-question display-flex" style={{justifyContent: 'space-around'}}>
-              <ul className='salom'>
+              <ul className='salom' style={{listStyle: 'none', padding: 0}}>
                 {['1. Drab', '2. Hunched', '3. Underlip', '4. Muttering', '5. Foreman'].map(word => (
-                  <li key={word} style={{...getTextColor('word', word), cursor: 'pointer'}} onClick={() => handleWordClick(word)}>{word}</li>
+                  <li key={word} style={{...getTextColor('word', word), cursor: 'pointer', marginBottom: '5px'}} onClick={() => handleWordClick(word)}>{word}</li>
                 ))}
               </ul>
-              <ul className='salom'>
+              <ul className='salom' style={{listStyle: 'none', padding: 0}}>
                 {['a2', 'b2', 'c2', 'd2', 'e2'].map((key) => {
                   const labels = { a2: 'a) speaking low', b2: 'b) dull color', c2: 'c) person in charge', d2: 'd) bending forward', e2: 'e) lower lip' };
-                  return ( <li key={key} style={{...getTextColor('option', key), cursor: 'pointer', fontSize: '13px'}} onClick={() => handleOptionClick(key)}>{labels[key]}</li> )
+                  return ( <li key={key} style={{...getTextColor('option', key), cursor: 'pointer', marginBottom: '5px'}} onClick={() => handleOptionClick(key)}>{labels[key]}</li> )
                 })}
               </ul>
             </div>
           </section>
-
         </div>
 
+        {/* TASK 3 */}
+        <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+          <h2 style={{ fontSize: '18px', display: 'inline-block', borderRight: '5px solid #e67e22', paddingRight: '15px' }}>
+            Task 3. Match the words with their antonyms.
+          </h2>
+        </div>
+        <section style={{ marginBottom: '40px', padding: '15px', background: '#fffef4', borderRadius: '10px', border: '1px solid #f9e79f' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                <ul className='salom' style={{listStyle: 'none', padding: 0}}>
+                    {['Lustreless', 'Hunched', 'Brooding', 'Drab', 'Curtly'].map(word => (
+                        <li key={word} style={{...getTextColor('word', word), cursor: 'pointer', marginBottom: '8px'}} onClick={() => handleWordClick(word)}>{word}</li>
+                    ))}
+                </ul>
+                <ul className='salom' style={{listStyle: 'none', padding: 0}}>
+                    {[
+                        { k: 'shiny', l: 'a) shiny; b) dull; c) dim' },
+                        { k: 'upbright', l: 'a) Upbright; b) bent; c) stooped' },
+                        { k: 'carefree', l: 'a) reflective; b) carefree; c) worrying' },
+                        { k: 'colourful', l: 'a) colourful; b) boring; c) gray' },
+                        { k: 'politely', l: 'a) politely; b) abruptly; c) briefly' }
+                    ].map((item) => (
+                        <li key={item.k} style={{...getTextColor('option', item.k), cursor: 'pointer', marginBottom: '8px'}} onClick={() => handleOptionClick(item.k)}>{item.l}</li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+
+        {/* Task 4, 5, 6 - O'zgarishsiz qoldi */}
         <section style={{marginTop: '50px'}}>
+          {/* ... qolgan kodlar o'zgarishsiz ... */}
           <h3>Task 4. Fill in the blanks</h3>
           <div style={{lineHeight: '2.5', marginBottom: '40px'}}>
             {[

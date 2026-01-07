@@ -1,4 +1,4 @@
-import logo from '../../assets/img/remove-back_logo.png'
+import logo from '../../assets/img/finish-logo.png'
 import './sidebar.css'
 import { NavLink } from 'react-router-dom'
 
