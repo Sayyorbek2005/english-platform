@@ -57,8 +57,6 @@ const Taskthree3 = () => {
       <div className="taskthree3-card" style={{padding: '30px', backgroundColor: '#fff', borderRadius: '20px'}}>
         
         <div className="task-header" style={{textAlign: 'center', marginBottom: '40px'}}>
-            <h1 style={{color: '#2c3e50', fontSize: '26px'}}>Exercises for the story “The Last Night of the World”</h1>
-            <p style={{color: '#3498db', fontWeight: 'bold', fontSize: '20px'}}>Level: Inferential</p>
         </div>
 
         {/* Task 1 */}

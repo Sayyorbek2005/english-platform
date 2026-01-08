@@ -66,8 +66,6 @@ const Taskfive = () => {
       <div className="taskfive-card">
         
         <div className="task-header" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '24px', color: '#2c3e50'}}>Exercises for the story “The Last Night of the World” by R.Bradbury</h1>
-            <h3 style={{color: '#3498db', marginTop: '10px'}}>Appreciative level</h3>
         </div>
 
         {/* --- TASK 1 SECTION --- */}

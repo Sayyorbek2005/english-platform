@@ -142,8 +142,6 @@ const Taskone1 = () => {
                 <div className="taskone1-card" style={{ background: '#f8f9fa', padding: '30px' }}>
                     
                     <div className="mini-header" style={{ textAlign: 'center', marginBottom: '30px' }}>
-                        <h2 style={{ fontSize: '24px' }}>The Last Night of the World</h2>
-                        <span style={{ fontSize: '14px' }}>LITERAL LEVEL EXERCISES</span>
                     </div>
 
                     {/* TASK 1 */}

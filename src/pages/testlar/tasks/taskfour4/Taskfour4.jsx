@@ -41,8 +41,6 @@ const Taskfour4 = () => {
       <div className="taskfour4-card">
         
         <div className="answer-1" style={{textAlign: 'center', marginBottom: '40px'}}>
-            <h2 style={{color: '#2c3e50', fontSize: '26px'}}>The Last Night of the World</h2>
-            <h3 style={{color: '#e67e22', marginTop: '10px'}}>Evaluative Level Assessment</h3>
         </div>
 
         {/* --- TASK 1 --- */}
